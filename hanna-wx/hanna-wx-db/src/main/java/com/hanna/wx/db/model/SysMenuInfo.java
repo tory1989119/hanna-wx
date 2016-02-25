@@ -3,10 +3,9 @@ package com.hanna.wx.db.model;
 import java.sql.Date;
 
 /**
- * 系统后台菜单表
- * 
- * @author wuxiaojian
- * @version $Id: SysMenuInfo.java, v 0.1 2015年12月18日 上午10:06:26  Exp $
+ * 系统后台菜单对象
+ * @author wuxj
+ *
  */
 public class SysMenuInfo {
     /**

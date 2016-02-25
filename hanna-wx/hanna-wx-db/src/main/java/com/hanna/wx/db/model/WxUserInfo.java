@@ -1,15 +1,11 @@
 package com.hanna.wx.db.model;
 
 /**
- * 
- * @ClassName: UserInfoResponse
- * @Package com.wx.plat.core.model.user.res
- * @Description: 用户基本信息响应对象
- * @author rockyLee
- * @date 2015-7-6 下午6:20:30
- * 
+ * 用户基本信息响应对象
+ * @author wuxj
+ *
  */
-public class UserInfo{
+public class WxUserInfo{
 	/**
 	 * 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
 	 */

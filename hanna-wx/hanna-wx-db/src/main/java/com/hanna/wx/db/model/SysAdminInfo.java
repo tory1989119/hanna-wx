@@ -3,10 +3,9 @@ package com.hanna.wx.db.model;
 import java.sql.Date;
 
 /**
- * 管理端系统管理员
- * 
- * @author wuxiaojian
- * @version $Id: SysAdminInfo.java, v 0.1 2015年12月17日 下午1:51:05 Exp $
+ * 系统管理员对象
+ * @author wuxj
+ *
  */
 public class SysAdminInfo {
 	/**

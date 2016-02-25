@@ -1,15 +1,11 @@
 package com.hanna.wx.db.model;
 
 /**
- * 
- * @ClassName: WxInMessage
- * @Package com.wx.plat.core.model.msg
- * @Description: 微信消息响应对象
- * @author rockyLee
- * @date 2015-7-9 下午12:49:57
- * 
+ * 微信消息响应对象
+ * @author Administrator
+ *
  */
-public class WxInMessage{
+public class WxMessageInfo{
 	
 	private String URL;//请求url路劲
 
