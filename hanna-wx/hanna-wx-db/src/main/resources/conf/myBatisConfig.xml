@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="WxInMessage" type="com.hanna.wx.db.model.WxInMessage" />
+		<typeAlias alias="SysAdminInfo" type="com.hanna.wx.db.model.SysAdminInfo" />
+		<typeAlias alias="SysMenuInfo" type="com.hanna.wx.db.model.SysMenuInfo" />
+		
+		<typeAlias alias="SysSearchDto" type="com.hanna.wx.db.dto.SysSearchDto" />
+	</typeAliases>
+</configuration>
