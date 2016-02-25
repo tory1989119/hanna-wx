@@ -6,7 +6,7 @@
              version="3.0">  
 		<!-- 欢迎页面-->     
         <welcome-file-list>
-		    <welcome-file>pages/index.jsp</welcome-file>
+		    <welcome-file>pages/login.jsp</welcome-file>
 		</welcome-file-list>
       
         <!--  Spring 上下文参数 加载Spring配置文件 -->
@@ -25,7 +25,7 @@
             <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
             <init-param>
                 <param-name>contextConfigLocation</param-name>
-                <param-value>classpath*:/conf/spring-servlet.xml</param-value>
+                <param-value>classpath*:conf/spring-servlet.xml</param-value>
             </init-param>
             <load-on-startup>1</load-on-startup>
         </servlet>
@@ -53,7 +53,15 @@
             <url-pattern>/*</url-pattern>
         </filter-mapping>
       
+	    <filter>
+        	<filter-name>sessionfilter</filter-name>
+        	<filter-class>com.hanna.wx.manager.system.filter.SessionFilter</filter-class>
+	    </filter>
 	    
+	    <filter-mapping>
+	        <filter-name>sessionfilter</filter-name>
+	        <url-pattern>*.do</url-pattern>
+	    </filter-mapping>
 	      
 	    <session-config> 
 	        <session-timeout>30</session-timeout>

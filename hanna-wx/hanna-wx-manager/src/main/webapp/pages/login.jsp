@@ -1,20 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="海象网络科技(杭州)有限公司" />
-		<meta name="robots" content="All|None|Index|Noindex|Follow|Nofollow" />
-		<meta name="author" content="海象网络科技(杭州)有限公司" />
-		<meta name="copyright" content="© Walrushz.com All rights reserved" />
-		<title>物流APP后台管理系统</title>
-		<link rel="stylesheet" href="$request.getContextPath()/css/login.css">
-		<link rel="stylesheet" href="$request.getContextPath()/css/common.css">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>微信管理后台</title>
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/login.css">
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/common.css">
 			
-		<script type="text/javascript" src="$request.getContextPath()/js/jquery.min.js"></script>
-		<script type="text/javascript" src="$request.getContextPath()/js/login.js"></script>
-		<script type="text/javascript" src="$request.getContextPath()/plugin/layer/layer.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/layer/layer.js"></script>
 		<!–[if lt IE 9]> 	
     		<style>
     			html,body{
@@ -27,11 +23,11 @@
 	<body>
 	<div class="loginMain">
 		<h1 class="f26 whitefc">
-			易货物流app后台管理系统
+			微信后台管理系统
 		</h1>
 		<div class="loginBgbody pr">
 			<div class="loginLogo pa">
-				<img src="images/logoAdmin.png" class="img-responsive">
+				<img src="<%=request.getContextPath()%>/images/logoAdmin.png" class="img-responsive">
 			</div>
 			<div class="pa loginUsr">
 				<div class="namefc f24 mb10">
@@ -54,12 +50,55 @@
 			</div>
 		</div>
 	</div>
-	<form action="$request.getContextPath()/main.htm" method="get" id="main" >
+	<form action="<%=request.getContextPath()%>/main.do" method="get" id="main" >
                 
     </form>
-	<script>
+	<script type="text/javascript">
 		if (window != top) 
 		top.location.href = location.href; 
+		
+		$(function() {
+			//登录方法
+			$("#dologin").click(function(){
+				var isTop = false;
+				if($("#username").val() == '' || $("#username").val() == null){
+					layer.tips('用户名不能为空', '#username', {
+						tipsMore: true,
+					    tips: [2, '#2AC0CE']
+					});
+					isTop = true;
+				}
+				
+				if($("#password").val() == '' || $("#password").val() == null){
+					layer.tips('密码不能为空', '#password', {
+						tipsMore: true,
+					    tips: [2, '#2AC0CE']
+					});
+					isTop = true;
+				}
+				
+				if(isTop){
+					return;
+				}
+				
+				$.ajax({
+		    		type:"post",
+		    		url:"<%=request.getContextPath()%>/doLogin.do",
+		    		data:{
+		    			username:$("#username").val(),
+						password:$("#password").val()
+		    		},
+		    		dataType:"json",
+		    		success:function(data){
+		    			if(data.flag == "1" && data.errorCode == "10000"){
+							$("#main").submit();
+		    			}else{
+		    				layer.msg(data.content, {icon: 5});
+		    			}
+		    		}
+				});
+			});
+		});
     </script>
 </body>
 	

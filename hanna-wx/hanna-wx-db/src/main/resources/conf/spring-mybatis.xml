@@ -22,7 +22,7 @@
       
 	  <!--MyBatis data source configuration -->
 	  <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		  <property name="jndiName" value="java:comp/env/jdbc/myDB" />
+		  <property name="jndiName" value="java:comp/env/jdbc/hannawxDB" />
 	  </bean>
           
       <bean id="ysSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

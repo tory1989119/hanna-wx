@@ -1,8 +1,5 @@
 package com.hanna.wx.manager.system.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,7 +29,6 @@ public class LoginController {
 
     private final String LOGIN_PAGE           = "login";
     private final String MAIN_PAGE            = "main";
-    private final String MAIN_STATISTICS_PAGE = "mainStatistics";
 
     @Resource
     private LoginService loginService;
@@ -42,7 +38,7 @@ public class LoginController {
      * 
      * @return
      */
-    @RequestMapping(value = "login.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "login.do", method = RequestMethod.GET)
     public String login() {
         return LOGIN_PAGE;
     }
@@ -54,7 +50,7 @@ public class LoginController {
      * @param adminInfo
      * @return
      */
-    @RequestMapping(value = "doLogin.htm", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "doLogin.do", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public BaseResponseDto<Object> doLogin(HttpServletRequest request, SysAdminInfo adminInfo) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
@@ -65,7 +61,7 @@ public class LoginController {
                 br.setContent(ErrorCode.login_error.getDes());
             } else {
                 //保存登录信息到session
-                request.getSession().setAttribute("logisticsAdminInfo", adminInfo);
+                request.getSession().setAttribute("sysAdminInfo", adminInfo);
             }
         } catch (Exception e) {
             logger.error("LoginController.doLogin", e);
@@ -81,10 +77,10 @@ public class LoginController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "loginOut.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "loginOut.do", method = RequestMethod.GET)
     public String loginOut(HttpServletRequest request) {
         //登出 去除登录信息
-        request.getSession().removeAttribute("logisticsAdminInfo");
+        request.getSession().removeAttribute("sysAdminInfo");
         return LOGIN_PAGE;
     }
 
@@ -93,22 +89,12 @@ public class LoginController {
      * 
      * @return
      */
-    @RequestMapping(value = "main.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String main(HttpServletRequest request) {
         //拼装菜单列表 首页显示
         String menuStr = loginService.getMenuStr();
         request.setAttribute("menuStr", menuStr);
+        request.setAttribute("sysAdminInfo", request.getSession().getAttribute("sysAdminInfo"));
         return MAIN_PAGE;
     }
-
-    /**
-     * 登陆后跳转到首页
-     * 
-     * @return
-     */
-    @RequestMapping(value = "mianStatistics.htm", method = RequestMethod.GET)
-    public String mianStatistics(HttpServletRequest request) {
-        return MAIN_STATISTICS_PAGE;
-    }
-
 }

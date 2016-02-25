@@ -47,7 +47,7 @@ public class ParseMessageXml {
 			// 遍历所有结点
 			// 利用反射机制，调用set方法
 			// 获取该实体的元类型
-			Class<?> c = Class.forName( "com.hanna.wx.model.WxInMessage" );
+			Class<?> c = Class.forName( "com.hanna.wx.db.model.WxInMessage" );
 			obj = ( ( T )c.newInstance() );// 创建这个实体的对象
 
 			while( iter.hasNext() ) {

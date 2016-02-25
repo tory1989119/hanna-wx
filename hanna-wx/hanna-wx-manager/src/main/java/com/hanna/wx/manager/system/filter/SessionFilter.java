@@ -27,13 +27,13 @@ public class SessionFilter implements Filter {
         // 如果session不为空，则可以浏览其他页面
         String url = request.getServletPath();
         // 这里判断目录，后缀名，当然也可以写在web.xml中，用url-pattern进行拦截映射
-        if ((!url.endsWith("/login.htm")) && (!url.endsWith("/doLogin.htm"))) {
-            if (session.getAttribute("logisticsAdminInfo") == null) {
+        if ((!url.endsWith("/login.do")) && (!url.endsWith("/doLogin.do"))&& (!url.endsWith("/callback.do"))) {
+            if (session.getAttribute("sysAdminInfo") == null) {
                 session.invalidate();
                 response.setContentType("text/html;charset=utf-8");
                 PrintWriter out = response.getWriter();
                 out.println("<script language='javascript' type='text/javascript'>");
-                out.println("window.location.href='" + request.getContextPath() + "/login.htm'");
+                out.println("window.location.href='" + request.getContextPath() + "/login.do'");
                 out.println("</script>");
             } else {
                 chain.doFilter(request, response);
