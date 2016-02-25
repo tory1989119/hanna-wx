@@ -24,7 +24,7 @@ import com.hanna.wx.manager.system.service.SysManagerService;
  * @version $Id: SysManagerController.java, v 0.1 2015年12月18日 上午10:26:11  Exp $
  */
 @Controller
-@RequestMapping("/sys/admin")
+@RequestMapping("/sys")
 public class SysManagerController {
     private Logger            logger     = LoggerFactory.getLogger(SysManagerController.class);
 
@@ -42,7 +42,7 @@ public class SysManagerController {
      * 
      * @return
      */
-    @RequestMapping(value = "adminInfoPage.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "adminPage.do", method = RequestMethod.GET)
     public String adminInfoPage() {
         return ADMIN_PAGE;
     }
@@ -52,7 +52,7 @@ public class SysManagerController {
      * 
      * @return
      */
-    @RequestMapping(value = "addAdminPage.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "addAdminPage.do", method = RequestMethod.GET)
     public String addAdminPage() {
     	return ADD_ADMIN_PAGE;
     }
@@ -63,7 +63,7 @@ public class SysManagerController {
      * @param searchDto
      * @return
      */
-    @RequestMapping(value = "queryAdmin.htm", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "queryAdmin.do", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public BaseResponseDto<Object> queryAdmin(SysSearchDto searchDto) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
@@ -83,7 +83,7 @@ public class SysManagerController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "getAdminInfo.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "getAdminInfo.do", method = RequestMethod.GET)
     public String getAdminInfo(HttpServletRequest request,String id) {
         try {
             SysAdminInfo adminInfo = sysManagerService.getAdminInfoById(id);
@@ -100,7 +100,7 @@ public class SysManagerController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "modifyAdminInfo.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "modifyAdminInfo.do", method = RequestMethod.GET)
     public String modifyAdminInfo(HttpServletRequest request,String id) {
     	try {
     		SysAdminInfo adminInfo = sysManagerService.getAdminInfoById(id);
@@ -118,7 +118,7 @@ public class SysManagerController {
      * @param adminInfo
      * @return
      */
-    @RequestMapping(value = "insertAdminInfo.htm", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "insertAdminInfo.do", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public BaseResponseDto<Object> insertAdminInfo(SysAdminInfo adminInfo) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
@@ -139,7 +139,7 @@ public class SysManagerController {
      * @param adminInfo
      * @return
      */
-    @RequestMapping(value = "updateAdminInfo.htm", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "updateAdminInfo.do", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody BaseResponseDto<Object> updateAdminInfo(SysAdminInfo adminInfo) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
         try {

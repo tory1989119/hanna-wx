@@ -33,7 +33,7 @@ public class WxCallbackController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/callback", method = RequestMethod.GET)  
+	@RequestMapping(value = "/callback.do", method = RequestMethod.GET)  
     @ResponseBody
 	public String importGet(HttpServletRequest request, HttpServletResponse response, Model model) {
 		String signature = request.getParameter("signature");
@@ -63,7 +63,7 @@ public class WxCallbackController {
 	 * @param response
 	 * @param model
 	 */
-	@RequestMapping(value = "/callback", method = RequestMethod.POST)  
+	@RequestMapping(value = "/callback.do", method = RequestMethod.POST)  
     @ResponseBody
 	public void importPost(HttpServletRequest request, HttpServletResponse response, Model model) {
 		WxInMessage wm = null;

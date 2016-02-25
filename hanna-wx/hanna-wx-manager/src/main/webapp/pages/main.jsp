@@ -17,7 +17,6 @@
 		<div class="logo pl20 fl">
 			<img src="images/logo.png" alt="logo" class="fl mr10 mt15"/>
 			<span class="fl f20 mr5">微信后台管理系统</span> 
-			<span class="fl f16">版本号 1.1</span>
 		</div>
 		<div class="headLink fr f14">
 			<ul>
