@@ -9,7 +9,9 @@
   <artifactId>hanna-wx-manager</artifactId>
   <packaging>war</packaging>
   
-  
+  <properties>
+		<web.app.name>wx</web.app.name>
+	</properties>
   
   <dependencies>
 	<dependency>
@@ -139,8 +141,9 @@
 			<artifactId>hanna-wx-db</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-	
   </dependencies>
   
-  
+  <build>
+		<finalName>${web.app.name}</finalName>
+	</build>
 </project>
