@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.hanna.wx.db.dao.WxCallbackDao;
 import com.hanna.wx.db.model.WxMessageInfo;
+import com.hanna.wx.db.model.WxUserInfo;
 
 @Service
 public class WxCallbackService {
@@ -15,7 +16,8 @@ public class WxCallbackService {
 	 * @param wm
 	 */
 	public void subscribe(WxMessageInfo wm){
-		WxCallbackDao.subscribe(wm);
+		WxUserInfo wxUser = new WxUserInfo();
+		WxCallbackDao.subscribe(wxUser);
 	}
 	
 	/**
@@ -23,6 +25,7 @@ public class WxCallbackService {
 	 * @param wm
 	 */
 	public void unsubscribe(WxMessageInfo wm){
-		WxCallbackDao.unsubscribe(wm);
+		WxUserInfo wxUser = new WxUserInfo();
+		WxCallbackDao.subscribe(wxUser);
 	}
 }

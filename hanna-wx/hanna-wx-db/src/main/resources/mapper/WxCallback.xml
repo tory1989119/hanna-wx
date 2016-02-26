@@ -2,5 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hanna.wx.db.dao.WxCallbackDao">
+	<!-- 插入信息 -->
+	<insert id="insertWxUser" parameterType="WxUserInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO WX_USER_INFO (OPENID,NICKNAME,SUBSCRIBE,SUBSCRIBE_TIME,SEX,COUNTRY,PROVINCE,CITY,LANGUAGE,HEADIMGURL,UNIONID,REMARK,GROUPID)
+		VALUES (#{openid},#{nickname},#{subscribe},#{subscribe_time},#{sex},#{country},#{province},#{city},#{language},#{headimgurl},#{unionid},#{remark},#{groupid})
+	</insert>
 	
+	<update id="subscribe" parameterType="WxUserInfo">
+		UPDATE WX_USER_INFO SET SUBSCRIBE = #{subscribe} WHERE ID = #{id}
+	</update>
 </mapper>

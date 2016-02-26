@@ -21,7 +21,7 @@ import com.hanna.wx.common.utils.FileNameUtils;
  * @version $Id: LogisticsFtpClient.java, v 0.1 2015
  */
 @Service
-public class LogisticsFtpClient {
+public class FtpClient {
 
     @Value("${ftp.server}")
     private String      serverUrl;            //ftp服务器地址                                                   

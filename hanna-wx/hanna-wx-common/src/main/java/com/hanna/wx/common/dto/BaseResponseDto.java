@@ -5,10 +5,10 @@ import static com.hanna.wx.common.enums.GlobConstants.REQUEST_RESULT_FLAG_SUCCES
 
 
 /**
- * 返回参数父Dto
- * 
- * @author melodymao
- * @version $Id: BaseResponseDto.java, v 0.1 2015年6月17日 下午2:10:17  Exp $
+ * 消息体
+ * @author wuxj
+ *
+ * @param <E>
  */
 public class BaseResponseDto<E>{
 

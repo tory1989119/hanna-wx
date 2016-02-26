@@ -1,17 +1,17 @@
 package com.hanna.wx.db.dao;
 
 import com.hanna.wx.db.model.WxMessageInfo;
+import com.hanna.wx.db.model.WxUserInfo;
 
 public interface WxCallbackDao {
 	/**
-	 * 用户关注
-	 * @param wm
+	 * 插入微信用户
+	 * @param wxUser
 	 */
-	public void subscribe(WxMessageInfo wm);
-	
+	public void insertWxUser(WxUserInfo wxUser);
 	/**
-	 * 用户取消关注
+	 * 修改关注状态
 	 * @param wm
 	 */
-	public void unsubscribe(WxMessageInfo wm);
+	public void subscribe(WxUserInfo wxUser);
 }
