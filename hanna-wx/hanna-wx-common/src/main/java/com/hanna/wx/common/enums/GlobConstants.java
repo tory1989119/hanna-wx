@@ -16,21 +16,5 @@ public interface GlobConstants {
      * 接口调用标志:失败
      */
     int    REQUEST_RESULT_FLAG_FAILED    = 0;
-
-    /**
-     * 图片的后缀
-     */
-    String PICTURE_SUFFIX                = ".jpg";
-
-    /**
-     * 竖线
-     */
-    String SYMBOL_VERTICAL               = "|";
-
-    /**
-     * mp3的后缀
-     */
-    String SOUND_SUFFIX                  = ".mp3";
-    
     
 }

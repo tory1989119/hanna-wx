@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hanna.wx.common.dto.BaseResponseDto;
+import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.common.enums.ErrorCode;
 import com.hanna.wx.db.model.SysAdminInfo;
 import com.hanna.wx.manager.system.service.LoginService;

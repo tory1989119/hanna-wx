@@ -65,5 +65,12 @@
 			<scope>provided</scope>
 		</dependency>
 		
+		<!-- 子工程的引用 -->
+		<dependency>
+			<groupId>com.hanna.wx.common</groupId>
+			<artifactId>hanna-wx-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 		</dependencies>
 </project>

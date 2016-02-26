@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.hanna.wx.common.dto.BaseResponseDto;
+import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.db.dao.SysManagerDAO;
 import com.hanna.wx.db.dto.SysSearchDto;
 import com.hanna.wx.db.model.SysAdminInfo;
