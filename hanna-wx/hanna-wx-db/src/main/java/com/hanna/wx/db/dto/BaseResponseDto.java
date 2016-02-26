@@ -1,6 +1,7 @@
 package com.hanna.wx.db.dto;
 
-import com.hanna.wx.common.enums.ErrorCoded;
+import com.hanna.wx.common.enums.ErrorCode;
+import com.hanna.wx.common.enums.GlobConstants;
 
 
 
@@ -12,16 +13,16 @@ import com.hanna.wx.common.enums.ErrorCoded;
  */
 public class BaseResponseDto<E>{
 
-    protected int flag = REQUEST_RESULT_FLAG_SUCCESSED;//调用结果标志位 0:失败 1:成功
+    protected int flag = GlobConstants.REQUEST_RESULT_FLAG_SUCCESSED;//调用结果标志位 0:失败 1:成功
     
-    protected String errorCode = ErrorCoded.sucessed.getCode();//错误编码
+    protected String errorCode = ErrorCode.sucessed.getCode();//错误编码
     
     protected int pageCount;//分页数据的总数
     
     protected E content;//返回的内容
 
     public int getFlag() {
-    	if(!ErrorCoded.sucessed.getCode().equals(errorCode)){
+    	if(!ErrorCode.sucessed.getCode().equals(errorCode)){
     		flag = 0;
     	}
         return flag;
