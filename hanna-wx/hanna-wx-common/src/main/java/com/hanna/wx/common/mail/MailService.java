@@ -1,12 +1,7 @@
 package com.hanna.wx.common.mail;
 
-import static com.hanna.wx.common.enums.MailType.modify_passWord;
-import static com.hanna.wx.common.enums.MailType.register_web;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.hanna.wx.common.enums.MailType;
 
 @Component
 public class MailService {
@@ -31,7 +26,7 @@ public class MailService {
      * @param copyToMails
      * @return
      */
-    public boolean sendMail(MailType type, String[] toMails, String content) {
+    public boolean sendMail(String[] toMails, String content,String subject) {
         SimpleMailSender sender = new SimpleMailSender();
         MailSenderInfo info = new MailSenderInfo();
         info.setMailServerHost(mailServer);
@@ -40,17 +35,8 @@ public class MailService {
         info.setUserName(userName);
         info.setPassword(passWord);
         info.setValidate(isValidate);
-        switch (type) {
-            case register_web://web版用户注册
-                info.setSubject(register_web.getSubject());
-                info.setContent(content);
-                break;
-            case modify_passWord://修改密码
-                info.setSubject(modify_passWord.getSubject());
-                info.setContent(content);
-                break;
-
-        }
+        info.setSubject(subject);
+		info.setContent(content);
         return sender.sendTextMail(info);
     }
 
