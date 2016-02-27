@@ -16,49 +16,52 @@
 <body>
 <div class="mainSemt">
 	<div class="navigateItem pl20">
-		系统管理>管理员管理>新增管理员
+		系统管理>管理员管理>修改管理员信息
 	</div>
 	<div class="rightMain p10">
 		<div class="rightMain p10 w600 autoCenter">
 				<div>
-					<form id="mainform" name="mainform" method="post" action="insertAdminInfo.htm">
+					<form id="mainform" name="mainform" method="post">
 						<div class="lh35 mb20">
+							<input type="hidden" class="input-control h35  pl5 pr5 wp80" name="id" id="id" value="${sysUserInfo.id}">
 							<span class="fl wp16 tr">昵称：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="nickName" id="nickName">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="nickName" id="nickName" value="${sysUserInfo.nickName}">
 						</div>
 						<div class="lh35 mb20">
 							<span class="fl wp16 tr">性别：</span>
 							<span>
-　　　　　　						　男　<input name="sex" type="radio" id="men" checked=" checked" value="1"/>　　
-				 　　　　　　		　女　<input name="sex" type="radio" id="women" value="2"/>
+								
+									男　<input name="sex" type="radio" id="men"   <c:if test="${sysUserInfo.sex == '0'}">checked=" checked"</c:if> value="0"/>　　
+				 　　　　　　		　	女　<input name="sex" type="radio" id="women" <c:if test="${sysUserInfo.sex == '1'}">checked=" checked"</c:if> value="1"/>
+								
 							</span>
 						</div>
 						<div class="lh35 mb20">
 							<span class="fl wp16 tr">年龄：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="age" value="1" id="age">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="age" value="${sysUserInfo.age}" id="age">
 						</div>
 						<div class="lh35 mb20">
 							<span class="fl wp16 tr">地址：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="address" id="address">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="address" value="${sysUserInfo.address}">
 						</div>
 						<div class="lh35 mb20">
 							<span class="fl wp16 tr">手机号码：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="phoneNumber" id="phoneNumber">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="phoneNumber" id="phoneNumber" value="${sysUserInfo.phoneNumber}">
 						</div>
 						<div class="lh35 mb20">
 							<span class="fl wp16 tr">用户名：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="username" id="username">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="username" id="username" value="${sysUserInfo.username}">
 						</div>
 						<div class="lh35 mb20">
 							<span class="fl wp16 tr">密码：</span>
-							<input type="password" class="input-control h35  pl5 pr5 wp80" name="password" id="password">
+							<input type="password" class="input-control h35  pl5 pr5 wp80" name="password" id="password" value="${sysUserInfo.password}">
 						</div>
 						<div class="tc lh35 mt20">　　　　
 							<span class="btnGriy Blackdetail cursor mr20" onclick="closeIf();">
 									取消
 							</span>　　　　　　　　　
-							<span class="btnBlue Blackdetail whitefc cursor mr20" onclick="add();">
-									添加
+							<span class="btnBlue Blackdetail whitefc cursor mr20" onclick="modify();">
+									修改
 							</span>
 						</div>
 					</form>	
@@ -73,9 +76,8 @@
 		parent.search(parseInt(parent.$('.active').attr('jp-data')));
         parent.layer.close(index);
 	}
-	function add(){
-		
-		var nickName = document.getElementById("nickName").value;
+	function modify(){
+		var nickName = $('#nickName').val();
 		if(nickName==''){ 
  			layer.tips('请输入昵称', '#nickName', {
 				tipsMore: true,
@@ -83,7 +85,7 @@
 			}); 
 			return false; 
  		}
-		var username = document.getElementById("username").value;
+		var username = $('#username').val();
 		if(username==''){ 
  			layer.tips('请输入用户名', '#username', {
 				tipsMore: true,
@@ -91,15 +93,7 @@
 			}); 
 			return false; 
  		}
-		if(username.length<6){ 
- 			layer.tips('用户名至少6位', '#username', {
-				tipsMore: true,
-			    tips: [2, '#3E7FE7']
-			}); 
-			return false; 
- 		}
- 		
-		var password = document.getElementById("password").value;
+		var password = $('#password').val();
 		if(password==''){ 
  			layer.tips('请输入密码', '#password', {
 				tipsMore: true,
@@ -107,18 +101,8 @@
 			}); 
 			return false; 
  		}
- 		if(password.length<6){ 
- 			layer.tips('密码至少6位', '#password', {
-				tipsMore: true,
-			    tips: [2, '#3E7FE7']
-			}); 
-			return false; 
- 		}
-		var age = document.getElementById("age").value;
-		if(age==''){ 
- 			document.getElementById("age").value = 1;
- 		}
- 		var phoneNumber = document.getElementById("phoneNumber").value;
+		
+ 		var phoneNumber = $('#phoneNumber').val();
  		if(phoneNumber!=''){
 			if(!(/^1\d{10}$/.test(phoneNumber))){ 
 	 			layer.tips('请输入正确的手机号码', '#phoneNumber', {
@@ -128,28 +112,10 @@
 				return false; 
 	 		}
  		}
- 		var sex = $('input[name="sex"]:checked').val();
- 		var address = document.getElementById("address").value;
-		$.ajax({
-			url: "<%=request.getContextPath()%>/sys/insertAdminInfo.do",
-			datatype: 'json',
-			type: "post",
-			data: {
-				nickName:nickName,
-				sex:sex,
-				age:age,
-				address:address,
-				phoneNumber:phoneNumber,
-				username:username,
-				password:password
-				
-			},
-			success: function (data) {
-				if (data.flag == '1' && data.errorCode == '10000') {
-					closeIf();
-				}else{
-					layer.alert(data.content, {icon: 6});
-				}
+ 		$('#mainform').form('submit', {
+			url:"<%=request.getContextPath()%>/sys/updateSysUser.do", 
+			success:function(data){  
+			    closeIf();
 			}
 		});
 	}

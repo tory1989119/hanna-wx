@@ -21,7 +21,7 @@
 		<div class="headLink fr f14">
 			<ul>
 				<li><img src="images/portrait.png" class="pt10"/></li>
-				<li>你好，${sysAdminInfo.nickName}  |</li>
+				<li>你好，${sysUserInfo.nickName}  |</li>
 				<li class="cursor" onclick="loginOut()">退出</li>
 			</ul>
 		</div>

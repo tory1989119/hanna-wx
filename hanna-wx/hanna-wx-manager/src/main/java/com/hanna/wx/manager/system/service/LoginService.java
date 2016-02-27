@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.hanna.wx.db.dao.SysManagerDAO;
-import com.hanna.wx.db.model.SysAdminInfo;
+import com.hanna.wx.db.model.SysUserInfo;
 import com.hanna.wx.db.model.SysMenuInfo;
 
 @Service
@@ -20,12 +20,12 @@ public class LoginService {
     /**
      * 登录操作
      * 
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    public SysAdminInfo doLogin(SysAdminInfo adminInfo) {
-        adminInfo = sysManagerDAO.getAdminInfoByUsernameAndPwd(adminInfo);
-        return adminInfo;
+    public SysUserInfo doLogin(SysUserInfo sysUserInfo) {
+        sysUserInfo = sysManagerDAO.getSysUserByUsernameAndPwd(sysUserInfo);
+        return sysUserInfo;
     }
 
     /**
@@ -38,13 +38,13 @@ public class LoginService {
         //查询父节点所有菜单
         Map<String, String> fparams = new HashMap<String, String>();
         fparams.put("grade", "0");
-        List<SysMenuInfo> flist = sysManagerDAO.queryMenu(fparams);
+        List<SysMenuInfo> flist = sysManagerDAO.querySysMenu(fparams);
         //查询没个父节点下所有菜单
         for (SysMenuInfo fmenuInfo : flist) {
             Map<String, String> lparams = new HashMap<String, String>();
             lparams.put("grade", "1");
             lparams.put("fid", fmenuInfo.getMenuId());
-            List<SysMenuInfo> llist = sysManagerDAO.queryMenu(lparams);
+            List<SysMenuInfo> llist = sysManagerDAO.querySysMenu(lparams);
             if (llist != null && llist.size() > 0) {
                 menuStr.append("<dl><dt>").append(fmenuInfo.getMenuName())
                     .append("</dt><dd class=\"leftListName\"><ul class=\"leftList\">");

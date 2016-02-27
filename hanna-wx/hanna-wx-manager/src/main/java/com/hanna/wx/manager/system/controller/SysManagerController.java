@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.common.enums.ErrorCode;
 import com.hanna.wx.db.dto.SysSearchDto;
-import com.hanna.wx.db.model.SysAdminInfo;
+import com.hanna.wx.db.model.SysUserInfo;
 import com.hanna.wx.manager.system.service.SysManagerService;
 
 /**
@@ -28,10 +28,10 @@ import com.hanna.wx.manager.system.service.SysManagerService;
 public class SysManagerController {
     private Logger            logger     = LoggerFactory.getLogger(SysManagerController.class);
 
-    private final String      ADMIN_PAGE = "sys/admin";						  //管理员管理页面
-    private final String      ADMIN_INFO_PAGE = "sys/adminInfo";			  //管理员详情页面
-    private final String      ADD_ADMIN_PAGE = "sys/addAdmin";                //新增管理员页面
-    private final String      MODIFY_ADMIN_PAGE = "sys/modifyAdmin";             //修改管理员信息页面
+    private final String      SYS_USER_MANA_PAGE = "sys/sysUserMana";						  //管理员管理页面
+    private final String      SYS_USER_INFO_PAGE = "sys/sysUserInfo";			  //管理员详情页面
+    private final String      ADD_SYS_USER_PAGE = "sys/addSysUser";                //新增管理员页面
+    private final String      MODIFY_SYS_USER__PAGE = "sys/modifySysUser";             //修改管理员信息页面
     
 
     @Resource
@@ -42,9 +42,9 @@ public class SysManagerController {
      * 
      * @return
      */
-    @RequestMapping(value = "adminPage.do", method = RequestMethod.GET)
-    public String adminInfoPage() {
-        return ADMIN_PAGE;
+    @RequestMapping(value = "sysUserManaPage.do", method = RequestMethod.GET)
+    public String sysUserManaPage() {
+        return SYS_USER_MANA_PAGE;
     }
     
     /**
@@ -52,9 +52,9 @@ public class SysManagerController {
      * 
      * @return
      */
-    @RequestMapping(value = "addAdminPage.do", method = RequestMethod.GET)
-    public String addAdminPage() {
-    	return ADD_ADMIN_PAGE;
+    @RequestMapping(value = "addSysUserPage.do", method = RequestMethod.GET)
+    public String addSysUserPage() {
+    	return ADD_SYS_USER_PAGE;
     }
 
     /**
@@ -63,14 +63,14 @@ public class SysManagerController {
      * @param searchDto
      * @return
      */
-    @RequestMapping(value = "queryAdmin.do", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "querySysUser.do", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public BaseResponseDto<Object> queryAdmin(SysSearchDto searchDto) {
+    public BaseResponseDto<Object> querySysUser(SysSearchDto searchDto) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
         try {
-            return sysManagerService.queryAdmin(searchDto);
+            return sysManagerService.querySysUser(searchDto);
         } catch (Exception e) {
-            logger.error("SysManagerController.queryAdminInfo", e);
+            logger.error("SysManagerController.querySysUser", e);
             br.setErrorCode(ErrorCode.sys_error.getCode());
             br.setContent(ErrorCode.sys_error.getDes());
         }
@@ -83,15 +83,15 @@ public class SysManagerController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "getAdminInfo.do", method = RequestMethod.GET)
-    public String getAdminInfo(HttpServletRequest request,String id) {
+    @RequestMapping(value = "sysUserInfoPage.do", method = RequestMethod.GET)
+    public String sysUserInfoPage(HttpServletRequest request,String id) {
         try {
-            SysAdminInfo adminInfo = sysManagerService.getAdminInfoById(id);
-            request.setAttribute("adminInfo", adminInfo);
+            SysUserInfo sysUserInfo = sysManagerService.getSysUserById(id);
+            request.setAttribute("sysUserInfo", sysUserInfo);
         } catch (Exception e) {
-            logger.error("SysManagerController.getAdminInfo", e);
+            logger.error("SysManagerController.sysUserInfoPage", e);
         }
-        return ADMIN_INFO_PAGE;
+        return SYS_USER_INFO_PAGE;
     }
     
     /**
@@ -100,32 +100,32 @@ public class SysManagerController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "modifyAdminInfo.do", method = RequestMethod.GET)
-    public String modifyAdminInfo(HttpServletRequest request,String id) {
+    @RequestMapping(value = "modifySysUserPage.do", method = RequestMethod.GET)
+    public String modifySysUserPage(HttpServletRequest request,String id) {
     	try {
-    		SysAdminInfo adminInfo = sysManagerService.getAdminInfoById(id);
-    		request.setAttribute("adminInfo", adminInfo);
+    		SysUserInfo sysUserInfo = sysManagerService.getSysUserById(id);
+    		request.setAttribute("sysUserInfo", sysUserInfo);
     	} catch (Exception e) {
-    		logger.error("SysManagerController.getAdminInfo", e);
+    		logger.error("SysManagerController.modifySysUserPage", e);
     	}
-    	return MODIFY_ADMIN_PAGE;
+    	return MODIFY_SYS_USER__PAGE;
     }
 
     /**
      * 增加管理员
      * 
      * @param request
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    @RequestMapping(value = "insertAdminInfo.do", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "insertSysUser.do", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public BaseResponseDto<Object> insertAdminInfo(SysAdminInfo adminInfo) {
+    public BaseResponseDto<Object> insertSysUser(SysUserInfo sysUserInfo) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
         try {
-            sysManagerService.insertAdminInfo(adminInfo);
+            sysManagerService.insertSysUser(sysUserInfo);
         } catch (Exception e) {
-            logger.error("SysManagerController.insertAdminInfo", e);
+            logger.error("SysManagerController.insertSysUser", e);
             br.setErrorCode(ErrorCode.sys_error.getCode());
             br.setContent(ErrorCode.sys_error.getDes());
         }
@@ -136,16 +136,16 @@ public class SysManagerController {
      * 修改管理员
      * 
      * @param request
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    @RequestMapping(value = "updateAdminInfo.do", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody BaseResponseDto<Object> updateAdminInfo(SysAdminInfo adminInfo) {
+    @RequestMapping(value = "updateSysUser.do", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody BaseResponseDto<Object> updateSysUser(SysUserInfo sysUserInfo) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
         try {
-            sysManagerService.updateAdminInfo(adminInfo);
+            sysManagerService.updateSysUser(sysUserInfo);
         } catch (Exception e) {
-            logger.error("SysManagerController.updateAdminInfo", e);
+            logger.error("SysManagerController.updateSysUser", e);
             br.setErrorCode(ErrorCode.sys_error.getCode());
             br.setContent(ErrorCode.sys_error.getDes());
         }

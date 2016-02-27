@@ -23,9 +23,8 @@ import com.google.gson.stream.JsonWriter;
 
 /**
  * gson工具类
- * 
- * @author melodymao
- * @version $Id: GsonUtils.java, v 0.1 2015年6月18日 上午11:18:40  Exp $
+ * @author wuxj
+ *
  */
 public class GsonUtils {
 
@@ -33,8 +32,7 @@ public class GsonUtils {
 
     private static Gson getInstants() {
         if (null == gson) {
-            gson = new GsonBuilder().serializeNulls().registerTypeAdapter(String.class, new StringConverter())
-                .setDateFormat("yyyy-MM-dd").create();
+            gson = new GsonBuilder().serializeNulls().registerTypeAdapter(String.class, new StringConverter()).setDateFormat("yyyy-MM-dd").create();
         }
         return gson;
     }

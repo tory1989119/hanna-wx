@@ -1,18 +1,11 @@
 package com.hanna.wx.manager.system.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.db.dao.SysManagerDAO;
 import com.hanna.wx.db.dto.SysSearchDto;
-import com.hanna.wx.db.model.SysAdminInfo;
+import com.hanna.wx.db.model.SysUserInfo;
 
 @Service
 public class SysManagerService {
@@ -22,21 +15,21 @@ public class SysManagerService {
     /**
      * 插入管理员信息
      * 
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    public int insertAdminInfo(SysAdminInfo adminInfo) {
-        return sysManagerDAO.insertAdminInfo(adminInfo);
+    public int insertSysUser(SysUserInfo sysUserInfo) {
+        return sysManagerDAO.insertSysUser(sysUserInfo);
     }
 
     /**
      * 修改管理员信息
      * 
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    public int updateAdminInfo(SysAdminInfo adminInfo) {
-        return sysManagerDAO.updateAdminInfo(adminInfo);
+    public int updateSysUser(SysUserInfo sysUserInfo) {
+        return sysManagerDAO.updateSysUser(sysUserInfo);
     }
 
     /**
@@ -45,8 +38,8 @@ public class SysManagerService {
      * @param id
      * @return
      */
-    public SysAdminInfo getAdminInfoById(String id) {
-        return sysManagerDAO.getAdminInfoById(id);
+    public SysUserInfo getSysUserById(String id) {
+        return sysManagerDAO.getSysUserById(id);
     }
 
     /**
@@ -55,10 +48,10 @@ public class SysManagerService {
      * @param searchDto
      * @return
      */
-    public BaseResponseDto<Object> queryAdmin(SysSearchDto searchDto) {
+    public BaseResponseDto<Object> querySysUser(SysSearchDto searchDto) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-        br.setContent(sysManagerDAO.queryAdmin(searchDto));
-        br.setPageCount(sysManagerDAO.countAdmin(searchDto));
+        br.setContent(sysManagerDAO.querySysUser(searchDto));
+        br.setPageCount(sysManagerDAO.countSysUser(searchDto));
         return br;
     }
 }

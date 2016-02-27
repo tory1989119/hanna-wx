@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hanna.wx.db.dto.SysSearchDto;
-import com.hanna.wx.db.model.SysAdminInfo;
+import com.hanna.wx.db.model.SysUserInfo;
 import com.hanna.wx.db.model.SysMenuInfo;
 
 
@@ -12,28 +12,28 @@ public interface SysManagerDAO {
     /**
      * 根据账号和密码获取用户信息
      * 
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    public SysAdminInfo getAdminInfoByUsernameAndPwd(SysAdminInfo adminInfo);
+    public SysUserInfo getSysUserByUsernameAndPwd(SysUserInfo sysUserInfo);
 
     
 
     /**
      * 插入管理员信息
      * 
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    public int insertAdminInfo(SysAdminInfo adminInfo);
+    public int insertSysUser(SysUserInfo sysUserInfo);
 
     /**
      * 修改管理员信息
      * 
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
-    public int updateAdminInfo(SysAdminInfo adminInfo);
+    public int updateSysUser(SysUserInfo sysUserInfo);
 
     /**
      * 根据ID获取管理员信息 
@@ -41,7 +41,7 @@ public interface SysManagerDAO {
      * @param id
      * @return
      */
-    public SysAdminInfo getAdminInfoById(String id);
+    public SysUserInfo getSysUserById(String id);
 
     /**
      * 查询管理员列表
@@ -49,7 +49,7 @@ public interface SysManagerDAO {
      * @param searchDto
      * @return
      */
-    public List<SysAdminInfo> queryAdmin(SysSearchDto searchDto);
+    public List<SysUserInfo> querySysUser(SysSearchDto searchDto);
 
     /**
      * 查询管理员列表数
@@ -57,12 +57,12 @@ public interface SysManagerDAO {
      * @param searchDto
      * @return
      */
-    public int countAdmin(SysSearchDto searchDto);
+    public int countSysUser(SysSearchDto searchDto);
 
     /**
      * 获取菜单列表
      * 
      * @return
      */
-    public List<SysMenuInfo> queryMenu(Map<String, String> params);
+    public List<SysMenuInfo> querySysMenu(Map<String, String> params);
 }

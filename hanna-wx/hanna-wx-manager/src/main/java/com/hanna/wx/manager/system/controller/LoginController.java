@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.common.enums.ErrorCode;
-import com.hanna.wx.db.model.SysAdminInfo;
+import com.hanna.wx.db.model.SysUserInfo;
 import com.hanna.wx.manager.system.service.LoginService;
 
 /**
@@ -47,21 +47,21 @@ public class LoginController {
      * 登录操作
      * 
      * @param request
-     * @param adminInfo
+     * @param sysUserInfo
      * @return
      */
     @RequestMapping(value = "doLogin.do", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public BaseResponseDto<Object> doLogin(HttpServletRequest request, SysAdminInfo adminInfo) {
+    public BaseResponseDto<Object> doLogin(HttpServletRequest request, SysUserInfo sysUserInfo) {
         BaseResponseDto<Object> br = new BaseResponseDto<Object>();
         try {
-            adminInfo = loginService.doLogin(adminInfo);
-            if (adminInfo == null) {
+            sysUserInfo = loginService.doLogin(sysUserInfo);
+            if (sysUserInfo == null) {
                 br.setErrorCode(ErrorCode.login_error.getCode());
                 br.setContent(ErrorCode.login_error.getDes());
             } else {
                 //保存登录信息到session
-                request.getSession().setAttribute("sysAdminInfo", adminInfo);
+                request.getSession().setAttribute("sysUserInfo", sysUserInfo);
             }
         } catch (Exception e) {
             logger.error("LoginController.doLogin", e);
@@ -80,7 +80,7 @@ public class LoginController {
     @RequestMapping(value = "loginOut.do", method = RequestMethod.GET)
     public String loginOut(HttpServletRequest request) {
         //登出 去除登录信息
-        request.getSession().removeAttribute("sysAdminInfo");
+        request.getSession().removeAttribute("sysUserInfo");
         return LOGIN_PAGE;
     }
 
@@ -94,7 +94,7 @@ public class LoginController {
         //拼装菜单列表 首页显示
         String menuStr = loginService.getMenuStr();
         request.setAttribute("menuStr", menuStr);
-        request.setAttribute("sysAdminInfo", request.getSession().getAttribute("sysAdminInfo"));
+        request.setAttribute("sysUserInfo", request.getSession().getAttribute("sysUserInfo"));
         return MAIN_PAGE;
     }
 }

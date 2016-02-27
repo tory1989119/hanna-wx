@@ -1,11 +1,11 @@
-package com.hanna.wx.db.model;
+package com.hanna.wx.db.dto;
 
 /**
  * 微信消息响应对象
  * @author Administrator
  *
  */
-public class WxMessageInfo{
+public class WxMessageDto{
 	
 	private String URL;//请求url路劲
 

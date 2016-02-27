@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanna.wx.db.dao.WxMenuDao">
+	<!-- 插入信息 -->
+	<insert id="insertWxUser" parameterType="WxMenuInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO WX_MENU_INFO (NAME,TYPE,KEY,URL,MEDIA_ID,FID,CREATE_TIME)
+		VALUES (#{name},#{type},#{key},#{url},#{mediaId},#{fid},#{createTime})
+	</insert>
+	
+	<!-- 根据ID获取微信菜单信息 -->
+	<select id="getWxMenuInfoById" parameterType="string" resultType="WxMenuInfo" >
+		SELECT 
+		ID id,
+		NAME name,
+		TYPE type,
+		KEY key,
+		URL ,url
+		MEDIA_ID mediaId,
+		FID fid,
+		CREATE_TIME createTime
+		FROM WX_MENU_INFO
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 查询微信一级菜单 -->
+	<select id="queryOneLevelWxMenu" resultType="WxMenuInfo" >
+		SELECT 
+		ID id,
+		NAME name,
+		TYPE type,
+		KEY key,
+		URL ,url
+		MEDIA_ID mediaId,
+		FID fid,
+		CREATE_TIME createTime
+		FROM WX_MENU_INFO
+		WHERE FID IS NULL
+	</select>
+	
+	<!-- 查询微信一级菜单数 -->
+	<select id="countOneLevelWxMenu" resultType="Int" >
+		SELECT 
+		COUNT(ID)
+		FROM WX_MENU_INFO
+		WHERE FID IS NULL
+	</select>
+	
+	<!-- 查询微信二级菜单 -->
+	<select id="querySecondLevelWxMenu" parameterType="string" resultType="WxMenuInfo" >
+		SELECT 
+		ID id,
+		NAME name,
+		TYPE type,
+		KEY key,
+		URL ,url
+		MEDIA_ID mediaId,
+		FID fid,
+		CREATE_TIME createTime
+		FROM WX_MENU_INFO
+		WHERE FID = #{fid}
+	</select>
+	
+	<!-- 查询微信二级菜单数 -->
+	<select id="countSecondLevelWxMenu" resultType="Int" >
+		SELECT 
+		COUNT(ID)
+		FROM WX_MENU_INFO
+		WHERE FID = #{fid}
+	</select>
+	
+	<!-- 删除菜单 -->
+	<update id="deleteWxMenu" parameterType="String">
+		DELETE FROM WX_MENU_INFO WHERE ID = #{id}
+	</update>
+</mapper>

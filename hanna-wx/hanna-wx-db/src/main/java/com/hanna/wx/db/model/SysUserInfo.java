@@ -7,7 +7,7 @@ import java.sql.Date;
  * @author wuxj
  *
  */
-public class SysAdminInfo {
+public class SysUserInfo {
 	/**
 	 * id
 	 */

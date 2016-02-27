@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hanna.wx.manager.business.service.WxCallbackService;
+import com.hanna.wx.manager.business.utils.ParseMessageXml;
 import com.hanna.wx.common.enums.EventEnum;
 import com.hanna.wx.common.enums.MsgTypeEnum;
-import com.hanna.wx.db.model.WxMessageInfo;
+import com.hanna.wx.db.dto.WxMessageDto;
 import com.hanna.wx.common.utils.Configuration;
-import com.hanna.wx.common.utils.ParseMessageXml;
 import com.hanna.wx.common.utils.SHA1;
 
 @Controller
@@ -66,7 +66,7 @@ public class WxCallbackController {
 	@RequestMapping(value = "/callback.do", method = RequestMethod.POST)  
     @ResponseBody
 	public void importPost(HttpServletRequest request, HttpServletResponse response, Model model) {
-		WxMessageInfo wm = null;
+		WxMessageDto wm = null;
 		try {
 			wm = ParseMessageXml.format2Object(request.getInputStream());
 			

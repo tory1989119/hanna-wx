@@ -20,18 +20,18 @@
 	<div class="rightMain p10">
 		<table width="100%" class="detailBus">
 			<tr>
-				<td>昵称：${adminInfo.nickName}</td>
-				<td>性别：<c:if test="${adminInfo.sex == '0'}">男</c:if><c:if test="${adminInfo.sex == '1'}">女</c:if></td>
-				<td>年龄：${adminInfo.age}</td>
-				<td>创建时间：${adminInfo.createTime}</td>
+				<td>昵称：${sysUserInfo.nickName}</td>
+				<td>性别：<c:if test="${sysUserInfo.sex == '0'}">男</c:if><c:if test="${sysUserInfo.sex == '1'}">女</c:if></td>
+				<td>年龄：${sysUserInfo.age}</td>
+				<td>创建时间：${sysUserInfo.createTime}</td>
 			</tr>
 			<tr>
-				<td colspan="2">地址：${adminInfo.address}</td>
-				<td colspan="2">手机号码：${adminInfo.phoneNumber}</td>
+				<td colspan="2">地址：${sysUserInfo.address}</td>
+				<td colspan="2">手机号码：${sysUserInfo.phoneNumber}</td>
 			</tr>
 			<tr>
-    			<td colspan="2">用户名：${adminInfo.username}</td>
-    			<td colspan="2">密码：${adminInfo.password}</td>
+    			<td colspan="2">用户名：${sysUserInfo.username}</td>
+    			<td colspan="2">密码：${sysUserInfo.password}</td>
 			</tr>
 		</table>
 		<div class="tc lh30 mt20">

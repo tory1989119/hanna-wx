@@ -1,6 +1,8 @@
 package com.hanna.wx.db.dto;
+
 /**
  * 公用查询对象
+ * 
  * @author wuxj
  *
  */
@@ -22,9 +24,9 @@ public class SysSearchDto {
 	 */
 	private String phoneNumber;
 	/**
-	 * 状态
+	 * 用户的标识，对当前公众号唯一
 	 */
-	private String status;
+	private String openid;
 	/**
 	 * 页数
 	 */
@@ -66,12 +68,12 @@ public class SysSearchDto {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getOpenid() {
+		return openid;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 	public Integer getBegin() {

@@ -1,16 +1,16 @@
 package com.hanna.wx.common.enums;
 
 /**
- * 接口调用返回的ErrorCode
- * 
- * @author melodymao
- * @version $Id: ErrorCodeEnum.java, v 0.1 2015年6月17日 下午12:56:42  Exp $
+ * 系统错误定义
+ * @author wuxj
+ *
  */
 public enum ErrorCode {
 
     sucessed("10000","成功"),
     sys_error("10001","系统错误"),
-    login_error("10002","登录失败");
+    login_error("10002","登录失败"),
+    no_this_function("10003","无此功能");
     
     private String code;
     

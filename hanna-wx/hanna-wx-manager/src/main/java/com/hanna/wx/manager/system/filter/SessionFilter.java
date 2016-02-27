@@ -28,7 +28,7 @@ public class SessionFilter implements Filter {
         String url = request.getServletPath();
         // 这里判断目录，后缀名，当然也可以写在web.xml中，用url-pattern进行拦截映射
         if ((!url.endsWith("/login.do")) && (!url.endsWith("/doLogin.do"))&& (!url.endsWith("/callback.do"))) {
-            if (session.getAttribute("sysAdminInfo") == null) {
+            if (session.getAttribute("sysUserInfo") == null) {
                 session.invalidate();
                 response.setContentType("text/html;charset=utf-8");
                 PrintWriter out = response.getWriter();

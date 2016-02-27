@@ -11,10 +11,10 @@ public interface GlobConstants {
     /**
      * 接口调用标志:成功
      */
-    int    REQUEST_RESULT_FLAG_SUCCESSED = 1;
+	public static final int    REQUEST_RESULT_FLAG_SUCCESSED = 1;
     /**
      * 接口调用标志:失败
      */
-    int    REQUEST_RESULT_FLAG_FAILED    = 0;
+	public static final int    REQUEST_RESULT_FLAG_FAILED    = 0;
     
 }
