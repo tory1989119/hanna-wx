@@ -13,7 +13,6 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/layer/layer.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/jqPaginator/jqPaginator.js"></script>
 </head>
 <body>
@@ -28,28 +27,29 @@
 					新增
 				</span>
 			</li>
+			<li>
+				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="addMenu();">
+					同步菜单
+				</span>
+			</li>
 		</ul>
 	</div>
 	<div class="rightMain tc p10">
 		<table width="100%">
 			<tr>
-				<td>管理员ID</td>
-				<td>昵称</td>
-				<td>性别</td>
-				<td>年龄</td>
-				<td>手机号码</td>
-				<td>创建时间</td>
+				<td>菜单名称</td>
+				<td>菜单类型</td>
+				<td>菜单key</td>
+				<td>url地址</td>
+				<td>素材id</td>
 				<td>操作</td>
 			</tr>
 			<tbody id="tbodyId">
 				<tr >
-					<td colspan="6">无数据</td>
+					<td colspan="5">无数据</td>
 				</tr>
             </tbody>
 		</table>
-		<div class="page tc f14 mt20 customBootstrap" id="pageId" style="display:none">
-			<div class="fl">共<span class="bluefc" id="showPageCount"></span>页记录</div><ul class="pagination" id="paginationId"></ul>
-		</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -94,7 +94,7 @@ function search(pageNum){
 //列表显示内容
 function table(data,pageNum){
 	if(data.content == null || data.content.length <= 0){
-		$("#tbodyId").html('<tr ><td colspan="7">无数据</td></tr>');
+		$("#tbodyId").html('<tr ><td colspan="6">无数据</td></tr>');
 		$('#pageId').css('display','none');
 		return;
 	}else{
@@ -118,49 +118,23 @@ function table(data,pageNum){
 	var str = '';
 	for (var i = 0; i < data.content.length; i++) { 
 		str = str + '<tr>';
-		str = str + '<td>' + data.content[i].id + '</td>';
-		str = str + '<td>' + data.content[i].nickName + '</td>';
-		
-		if(data.content[i].sex != null){
-			if(data.content[i].sex == '0'){
-				str = str + '<td>' + '男' + '</td>';
-			}else{
-				str = str + '<td>' + '女' + '</td>';
-			}
+		str = str + '<td>' + data.content[i].name + '</td>';
+		str = str + '<td>' + data.content[i].type + '</td>';
+		str = str + '<td>' + data.content[i].menuKey + '</td>';
+		str = str + '<td>' + data.content[i].url + '</td>';
+		str = str + '<td>' + data.content[i].mediaId + '</td>';
+		if(data.content[i].type == '' || data.content[i].type == null){
+			str = str + '<td><a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a> <a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\')">删除</a> <a href="javascript:void(0)" onclick="viewSub(\'' + data.content[i].id + '\')">查看子菜单</a></td>';
 		}else{
-			str = str + '<td></td>';
+			str = str + '<td><a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a> <a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\')">删除</a></td>';
 		}
-		
-		if(data.content[i].age != null){
-			str = str + '<td>' + data.content[i].age + '</td>';
-		}else{
-			str = str + '<td></td>';
-		}
-		
-		if(data.content[i].phoneNumber != null){
-			str = str + '<td>' + data.content[i].phoneNumber + '</td>';
-		}else{
-			str = str + '<td></td>';
-		}
-		str = str + '<td>' + data.content[i].createTime + '</td>';
-		str = str + '<td><a href="javascript:void(0)" onclick="getAdminInfo(\'' + data.content[i].id + '\')">菜单详情</a>　<a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a>　<a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\')">删除</a></td>';
 		str = str + '</tr>';
     }
 	$("#tbodyId").html(str);
 }
-//查看管理员详情
-function getAdminInfo(id){
-	//iframe层-父子操作
-	var index = layer.open({
-	    type: 2,
-	    area: ['900px', '500px'],
-	    fix: false, //不固定
-	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/sys/sysUserInfoPage.do?id=' + id
-	});
-	layer.full(index);
-}
-//新增
+/**
+ * 新增
+ */
 function add(){
 	//iframe层-父子操作
 	var index = layer.open({
@@ -172,7 +146,9 @@ function add(){
 	});
 	layer.full(index);
 }
-//修改
+/**
+ * 修改
+ */
 function modify(id){
 	//iframe层-父子操作
 	var index = layer.open({
@@ -180,17 +156,19 @@ function modify(id){
 	    area: ['900px', '500px'],
 	    fix: false, //不固定
 	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/sys/modifySysUserPage.do?id='+id
+	    content: '<%=request.getContextPath()%>/bus/menu/modifyWxMenuPage.do?id='+id
 	});
 	layer.full(index);
 }
-//删除
+/**
+ * 删除
+ */
 function dele(id){
-	layer.confirm('确定删除该管理员？',{
+	layer.confirm('确定删除该菜单？',{
 		btn: ['确定','取消']
 	},function(){
 		$.ajax({
-			url: "<%=request.getContextPath()%>/sys/updateSysUser.do",
+			url: "<%=request.getContextPath()%>/bus/menu/deleteWxMenu.do",
 			datatype: 'json',
 			type: "post",
 			data: {
@@ -211,6 +189,41 @@ function dele(id){
 			}
 		});
 	});
+}
+/**
+ * 显示子菜单
+ */
+function viewSub(id){
+	//iframe层-父子操作
+	var index = layer.open({
+	    type: 2,
+	    area: ['900px', '500px'],
+	    fix: false, //不固定
+	    maxmin: true,
+	    content: '<%=request.getContextPath()%>/bus/menu/wxSubMenuManaPage.do?fid='+id
+	});
+	layer.full(index);
+}
+/**
+ * 同步菜单
+ */
+function addMenu(){
+	layer.load(2);//遮罩层
+	$.ajax({
+	      url: "<%=request.getContextPath()%>/bus/menu/syncWxUser.do",
+	      datatype: 'json',
+	      type: "post",
+	      data: {},
+	      success: function (data) {
+	    	  layer.closeAll('loading');
+	        if (data.flag == '1' && data.errorCode == '10000') {
+	        	layer.alert("同步成功", {icon: 6});
+	        	search(1);
+	        }else{
+	        	layer.alert(data.content, {icon: 6});
+	        }
+	      }
+	    });
 }
 </script>
 </body>

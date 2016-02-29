@@ -82,7 +82,7 @@ public class WxUserController {
 	public BaseResponseDto<Object> syncWxUser() {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		try {
-			wxUserService.syncWxUser();
+			return wxUserService.syncWxUser();
 		} catch (Exception e) {
 			logger.error("WxUserManagerController.syncWxUser", e);
 			br.setErrorCode(ErrorCode.sys_error.getCode());

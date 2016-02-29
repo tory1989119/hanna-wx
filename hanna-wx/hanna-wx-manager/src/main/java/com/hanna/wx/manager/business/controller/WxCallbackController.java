@@ -70,6 +70,7 @@ public class WxCallbackController {
 		WxMessageDto wm = null;
 		try {
 			String strXml = IOUtils.toString(request.getInputStream());
+			System.out.println(strXml);
 			if( strXml.length() <= 0 || strXml == null )
 				return;
 			XStream xStream = new XStream();

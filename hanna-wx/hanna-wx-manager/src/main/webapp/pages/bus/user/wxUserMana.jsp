@@ -159,9 +159,19 @@ function table(data,pageNum){
 		str = str + '<tr>';
 		str = str + '<td>' + data.content[i].openid + '</td>';
 		str = str + '<td>' + data.content[i].nickname + '</td>';
-		str = str + '<td>' + data.content[i].sex + '</td>';
+		if(data.content[i].sex == '1'){
+			str = str + '<td>男</td>';
+		}else if(data.content[i].sex == '2'){
+			str = str + '<td>女</td>';
+		}else{
+			str = str + '<td>未知</td>';
+		}
 		str = str + '<td>' + data.content[i].country + data.content[i].province + data.content[i].city + '</td>';
-		str = str + '<td>' + data.content[i].subscribe + '</td>';
+		if(data.content[i].subscribe == '1'){
+			str = str + '<td>关注</td>';
+		}else{
+			str = str + '<td>未关注</td>';
+		}
 		str = str + '<td>' + data.content[i].subscribeTime + '</td>';
 		str = str + '<td><a href="javascript:void(0)" onclick="getWxUserInfo(\'' + data.content[i].id + '\')">用户详情</a></td>';
 		str = str + '</tr>';
@@ -196,7 +206,8 @@ function syncWxUser(){
 	      success: function (data) {
 	    	  layer.closeAll('loading');
 	        if (data.flag == '1' && data.errorCode == '10000') {
-	        	table(data,pageNum);//显示列表
+	        	layer.alert("同步成功", {icon: 6});
+	        	search(1);
 	        }else{
 	        	layer.alert(data.content, {icon: 6});
 	        }

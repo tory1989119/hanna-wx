@@ -14,7 +14,7 @@
 	<bean id="accessTokenTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="accessTokenJobDetail" />
-		<property name="cronExpression" value="0 0/5 * * * ? *" /> <!-- 每隔2小时 -->
+		<property name="cronExpression" value="0 0 0/1 * * ? *" /> <!-- 每隔2小时 -->
 	</bean>
 	
 	<!-- 获取access_token的job的配置-->

@@ -29,12 +29,21 @@ import com.google.gson.stream.JsonWriter;
 public class GsonUtils {
 
     private static Gson gson;
+    
+    private static Gson gsonNoNULL;
 
-    private static Gson getInstants() {
-        if (null == gson) {
-            gson = new GsonBuilder().serializeNulls().registerTypeAdapter(String.class, new StringConverter()).setDateFormat("yyyy-MM-dd").create();
-        }
-        return gson;
+    private static Gson getInstants(boolean flag) {
+    	if(flag){
+    		if (null == gson) {
+                gson = new GsonBuilder().serializeNulls().registerTypeAdapter(String.class, new StringConverter()).setDateFormat("yyyy-MM-dd").create();
+            }
+    		 return gson;
+    	}else{
+    		if (null == gsonNoNULL) {
+            	gsonNoNULL = new GsonBuilder().registerTypeAdapter(String.class, new StringConverter()).setDateFormat("yyyy-MM-dd").create();
+            }
+    		 return gsonNoNULL;
+    	}
     }
 
     /**
@@ -44,8 +53,8 @@ public class GsonUtils {
      * @param type
      * @return
      */
-    public static String toJson(Object bean, Type type) {
-        Gson gson = getInstants();
+    public static String toJson(Object bean, Type type, boolean flag) {
+        Gson gson = getInstants(flag);
         return gson.toJson(bean, type);
     }
 
@@ -58,8 +67,8 @@ public class GsonUtils {
      * @return T 返回类型
      * @throws：
      */
-    public static <T> T fromJson(String json, Type type) {
-        Gson gson = getInstants();
+    public static <T> T fromJson(String json, Type type, boolean flag) {
+        Gson gson = getInstants(flag);
         return gson.fromJson(json, type);
     }
 
@@ -72,16 +81,16 @@ public class GsonUtils {
      * @return T 返回类型
      * @throws：
      */
-    public static <T> T fromJson(String json, Class<T> classOfT) {
-        Gson gson = getInstants();
+    public static <T> T fromJson(String json, Class<T> classOfT, boolean flag) {
+        Gson gson = getInstants(flag);
         return gson.fromJson(json, classOfT);
     }
 
     /**
      * Null Adapter
-     * 
-     * @author melodymao
-     * @version $Id: GsonUtils.java, v 0.1 2015年6月18日 上午11:10:32  Exp $
+     * @author wuxj
+     *
+     * @param <T>
      */
     @SuppressWarnings("unchecked")
     private static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {

@@ -41,7 +41,7 @@ public interface WxMenuDao {
 	 * @param fid
 	 * @return
 	 */
-	public List<WxMenuInfo> querySecondLevelWxMenu(String fid);
+	public List<WxMenuInfo> querySecondLevelWxMenu(Long fid);
 
 	/**
 	 * 查询微信二级菜单数
@@ -49,7 +49,7 @@ public interface WxMenuDao {
 	 * @param fid
 	 * @return
 	 */
-	public int countSecondLevelWxMenu(String fid);
+	public int countSecondLevelWxMenu(Long fid);
 
 	/**
 	 * 删除菜单
@@ -57,4 +57,10 @@ public interface WxMenuDao {
 	 * @param id
 	 */
 	public void deleteWxMenu(String id);
+
+	/**
+	 * 修改菜单
+	 * @param wxMenuInfo
+	 */
+	public void updateWxMenu(WxMenuInfo wxMenuInfo);
 }

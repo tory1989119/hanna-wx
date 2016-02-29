@@ -52,11 +52,10 @@ public class HttpClientUtils {
      * @param paramStr
      * @return
      */
-    public static String post(String url, String paramStr){
+    public static String post(String url, String paramStr,String charset){
         HttpPost httpPost = new HttpPost(url);
         try {
-          //封裝參數
-            httpPost.setEntity(new StringEntity(paramStr));
+            httpPost.setEntity(new StringEntity(paramStr, charset));
         } catch (Exception e) {
            return null;
         }
@@ -65,15 +64,13 @@ public class HttpClientUtils {
     }
     
     
-    public static String get(String url) {
+    public static String get(String url,String charset) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
             // 创建httpget.10秒超时    
             HttpGet httpget = new HttpGet(url);
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(10*1000).setConnectTimeout(10*1000).build();
             httpget.setConfig(requestConfig);
-            //编码
-            String charset = "UTF-8";   
             // 执行get请求.    
             CloseableHttpResponse response = httpclient.execute(httpget);
             try {

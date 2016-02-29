@@ -31,6 +31,9 @@ public interface WxConsts {
 
 	/** 菜单管理 - 创建菜单 */
 	public static final String MENU_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s";
+	
+	/** 菜单管理 - 删除菜单 */
+	public static final String MENU_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s";
 
 	// /** 消息类型-文本消息 */
 	// public static final String MSG_TEXT = "text";

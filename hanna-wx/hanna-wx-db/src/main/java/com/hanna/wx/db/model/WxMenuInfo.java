@@ -12,7 +12,7 @@ public class WxMenuInfo {
 	/**
 	 * id
 	 */
-	private long id;
+	private Long id;
 	/**
 	 * 菜单标题
 	 */
@@ -36,72 +36,56 @@ public class WxMenuInfo {
 	/**
 	 * 上级菜单id
 	 */
-	private long fid;
+	private Long fid;
 	/**
 	 * 创建时间
 	 */
 	private Date createTime;
-
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getType() {
 		return type;
 	}
-
 	public void setType(String type) {
 		this.type = type;
 	}
-
 	public String getMenuKey() {
 		return menuKey;
 	}
-
 	public void setMenuKey(String menuKey) {
 		this.menuKey = menuKey;
 	}
-
 	public String getUrl() {
 		return url;
 	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 	public String getMediaId() {
 		return mediaId;
 	}
-
 	public void setMediaId(String mediaId) {
 		this.mediaId = mediaId;
 	}
-
-	public long getFid() {
+	public Long getFid() {
 		return fid;
 	}
-
-	public void setFid(long fid) {
+	public void setFid(Long fid) {
 		this.fid = fid;
 	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
-
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}

@@ -47,7 +47,7 @@
 	</select>
 	
 	<!-- 查询微信二级菜单 -->
-	<select id="querySecondLevelWxMenu" parameterType="string" resultType="WxMenuInfo" >
+	<select id="querySecondLevelWxMenu" parameterType="Long" resultType="WxMenuInfo" >
 		SELECT 
 		ID id,
 		NAME name,
@@ -62,7 +62,7 @@
 	</select>
 	
 	<!-- 查询微信二级菜单数 -->
-	<select id="countSecondLevelWxMenu" parameterType="string" resultType="Int" >
+	<select id="countSecondLevelWxMenu" parameterType="Long" resultType="Int" >
 		SELECT 
 		COUNT(ID)
 		FROM WX_MENU_INFO
@@ -71,6 +71,17 @@
 	
 	<!-- 删除菜单 -->
 	<update id="deleteWxMenu" parameterType="String">
-		DELETE FROM WX_MENU_INFO WHERE ID = #{id}
+		DELETE FROM WX_MENU_INFO WHERE ID = #{id} OR FID = #{id}
+	</update>
+	
+	<!-- 修改菜单 -->
+	<update id="updateWxMenu" parameterType="WxMenuInfo">
+		UPDATE WX_MENU_INFO SET
+		NAME = #{name},
+		TYPE = #{type},
+		MENU_KEY = #{menuKey},
+		URL = #{url},
+		MEDIA_ID = #{mediaId}
+		where ID = #{id}
 	</update>
 </mapper>

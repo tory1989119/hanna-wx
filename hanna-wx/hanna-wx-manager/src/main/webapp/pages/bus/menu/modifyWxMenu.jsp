@@ -15,55 +15,55 @@
 <body>
 <div class="mainSemt">
 	<div class="navigateItem pl20">
-		系统管理>管理员管理>修改管理员信息
+		公众号管理>菜单管理>修改菜单
 	</div>
 	<div class="rightMain p10">
 		<div class="rightMain p10 w600 autoCenter">
 				<div>
-					<form id="mainform" name="mainform" method="post">
-						<div class="lh35 mb20">
-							<input type="hidden" class="input-control h35  pl5 pr5 wp80" name="id" id="id" value="${sysUserInfo.id}">
-							<span class="fl wp16 tr">昵称：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="nickName" id="nickName" value="${sysUserInfo.nickName}">
-						</div>
-						<div class="lh35 mb20">
-							<span class="fl wp16 tr">性别：</span>
-							<span>
-								
-									男　<input name="sex" type="radio" id="men"   <c:if test="${sysUserInfo.sex == '0'}">checked=" checked"</c:if> value="0"/>　　
-				 　　　　　　		　	女　<input name="sex" type="radio" id="women" <c:if test="${sysUserInfo.sex == '1'}">checked=" checked"</c:if> value="1"/>
-								
-							</span>
-						</div>
-						<div class="lh35 mb20">
-							<span class="fl wp16 tr">年龄：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="age" value="${sysUserInfo.age}" id="age">
-						</div>
-						<div class="lh35 mb20">
-							<span class="fl wp16 tr">地址：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="address" value="${sysUserInfo.address}">
-						</div>
-						<div class="lh35 mb20">
-							<span class="fl wp16 tr">手机号码：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="phoneNumber" id="phoneNumber" value="${sysUserInfo.phoneNumber}">
-						</div>
-						<div class="lh35 mb20">
-							<span class="fl wp16 tr">用户名：</span>
-							<input type="text" class="input-control h35  pl5 pr5 wp80" name="username" id="username" value="${sysUserInfo.username}">
-						</div>
-						<div class="lh35 mb20">
-							<span class="fl wp16 tr">密码：</span>
-							<input type="password" class="input-control h35  pl5 pr5 wp80" name="password" id="password" value="${sysUserInfo.password}">
-						</div>
-						<div class="tc lh35 mt20">　　　　
-							<span class="btnGriy Blackdetail cursor mr20" onclick="closeIf();">
-									取消
-							</span>　　　　　　　　　
-							<span class="btnBlue Blackdetail whitefc cursor mr20" onclick="modify();">
-									修改
-							</span>
-						</div>
-					</form>	
+					<div class="lh35 mb20">
+						<span class="fl wp16 tr">菜单名：</span>
+						<input type="hidden"  name="id" id="id" value="${wxMenuInfo.id}">
+						<input type="hidden" name="fid" id="fid" value="${wxMenuInfo.fid}">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" value="${wxMenuInfo.name}">
+					</div>
+					<div class="lh35 mb20">
+						<span class="fl wp16 tr">菜单类型：</span>
+						<select class="input-control h35  pl5 pr5 wp80" id="type" name="type" value="${wxMenuInfo.type}">
+							<c:if test="${wxMenuInfo.fid == null || wxMenuInfo.fid == '' }">
+								<option value="">主菜单</option>
+							</c:if>
+							<option value="click">点击推事件</option>
+							<option value="view">跳转URL</option>
+							<option value="scancode_push">扫码推事件</option>
+							<option value="scancode_waitmsg">扫码推事件且弹出“消息接收中”提示框</option>
+							<option value="pic_sysphoto">弹出系统拍照发图</option>
+							<option value="pic_photo_or_album">弹出拍照或者相册发图</option>
+							<option value="pic_weixin">弹出微信相册发图器</option>
+							<option value="location_select">弹出地理位置选择器</option>
+							<option value="media_id">下发消息（除文本消息）</option>
+							<option value="view_limited">跳转图文消息URL</option>
+						</select>
+					</div>
+					<div class="lh35 mb20">
+						<span class="fl wp16 tr">菜单key：</span>
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="menuKey" id="menuKey" value="${wxMenuInfo.menuKey}">
+					</div>
+					<div class="lh35 mb20">
+						<span class="fl wp16 tr">url地址：</span>
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="url" id="url" value="${wxMenuInfo.url}">
+					</div>
+					<div class="lh35 mb20">
+						<span class="fl wp16 tr">素材id：</span>
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="mediaId" id="mediaId" value="${wxMenuInfo.mediaId}">
+					</div>
+					<div class="tc lh35 mt20">　　　　
+						<span class="btnGriy Blackdetail cursor mr20" onclick="closeIf();">
+								取消
+						</span>　　　　　　　　　
+						<span class="btnBlue Blackdetail whitefc cursor mr20" onclick="modify();">
+								修改
+						</span>
+					</div>
 				</div>
     	</div>
 	</div>
@@ -76,45 +76,31 @@
         parent.layer.close(index);
 	}
 	function modify(){
-		var nickName = $('#nickName').val();
-		if(nickName==''){ 
- 			layer.tips('请输入昵称', '#nickName', {
+		if($('#name').val() == ''){ 
+ 			layer.tips('请输入菜单名称', '#name', {
 				tipsMore: true,
 			    tips: [2, '#3E7FE7']
 			}); 
 			return false; 
  		}
-		var username = $('#username').val();
-		if(username==''){ 
- 			layer.tips('请输入用户名', '#username', {
-				tipsMore: true,
-			    tips: [2, '#3E7FE7']
-			}); 
-			return false; 
- 		}
-		var password = $('#password').val();
-		if(password==''){ 
- 			layer.tips('请输入密码', '#password', {
-				tipsMore: true,
-			    tips: [2, '#3E7FE7']
-			}); 
-			return false; 
- 		}
-		
- 		var phoneNumber = $('#phoneNumber').val();
- 		if(phoneNumber!=''){
-			if(!(/^1\d{10}$/.test(phoneNumber))){ 
-	 			layer.tips('请输入正确的手机号码', '#phoneNumber', {
-					tipsMore: true,
-				    tips: [2, '#3E7FE7']
-				}); 
-				return false; 
-	 		}
- 		}
- 		$('#mainform').form('submit', {
-			url:"<%=request.getContextPath()%>/sys/updateSysUser.do", 
-			success:function(data){  
-			    closeIf();
+		$.ajax({
+			url: "<%=request.getContextPath()%>/bus/menu/updateWxUser.do",
+			datatype: 'json',
+			type: "post",
+			data: {
+				id:$('#id').val(),
+				name:$('#name').val(),
+				type:$('#type').val(),
+				menuKey:$('#menuKey').val(),
+				url:$('#url').val(),
+				mediaId:$('#mediaId').val()
+			},
+			success: function (data) {
+				if (data.flag == '1' && data.errorCode == '10000') {
+					closeIf();
+				}else{
+					layer.alert(data.content, {icon: 6});
+				}
 			}
 		});
 	}

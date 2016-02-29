@@ -63,7 +63,14 @@
 	        <url-pattern>*.do</url-pattern>
 	    </filter-mapping>
 	      
-	    <session-config> 
+	    <session-config>
 	        <session-timeout>30</session-timeout>
-	    </session-config>     
+	    </session-config>
+	    
+	    <!-- 初始化系统参数-->
+        <servlet>  
+	        <servlet-name>initServlet</servlet-name>
+	        <servlet-class>com.hanna.wx.manager.init.InitServlet</servlet-class>
+	        <load-on-startup>1</load-on-startup>  
+	    </servlet>   
 </web-app>  

@@ -12,7 +12,7 @@ public class SysMenuInfo {
 	/**
 	 * id
 	 */
-	private long id;
+	private Long id;
 	/**
 	 * 菜单编号
 	 */
@@ -32,11 +32,11 @@ public class SysMenuInfo {
 	/**
 	 * 菜单等级
 	 */
-	private int grade;
+	private Integer grade;
 	/**
 	 * 排序
 	 */
-	private int sort;
+	private Integer sort;
 
 	/**
 	 * 是否已删除 '0'未删除 '1'已删除
@@ -46,75 +46,57 @@ public class SysMenuInfo {
 	 * 创建时间
 	 */
 	private Date createTime;
-
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getMenuId() {
 		return menuId;
 	}
-
 	public void setMenuId(String menuId) {
 		this.menuId = menuId;
 	}
-
 	public String getMenuName() {
 		return menuName;
 	}
-
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
 	}
-
 	public String getUrl() {
 		return url;
 	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 	public String getFid() {
 		return fid;
 	}
-
 	public void setFid(String fid) {
 		this.fid = fid;
 	}
-
-	public int getGrade() {
+	public Integer getGrade() {
 		return grade;
 	}
-
-	public void setGrade(int grade) {
+	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
-
-	public int getSort() {
+	public Integer getSort() {
 		return sort;
 	}
-
-	public void setSort(int sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-
 	public String getIsDeleted() {
 		return isDeleted;
 	}
-
 	public void setIsDeleted(String isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
-
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}

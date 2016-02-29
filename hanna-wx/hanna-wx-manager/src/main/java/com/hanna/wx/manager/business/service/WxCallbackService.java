@@ -24,7 +24,7 @@ public class WxCallbackService {
 		if(wxUserInfo == null){
 			String access_token = AccessTokenDto.access_token;
 			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,wm.getFromUserName(),"zh_CN");
-			wxUserInfo = GsonUtils.fromJson(HttpClientUtils.get(url), WxUserInfo.class);
+			wxUserInfo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
 			if(wxUserInfo.getErrcode() == null){
 				wxUserDao.insertWxUser(wxUserInfo);
 			}else{
@@ -43,14 +43,8 @@ public class WxCallbackService {
 	public void unsubscribe(WxMessageDto wm){
 		WxUserInfo wxUserInfo = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
 		if(wxUserInfo != null){
-			wxUserInfo.setSubscribe("1");
+			wxUserInfo.setSubscribe("0");
 			wxUserDao.subscribe(wxUserInfo);
 		}
-	}
-	
-	public static void main(String[] args) {
-		WxUserInfo w = new WxUserInfo();
-		w.setCity("1");
-		System.out.println(GsonUtils.toJson(w, w.getClass()));
 	}
 }

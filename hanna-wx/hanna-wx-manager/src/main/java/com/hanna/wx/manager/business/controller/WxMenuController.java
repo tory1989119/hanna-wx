@@ -45,7 +45,8 @@ public class WxMenuController {
 	 * @return
 	 */
 	@RequestMapping(value = "wxSubMenuManaPage.do", method = RequestMethod.GET)
-	public String wxSubMenuManaPage() {
+	public String wxSubMenuManaPage(HttpServletRequest request,Long fid) {
+		request.setAttribute("fid", fid);
 		return WX_SUB_MENU_MANA_PAGE;
 	}
 
@@ -55,7 +56,8 @@ public class WxMenuController {
 	 * @return
 	 */
 	@RequestMapping(value = "addWxMenuPage.do", method = RequestMethod.GET)
-	public String addWxMenuPage() {
+	public String addWxMenuPage(HttpServletRequest request,Long fid) {
+		request.setAttribute("fid", fid);
 		return ADD_WX_MENU__PAGE;
 	}
 
@@ -85,7 +87,7 @@ public class WxMenuController {
 	 */
 	@RequestMapping(value = "querySecondLevelWxMenu.do", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public BaseResponseDto<Object> querySecondLevelWxMenu(String fid) {
+	public BaseResponseDto<Object> querySecondLevelWxMenu(Long fid) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		try {
 			return wxMenuService.querySecondLevelWxMenu(fid);
@@ -161,9 +163,51 @@ public class WxMenuController {
 	public BaseResponseDto<Object> insertWxUser(WxMenuInfo wxMenuInfo) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		try {
-			wxMenuService.insertWxUser(wxMenuInfo);
+			boolean flag = wxMenuService.insertWxUser(wxMenuInfo);
+			if(!flag){
+				br.setErrorCode(ErrorCode.menu_exceed_num.getCode());
+				br.setContent(ErrorCode.menu_exceed_num.getDes());
+			}
 		} catch (Exception e) {
 			logger.error("WxMenuController.insertWxUser", e);
+			br.setErrorCode(ErrorCode.sys_error.getCode());
+			br.setContent(ErrorCode.sys_error.getDes());
+		}
+		return br;
+	}
+	
+	/**
+	 * 修改微信菜单
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "updateWxUser.do", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public BaseResponseDto<Object> updateWxUser(WxMenuInfo wxMenuInfo) {
+		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
+		try {
+			wxMenuService.updateWxUser(wxMenuInfo);
+		} catch (Exception e) {
+			logger.error("WxMenuController.updateWxUser", e);
+			br.setErrorCode(ErrorCode.sys_error.getCode());
+			br.setContent(ErrorCode.sys_error.getDes());
+		}
+		return br;
+	}
+	
+	/**
+	 * 同步微信菜单
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "syncWxUser.do", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public BaseResponseDto<Object> syncWxUser() {
+		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
+		try {
+			return wxMenuService.syncWxMenu();
+		} catch (Exception e) {
+			logger.error("WxMenuController.syncWxUser", e);
 			br.setErrorCode(ErrorCode.sys_error.getCode());
 			br.setContent(ErrorCode.sys_error.getDes());
 		}

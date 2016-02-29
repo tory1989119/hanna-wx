@@ -53,6 +53,8 @@ public class WxMessageDto{
 	private String EventKey;
 	/** 二维码的ticket，可用来换取二维码图片 */
 	private String Ticket;
+	/** 菜单编号 */
+	private String MenuId;
 	public String getToUserName() {
 		return ToUserName;
 	}
@@ -190,5 +192,11 @@ public class WxMessageDto{
 	}
 	public void setTicket(String ticket) {
 		Ticket = ticket;
+	}
+	public String getMenuId() {
+		return MenuId;
+	}
+	public void setMenuId(String menuId) {
+		MenuId = menuId;
 	}
 }

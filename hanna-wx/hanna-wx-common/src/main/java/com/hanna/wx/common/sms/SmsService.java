@@ -81,7 +81,7 @@ public class SmsService {
         builder.append("?").append("action=send&").append("userid=&account=").append(ACCOUNT).append("&password=")
          .append(MD5Utils.getMD5String(PWD).toUpperCase()).append("&mobile=").append(appendTargetPhoneNumber(targetPhoneNumbers))
          .append("&content=").append(URLEncoder.encode(content,"utf-8")).append("&sendTime=&extno=");
-        String result = HttpClientUtils.get(builder.toString());
+        String result = HttpClientUtils.get(builder.toString(),"UTF-8");
         Document document = XMLUtils.readXmlString(result);
         String status = XMLUtils.getChild(document.getRootElement(),"returnstatus").getText();
         return "Success".equalsIgnoreCase(status);
