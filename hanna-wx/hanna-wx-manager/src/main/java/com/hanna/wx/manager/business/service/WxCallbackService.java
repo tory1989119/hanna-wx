@@ -14,25 +14,25 @@ import com.hanna.wx.db.model.WxUserInfo;
 @Service
 public class WxCallbackService {
 	@Autowired
-	private WxUserDao wxUserManagerDao;
+	private WxUserDao wxUserDao;
 	/**
 	 * 用户关注
 	 * @param wm
 	 */
 	public void subscribe(WxMessageDto wm){
-		WxUserInfo wxUserInfo = wxUserManagerDao.getWxUserByOpenid(wm.getFromUserName());
+		WxUserInfo wxUserInfo = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
 		if(wxUserInfo == null){
 			String access_token = AccessTokenDto.access_token;
 			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,wm.getFromUserName(),"zh_CN");
 			wxUserInfo = GsonUtils.fromJson(HttpClientUtils.get(url), WxUserInfo.class);
 			if(wxUserInfo.getErrcode() == null){
-				wxUserManagerDao.insertWxUser(wxUserInfo);
+				wxUserDao.insertWxUser(wxUserInfo);
 			}else{
 				System.out.println(wxUserInfo.getErrmsg());
 			}
 		}else{
 			wxUserInfo.setSubscribe("1");
-			wxUserManagerDao.subscribe(wxUserInfo);
+			wxUserDao.subscribe(wxUserInfo);
 		}
 	}
 	
@@ -41,10 +41,10 @@ public class WxCallbackService {
 	 * @param wm
 	 */
 	public void unsubscribe(WxMessageDto wm){
-		WxUserInfo wxUserInfo = wxUserManagerDao.getWxUserByOpenid(wm.getFromUserName());
+		WxUserInfo wxUserInfo = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
 		if(wxUserInfo != null){
 			wxUserInfo.setSubscribe("1");
-			wxUserManagerDao.subscribe(wxUserInfo);
+			wxUserDao.subscribe(wxUserInfo);
 		}
 	}
 	

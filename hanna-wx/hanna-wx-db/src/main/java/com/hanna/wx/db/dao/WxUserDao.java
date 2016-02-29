@@ -52,4 +52,9 @@ public interface WxUserDao {
 	 * @return
 	 */
 	public int countWxUser(SysSearchDto searchDto);
+	
+	/**
+	 * 清空表数据
+	 */
+	public void truncateWxUser();
 }

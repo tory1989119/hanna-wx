@@ -114,6 +114,12 @@
 		<artifactId>quartz-jobs</artifactId>
 	</dependency>
 	
+	<dependency>  
+	    <groupId>com.thoughtworks.xstream</groupId>  
+	    <artifactId>xstream</artifactId>  
+	</dependency>
+	
+	
 	<!-- 子工程的引用 -->
 	<dependency>
 		<groupId>com.hanna.wx.common</groupId>

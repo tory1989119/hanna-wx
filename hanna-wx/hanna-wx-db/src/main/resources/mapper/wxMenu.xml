@@ -4,8 +4,8 @@
 <mapper namespace="com.hanna.wx.db.dao.WxMenuDao">
 	<!-- 插入信息 -->
 	<insert id="insertWxUser" parameterType="WxMenuInfo" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO WX_MENU_INFO (NAME,TYPE,KEY,URL,MEDIA_ID,FID,CREATE_TIME)
-		VALUES (#{name},#{type},#{key},#{url},#{mediaId},#{fid},#{createTime})
+		INSERT INTO WX_MENU_INFO (NAME,TYPE,MENU_KEY,URL,MEDIA_ID,FID,CREATE_TIME)
+		VALUES (#{name},#{type},#{menuKey},#{url},#{mediaId},#{fid},#{createTime})
 	</insert>
 	
 	<!-- 根据ID获取微信菜单信息 -->
@@ -14,8 +14,8 @@
 		ID id,
 		NAME name,
 		TYPE type,
-		KEY key,
-		URL ,url
+		MENU_KEY menuKey,
+		URL url,
 		MEDIA_ID mediaId,
 		FID fid,
 		CREATE_TIME createTime
@@ -29,8 +29,8 @@
 		ID id,
 		NAME name,
 		TYPE type,
-		KEY key,
-		URL ,url
+		MENU_KEY menuKey,
+		URL url,
 		MEDIA_ID mediaId,
 		FID fid,
 		CREATE_TIME createTime
@@ -52,8 +52,8 @@
 		ID id,
 		NAME name,
 		TYPE type,
-		KEY key,
-		URL ,url
+		MENU_KEY menuKey,
+		URL url,
 		MEDIA_ID mediaId,
 		FID fid,
 		CREATE_TIME createTime
@@ -62,7 +62,7 @@
 	</select>
 	
 	<!-- 查询微信二级菜单数 -->
-	<select id="countSecondLevelWxMenu" resultType="Int" >
+	<select id="countSecondLevelWxMenu" parameterType="string" resultType="Int" >
 		SELECT 
 		COUNT(ID)
 		FROM WX_MENU_INFO

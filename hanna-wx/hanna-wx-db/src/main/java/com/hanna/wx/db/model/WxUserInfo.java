@@ -48,7 +48,11 @@ public class WxUserInfo extends WxErrorDto{
 	/**
 	 * 用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间
 	 */
-	private Long subscribeTime;
+	private Long subscribe_time;
+	/**
+	 * 用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间
+	 */
+	private String subscribeTime;
 	/**
 	 * 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
 	 */
@@ -134,12 +138,12 @@ public class WxUserInfo extends WxErrorDto{
 		this.headimgurl = headimgurl;
 	}
 
-	public Long getSubscribeTime() {
-		return subscribeTime;
+	public Long getSubscribe_time() {
+		return subscribe_time;
 	}
 
-	public void setSubscribeTime(Long subscribeTime) {
-		this.subscribeTime = subscribeTime;
+	public void setSubscribe_time(Long subscribe_time) {
+		this.subscribe_time = subscribe_time;
 	}
 
 	public String getUnionid() {
@@ -164,5 +168,13 @@ public class WxUserInfo extends WxErrorDto{
 
 	public void setGroupid(Integer groupid) {
 		this.groupid = groupid;
+	}
+
+	public String getSubscribeTime() {
+		return subscribeTime;
+	}
+
+	public void setSubscribeTime(String subscribeTime) {
+		this.subscribeTime = subscribeTime;
 	}
 }

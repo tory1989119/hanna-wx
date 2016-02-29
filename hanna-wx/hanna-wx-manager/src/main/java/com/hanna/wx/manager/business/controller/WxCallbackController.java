@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hanna.wx.manager.business.service.WxCallbackService;
-import com.hanna.wx.manager.business.utils.ParseMessageXml;
 import com.hanna.wx.common.enums.EventEnum;
 import com.hanna.wx.common.enums.MsgTypeEnum;
 import com.hanna.wx.db.dto.WxMessageDto;
 import com.hanna.wx.common.utils.Configuration;
 import com.hanna.wx.common.utils.SHA1;
+import com.thoughtworks.xstream.XStream;
 
 @Controller
 @RequestMapping("/data")
@@ -68,7 +69,12 @@ public class WxCallbackController {
 	public void importPost(HttpServletRequest request, HttpServletResponse response, Model model) {
 		WxMessageDto wm = null;
 		try {
-			wm = ParseMessageXml.format2Object(request.getInputStream());
+			String strXml = IOUtils.toString(request.getInputStream());
+			if( strXml.length() <= 0 || strXml == null )
+				return;
+			XStream xStream = new XStream();
+			xStream.alias("xml", WxMessageDto.class); 
+		    wm = (WxMessageDto) xStream.fromXML(strXml);
 			
 			if(wm.getMsgType().equals(MsgTypeEnum.TEXT.getType())){
 				System.out.println("获取到文本消息");
@@ -102,6 +108,5 @@ public class WxCallbackController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

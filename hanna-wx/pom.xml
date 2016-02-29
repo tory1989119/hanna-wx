@@ -154,6 +154,12 @@
 		<version>1.6.1</version>
 	</dependency>
 	
+	<dependency>  
+	    <groupId>com.thoughtworks.xstream</groupId>  
+	    <artifactId>xstream</artifactId>  
+	    <version>1.4.2</version>  
+	</dependency>
+	
 	<!-- apache net :ftp -->
 	<dependency>
 		<groupId>commons-net</groupId>

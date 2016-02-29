@@ -12,15 +12,15 @@ import com.hanna.wx.common.enums.ErrorCode;
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.db.dto.SysSearchDto;
 import com.hanna.wx.db.model.WxUserInfo;
-import com.hanna.wx.manager.business.service.WxUserManagerService;
+import com.hanna.wx.manager.business.service.WxUserService;
 
 @Controller
 @RequestMapping("/bus/user")
-public class WxUserManagerController {
+public class WxUserController {
 	@Autowired
-	WxUserManagerService wxUserManagerService;
+	WxUserService wxUserService;
 	
-	private Logger logger = LoggerFactory.getLogger(WxUserManagerController.class);
+	private Logger logger = LoggerFactory.getLogger(WxUserController.class);
 
 	private final String WX_USER_MANA_PAGE = "bus/user/wxUserMana"; // 微信用户管理界面
 	private final String WX_USER_INFO_PAGE = "bus/user/wxUserInfo"; // 微信用户详情
@@ -46,7 +46,7 @@ public class WxUserManagerController {
 	public BaseResponseDto<Object> queryWxUser(SysSearchDto searchDto) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		try {
-			return wxUserManagerService.queryWxUser(searchDto);
+			return wxUserService.queryWxUser(searchDto);
 		} catch (Exception e) {
 			logger.error("WxUserManagerController.queryWxUser", e);
 			br.setErrorCode(ErrorCode.sys_error.getCode());
@@ -64,7 +64,7 @@ public class WxUserManagerController {
 	@RequestMapping(value = "wxUserInfoPage.do", method = RequestMethod.GET)
 	public String wxUserInfoPage(HttpServletRequest request, String id) {
 		try {
-			WxUserInfo wxUserInfo = wxUserManagerService.getWxUserById(id);
+			WxUserInfo wxUserInfo = wxUserService.getWxUserById(id);
 			request.setAttribute("wxUserInfo", wxUserInfo);
 		} catch (Exception e) {
 			logger.error("WxUserManagerController.wxUserInfoPage", e);
@@ -82,9 +82,7 @@ public class WxUserManagerController {
 	public BaseResponseDto<Object> syncWxUser() {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		try {
-			wxUserManagerService.syncWxUser();
-			br.setErrorCode(ErrorCode.no_this_function.getCode());
-			br.setContent(ErrorCode.no_this_function.getDes());
+			wxUserService.syncWxUser();
 		} catch (Exception e) {
 			logger.error("WxUserManagerController.syncWxUser", e);
 			br.setErrorCode(ErrorCode.sys_error.getCode());

@@ -24,7 +24,7 @@ public class WxMenuInfo {
 	/**
 	 * 菜单KEY值
 	 */
-	private String key;
+	private String menuKey;
 	/**
 	 * 网页链接
 	 */
@@ -66,12 +66,12 @@ public class WxMenuInfo {
 		this.type = type;
 	}
 
-	public String getKey() {
-		return key;
+	public String getMenuKey() {
+		return menuKey;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setMenuKey(String menuKey) {
+		this.menuKey = menuKey;
 	}
 
 	public String getUrl() {

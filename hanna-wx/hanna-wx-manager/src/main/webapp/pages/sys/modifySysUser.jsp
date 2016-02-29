@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/common.css">
 	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugin/layer/layer.js"></script>
 </head>
 <body>
@@ -112,10 +111,27 @@
 				return false; 
 	 		}
  		}
- 		$('#mainform').form('submit', {
-			url:"<%=request.getContextPath()%>/sys/updateSysUser.do", 
-			success:function(data){  
-			    closeIf();
+ 		$.ajax({
+			url: "<%=request.getContextPath()%>/sys/updateSysUser.do",
+			datatype: 'json',
+			type: "post",
+			data: {
+				id:$('#id').val(),
+				nickName:nickName,
+				sex:sex,
+				age:age,
+				address:address,
+				phoneNumber:phoneNumber,
+				username:username,
+				password:password
+				
+			},
+			success: function (data) {
+				if (data.flag == '1' && data.errorCode == '10000') {
+					closeIf();
+				}else{
+					layer.alert(data.content, {icon: 6});
+				}
 			}
 		});
 	}

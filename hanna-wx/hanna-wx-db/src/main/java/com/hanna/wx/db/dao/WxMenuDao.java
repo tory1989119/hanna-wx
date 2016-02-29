@@ -2,54 +2,59 @@ package com.hanna.wx.db.dao;
 
 import java.util.List;
 
-import com.hanna.wx.db.dto.SysSearchDto;
-import com.hanna.wx.db.model.WxUserInfo;
+import com.hanna.wx.db.model.WxMenuInfo;
 
 public interface WxMenuDao {
 
 	/**
-	 * 插入微信用户
+	 * 插入微信菜单
 	 * 
-	 * @param wxUser
+	 * @param wxMenuInfo
 	 */
-	public void insertWxUser(WxUserInfo wxUser);
+	public void insertWxUser(WxMenuInfo wxMenuInfo);
 
 	/**
-	 * 修改关注状态
-	 * 
-	 * @param wm
-	 */
-	public void subscribe(WxUserInfo wxUser);
-	
-	/**
-	 * 根据OPENID获取微信用户信息
-	 * 
-	 * @param openid
-	 * @return
-	 */
-	public WxUserInfo getWxUserInfoByOpenid(String openid);
-
-	/**
-	 * 根据ID获取微信用户信息
+	 * 根据ID获取微信菜单信息
 	 * 
 	 * @param id
 	 * @return
 	 */
-	public WxUserInfo getWxUserInfoById(String id);
+	public WxMenuInfo getWxMenuInfoById(String id);
 
 	/**
-	 * 查询微信用户列表
+	 * 查询微信一级菜单
 	 * 
-	 * @param searchDto
 	 * @return
 	 */
-	public List<WxUserInfo> queryWxUser(SysSearchDto searchDto);
+	public List<WxMenuInfo> queryOneLevelWxMenu();
 
 	/**
-	 * 查询微信用户列表数
+	 * 查询微信一级菜单数
 	 * 
-	 * @param searchDto
 	 * @return
 	 */
-	public int countWxUser(SysSearchDto searchDto);
+	public int countOneLevelWxMenu();
+
+	/**
+	 * 查询微信二级菜单
+	 * 
+	 * @param fid
+	 * @return
+	 */
+	public List<WxMenuInfo> querySecondLevelWxMenu(String fid);
+
+	/**
+	 * 查询微信二级菜单数
+	 * 
+	 * @param fid
+	 * @return
+	 */
+	public int countSecondLevelWxMenu(String fid);
+
+	/**
+	 * 删除菜单
+	 * 
+	 * @param id
+	 */
+	public void deleteWxMenu(String id);
 }

@@ -116,4 +116,10 @@
 			]]>
 		</if>
 	</select>
+	
+	<!-- 清空表数据 -->
+	<update id="truncateWxUser">
+		TRUNCATE WX_USER_INFO
+	</update>
+	
 </mapper>
