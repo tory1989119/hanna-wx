@@ -20,19 +20,19 @@ public class WxCallbackService {
 	 * @param wm
 	 */
 	public void subscribe(WxMessageDto wm){
-		WxUserInfo wxUserInfo = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
-		if(wxUserInfo == null){
+		WxUserInfo wxUser = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
+		if(wxUser == null){
 			String access_token = AccessTokenDto.getAccess_token();
 			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,wm.getFromUserName(),"zh_CN");
-			wxUserInfo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
-			if(wxUserInfo.getErrcode() == null){
-				wxUserDao.insertWxUser(wxUserInfo);
+			wxUser = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
+			if(wxUser.getErrcode() == null){
+				wxUserDao.insertWxUser(wxUser);
 			}else{
-				System.out.println(wxUserInfo.getErrmsg());
+				System.out.println(wxUser.getErrmsg());
 			}
 		}else{
-			wxUserInfo.setSubscribe("1");
-			wxUserDao.subscribe(wxUserInfo);
+			wxUser.setSubscribe("1");
+			wxUserDao.subscribe(wxUser);
 		}
 	}
 	
@@ -41,10 +41,10 @@ public class WxCallbackService {
 	 * @param wm
 	 */
 	public void unsubscribe(WxMessageDto wm){
-		WxUserInfo wxUserInfo = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
-		if(wxUserInfo != null){
-			wxUserInfo.setSubscribe("0");
-			wxUserDao.subscribe(wxUserInfo);
+		WxUserInfo wxUser = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
+		if(wxUser != null){
+			wxUser.setSubscribe("0");
+			wxUserDao.subscribe(wxUser);
 		}
 	}
 }

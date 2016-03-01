@@ -27,21 +27,21 @@ public class WxMenuService {
 	/**
 	 * 插入微信菜单
 	 * 
-	 * @param wxMenuInfo
+	 * @param wxMenu
 	 */
-	public boolean insertWxUser(WxMenuInfo wxMenuInfo) {
-		if(wxMenuInfo.getFid() == null){
+	public boolean insertWxUser(WxMenuInfo wxMenu) {
+		if(wxMenu.getFid() == null){
 			if(wxMenuDao.countOneLevelWxMenu() >=3){
 				return false;
 			}
 		}else{
-			if(wxMenuDao.countSecondLevelWxMenu(wxMenuInfo.getFid()) >= 5){
+			if(wxMenuDao.countSecondLevelWxMenu(wxMenu.getFid()) >= 5){
 				return false;
 			}
 		}
 		
 		try {
-			wxMenuDao.insertWxUser(wxMenuInfo);
+			wxMenuDao.insertWxUser(wxMenu);
 		} catch (Exception e) {
 			try {
 				throw new Exception(e.toString());
@@ -99,10 +99,10 @@ public class WxMenuService {
 	/**
 	 * 修改微信菜单
 	 * 
-	 * @param wxMenuInfo
+	 * @param wxMenu
 	 */
-	public void updateWxUser(WxMenuInfo wxMenuInfo) {
-		wxMenuDao.updateWxMenu(wxMenuInfo);
+	public void updateWxUser(WxMenuInfo wxMenu) {
+		wxMenuDao.updateWxMenu(wxMenu);
 	}
 
 	/**

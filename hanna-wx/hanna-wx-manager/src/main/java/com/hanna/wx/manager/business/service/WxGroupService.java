@@ -29,15 +29,15 @@ public class WxGroupService {
 	 * @param searchDto
 	 * @return
 	 */
-	public BaseResponseDto<Object> insertWxGroup(WxGroupInfo wxGroupInfo) {
+	public BaseResponseDto<Object> insertWxGroup(WxGroupInfo wxGroup) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.USER_GROUP_ADD_URL, access_token);
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"name\":\"" + wxGroupInfo.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
+		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
 		if(jb.get("errcode") == null){
-			wxGroupInfo.setGroupId(jb.get("group").getAsJsonObject().get("id").getAsLong());
-			wxGroupInfo.setCount(0);
-			wxGroupDao.insertWxGroup(wxGroupInfo);
+			wxGroup.setGroupId(jb.get("group").getAsJsonObject().get("id").getAsLong());
+			wxGroup.setCount(0);
+			wxGroupDao.insertWxGroup(wxGroup);
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
 			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
@@ -99,13 +99,13 @@ public class WxGroupService {
 	 * @param searchDto
 	 * @return
 	 */
-	public BaseResponseDto<Object> deleteWxGroup(WxGroupInfo wxGroupInfo) {
+	public BaseResponseDto<Object> deleteWxGroup(WxGroupInfo wxGroup) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.USER_GROUP_DELETE_URL, access_token);
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroupInfo.getGroupId() + "}}", "UTF-8"), JsonObject.class,true);
+		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + "}}", "UTF-8"), JsonObject.class,true);
 		if(jb.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
-			wxGroupDao.deleteWxGroup(wxGroupInfo.getId());
+			wxGroupDao.deleteWxGroup(wxGroup.getId());
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
 			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
@@ -119,13 +119,13 @@ public class WxGroupService {
 	 * @param searchDto
 	 * @return
 	 */
-	public BaseResponseDto<Object> updateWxGroup(WxGroupInfo wxGroupInfo) {
+	public BaseResponseDto<Object> updateWxGroup(WxGroupInfo wxGroup) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.USER_GROUP_UPDATE_URL, access_token);
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroupInfo.getGroupId() + ",\"name\":\"" + wxGroupInfo.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
+		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + ",\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
 		if(jb.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
-			wxGroupDao.updateWxGroup(wxGroupInfo);
+			wxGroupDao.updateWxGroup(wxGroup);
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
 			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());

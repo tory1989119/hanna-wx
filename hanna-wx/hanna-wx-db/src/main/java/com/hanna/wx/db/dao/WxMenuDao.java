@@ -9,9 +9,9 @@ public interface WxMenuDao {
 	/**
 	 * 插入微信菜单
 	 * 
-	 * @param wxMenuInfo
+	 * @param wxMenu
 	 */
-	public void insertWxUser(WxMenuInfo wxMenuInfo);
+	public void insertWxUser(WxMenuInfo wxMenu);
 
 	/**
 	 * 根据ID获取微信菜单信息
@@ -60,7 +60,7 @@ public interface WxMenuDao {
 
 	/**
 	 * 修改菜单
-	 * @param wxMenuInfo
+	 * @param wxMenu
 	 */
-	public void updateWxMenu(WxMenuInfo wxMenuInfo);
+	public void updateWxMenu(WxMenuInfo wxMenu);
 }

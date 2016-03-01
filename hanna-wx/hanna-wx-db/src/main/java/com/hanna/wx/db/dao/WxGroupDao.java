@@ -9,9 +9,9 @@ public interface WxGroupDao {
 	
 	/**
 	 * 插入信息
-	 * @param wxGroupInfo
+	 * @param wxGroup
 	 */
-	public void insertWxGroup(WxGroupInfo wxGroupInfo);
+	public void insertWxGroup(WxGroupInfo wxGroup);
 	
 	/**
 	 * 根据id获取分组信息
@@ -47,7 +47,7 @@ public interface WxGroupDao {
 	
 	/**
 	 * 更新分组信息
-	 * @param wxGroupInfo
+	 * @param wxGroup
 	 */
-	public void updateWxGroup(WxGroupInfo wxGroupInfo);
+	public void updateWxGroup(WxGroupInfo wxGroup);
 }

@@ -17,9 +17,16 @@ public interface WxUserDao {
 	/**
 	 * 修改关注状态
 	 * 
-	 * @param wm
+	 * @param wxUser
 	 */
 	public void subscribe(WxUserInfo wxUser);
+	
+	/**
+	 * 修改用户分组
+	 * 
+	 * @param wxUser
+	 */
+	public void updateWxUserGroup(WxUserInfo wxUser);
 	
 	/**
 	 * 根据OPENID获取微信用户信息

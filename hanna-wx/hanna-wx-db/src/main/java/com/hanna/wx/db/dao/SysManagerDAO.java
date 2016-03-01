@@ -12,28 +12,28 @@ public interface SysManagerDAO {
     /**
      * 根据账号和密码获取用户信息
      * 
-     * @param sysUserInfo
+     * @param sysUser
      * @return
      */
-    public SysUserInfo getSysUserByUsernameAndPwd(SysUserInfo sysUserInfo);
+    public SysUserInfo getSysUserByUsernameAndPwd(SysUserInfo sysUser);
 
     
 
     /**
      * 插入管理员信息
      * 
-     * @param sysUserInfo
+     * @param sysUser
      * @return
      */
-    public int insertSysUser(SysUserInfo sysUserInfo);
+    public int insertSysUser(SysUserInfo sysUser);
 
     /**
      * 修改管理员信息
      * 
-     * @param sysUserInfo
+     * @param sysUser
      * @return
      */
-    public int updateSysUser(SysUserInfo sysUserInfo);
+    public int updateSysUser(SysUserInfo sysUser);
 
     /**
      * 根据ID获取管理员信息 

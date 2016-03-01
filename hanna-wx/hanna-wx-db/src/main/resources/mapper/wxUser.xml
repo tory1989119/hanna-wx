@@ -13,6 +13,11 @@
 		UPDATE WX_USER_INFO SET SUBSCRIBE = #{subscribe} WHERE OPENID = #{openid}
 	</update>
 	
+	<!-- 修改用户分组-->
+	<update id="updateWxUserGroup" parameterType="WxUserInfo">
+		UPDATE WX_USER_INFO SET GROUPID = #{groupId} WHERE ID = #{id}
+	</update>
+	
 	<!-- 根据OPENID获取微信用户信息 -->
 	<select id="getWxUserByOpenid" parameterType="string" resultType="WxUserInfo" >
 		SELECT 
