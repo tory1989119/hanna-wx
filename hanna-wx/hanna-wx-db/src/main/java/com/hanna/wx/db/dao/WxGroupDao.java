@@ -14,6 +14,13 @@ public interface WxGroupDao {
 	public void insertWxGroup(WxGroupInfo wxGroupInfo);
 	
 	/**
+	 * 根据id获取分组信息
+	 * @param id
+	 * @return
+	 */
+	public WxGroupInfo getWxGroupInfo(String id);
+	
+	/**
 	 * 查询微信用户分组列表 
 	 * @param sysSearchDto
 	 * @return
@@ -33,8 +40,14 @@ public interface WxGroupDao {
 	public void truncateWxGroup();
 	
 	/**
-	 * 删除某个分组
+	 * 删除分组
 	 * @param id
 	 */
 	public void deleteWxGroup(Long id);
+	
+	/**
+	 * 更新分组信息
+	 * @param wxGroupInfo
+	 */
+	public void updateWxGroup(WxGroupInfo wxGroupInfo);
 }

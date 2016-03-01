@@ -1,5 +1,7 @@
 package com.hanna.wx.manager.business.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,9 @@ public class WxGroupController {
 
 	private Logger logger = LoggerFactory.getLogger(WxGroupController.class);
 
-	private final String WX_GROUP_MANA_PAGE = "bus/user/wxGroupMana"; // 微信用户组管理界面
-	private final String ADD_WX_GROUP_PAGE = "bus/user/addWxGroup"; // 增加微信用户组
+	private final String WX_GROUP_MANA_PAGE = "bus/group/wxGroupMana"; // 微信用户组管理界面
+	private final String ADD_WX_GROUP_PAGE = "bus/group/addWxGroup"; // 增加微信用户组
+	private final String MODIFY_WX_GROUP_PAGE = "bus/group/modifyWxGroup"; // 修改微信用户组
 
 	/**
 	 * 跳转到微信用户组管理界面
@@ -36,7 +39,7 @@ public class WxGroupController {
 	}
 
 	/**
-	 * 跳转到增加微信用户组
+	 * 跳转到增加微信用户分组
 	 * 
 	 * @return
 	 */
@@ -44,9 +47,25 @@ public class WxGroupController {
 	public String addWxGroupPage() {
 		return ADD_WX_GROUP_PAGE;
 	}
+	
+	/**
+	 * 跳转到修改微信用户分组
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "modifyWxGroupPage.do", method = RequestMethod.GET)
+	public String modifyWxGroupPage(HttpServletRequest request, String id) {
+		try{
+			WxGroupInfo wxGroupInfo = wxGroupService.getWxGroupInfo(id);
+			request.setAttribute("wxGroupInfo", wxGroupInfo);
+		} catch (Exception e) {
+			logger.error("WxGroupController.modifyWxGroupPage", e);
+		}
+		return MODIFY_WX_GROUP_PAGE;
+	}
 
 	/**
-	 * 查询微信用户组列表
+	 * 查询微信用户分组列表
 	 * 
 	 * @param searchDto
 	 * @return
@@ -66,7 +85,7 @@ public class WxGroupController {
 	}
 
 	/**
-	 * 同步微信用户组
+	 * 同步微信用户分组
 	 * 
 	 * @return
 	 */
@@ -85,7 +104,7 @@ public class WxGroupController {
 	}
 
 	/**
-	 * 新增微信用户组
+	 * 新增微信用户分组
 	 * 
 	 * @return
 	 */
@@ -104,7 +123,7 @@ public class WxGroupController {
 	}
 
 	/**
-	 * 删除微信用户组
+	 * 删除微信用户分组
 	 * 
 	 * @return
 	 */
@@ -116,6 +135,25 @@ public class WxGroupController {
 			return wxGroupService.deleteWxGroup(wxGroupInfo);
 		} catch (Exception e) {
 			logger.error("WxGroupController.deleteWxGroup", e);
+			br.setErrorCode(ErrorCode.sys_error.getCode());
+			br.setContent(ErrorCode.sys_error.getDes());
+		}
+		return br;
+	}
+	
+	/**
+	 * 更新微信用户分组
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "updateWxGroup.do", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public BaseResponseDto<Object> updateWxGroup(WxGroupInfo wxGroupInfo) {
+		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
+		try {
+			return wxGroupService.updateWxGroup(wxGroupInfo);
+		} catch (Exception e) {
+			logger.error("WxGroupController.updateWxGroup", e);
 			br.setErrorCode(ErrorCode.sys_error.getCode());
 			br.setContent(ErrorCode.sys_error.getDes());
 		}

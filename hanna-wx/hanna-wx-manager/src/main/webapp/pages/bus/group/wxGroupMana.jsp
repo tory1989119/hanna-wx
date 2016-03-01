@@ -18,14 +18,18 @@
 <body>
 <div class="mainSemt">
 	<div class="navigateItem pl20">
-		公众号管理>菜单管理>子菜单管理
+		公众号管理>用户分组管理
 	</div>
 	<div class="search">
 		<ul class="mb20 overflow">
 			<li>
-			<input type="hidden" id="fid" name="fid" value="${fid}">
 				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="add();">
 					新增
+				</span>
+			</li>
+			<li>
+				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="addGroup();">
+					同步用户分组
 				</span>
 			</li>
 		</ul>
@@ -33,22 +37,17 @@
 	<div class="rightMain tc p10">
 		<table width="100%">
 			<tr>
-				<td>菜单名称</td>
-				<td>菜单类型</td>
-				<td>菜单key</td>
-				<td>url地址</td>
-				<td>素材id</td>
+				<td>分组名称</td>
+				<td>分组id</td>
+				<td>分组用户数</td>
 				<td>操作</td>
 			</tr>
 			<tbody id="tbodyId">
 				<tr >
-					<td colspan="6">无数据</td>
+					<td colspan="4">无数据</td>
 				</tr>
             </tbody>
 		</table>
-		<div class="page tc f14 mt20 customBootstrap" id="pageId" style="display:none">
-			<div class="fl">共<span class="bluefc" id="showPageCount"></span>页记录</div><ul class="pagination" id="paginationId"></ul>
-		</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -75,10 +74,13 @@ var pageSize = 10;
 function search(pageNum){
 	layer.load(2);//遮罩层
 	$.ajax({
-	      url: "<%=request.getContextPath()%>/bus/menu/querySecondLevelWxMenu.do",
+	      url: "<%=request.getContextPath()%>/bus/group/queryWxGroup.do",
 	      datatype: 'json',
 	      type: "post",
-	      data: {fid:$("#fid").val()},
+	      data: {
+	    	  begin:(pageNum-1)*pageSize,
+	    	  rows:pageSize
+	    	  },
 	      success: function (data) {
 	    	  layer.closeAll('loading');
 	        if (data.flag == '1' && data.errorCode == '10000') {
@@ -93,7 +95,7 @@ function search(pageNum){
 //列表显示内容
 function table(data,pageNum){
 	if(data.content == null || data.content.length <= 0){
-		$("#tbodyId").html('<tr ><td colspan="6">无数据</td></tr>');
+		$("#tbodyId").html('<tr ><td colspan="4">无数据</td></tr>');
 		$('#pageId').css('display','none');
 		return;
 	}else{
@@ -115,19 +117,19 @@ function table(data,pageNum){
     $("#showPageCount").html(pageCount);//按时一共查询出几页
 	
 	var str = '';
-	for (var i = 0; i < data.content.length; i++) { 
+	for (var i = 0; i < data.content.length; i++) {
 		str = str + '<tr>';
 		str = str + '<td>' + data.content[i].name + '</td>';
-		str = str + '<td>' + data.content[i].type + '</td>';
-		str = str + '<td>' + data.content[i].menuKey + '</td>';
-		str = str + '<td>' + data.content[i].url + '</td>';
-		str = str + '<td>' + data.content[i].mediaId + '</td>';
+		str = str + '<td>' + data.content[i].groupId + '</td>';
+		str = str + '<td>' + data.content[i].count + '</td>';
 		str = str + '<td><a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a> <a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\')">删除</a></td>';
 		str = str + '</tr>';
     }
 	$("#tbodyId").html(str);
 }
-//新增
+/**
+ * 新增
+ */
 function add(){
 	//iframe层-父子操作
 	var index = layer.open({
@@ -135,11 +137,13 @@ function add(){
 	    area: ['900px', '500px'],
 	    fix: false, //不固定
 	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/bus/menu/addWxMenuPage.do?fid='+$("#fid").val()
+	    content: '<%=request.getContextPath()%>/bus/group/addWxGroupPage.do'
 	});
 	layer.full(index);
 }
-//修改
+/**
+ * 修改
+ */
 function modify(id){
 	//iframe层-父子操作
 	var index = layer.open({
@@ -147,17 +151,19 @@ function modify(id){
 	    area: ['900px', '500px'],
 	    fix: false, //不固定
 	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/bus/menu/modifyWxMenuPage.do?id='+id
+	    content: '<%=request.getContextPath()%>/bus/group/modifyWxGroupPage.do?id='+id
 	});
 	layer.full(index);
 }
-//删除
+/**
+ * 删除
+ */
 function dele(id){
-	layer.confirm('确定删除该菜单？',{
+	layer.confirm('确定删除该分组？',{
 		btn: ['确定','取消']
 	},function(){
 		$.ajax({
-			url: "<%=request.getContextPath()%>/bus/menu/deleteWxMenu.do",
+			url: "<%=request.getContextPath()%>/bus/group/deleteWxGroup.do",
 			datatype: 'json',
 			type: "post",
 			data: {
@@ -178,6 +184,27 @@ function dele(id){
 			}
 		});
 	});
+}
+/**
+ * 同步分组
+ */
+function addMenu(){
+	layer.load(2);//遮罩层
+	$.ajax({
+	      url: "<%=request.getContextPath()%>/bus/group/syncWxGroup.do",
+	      datatype: 'json',
+	      type: "post",
+	      data: {},
+	      success: function (data) {
+	    	  layer.closeAll('loading');
+	        if (data.flag == '1' && data.errorCode == '10000') {
+	        	layer.alert("同步成功", {icon: 6});
+	        	search(1);
+	        }else{
+	        	layer.alert(data.content, {icon: 6});
+	        }
+	      }
+	    });
 }
 </script>
 </body>

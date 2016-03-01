@@ -24,7 +24,7 @@ public class WxGroupService {
 	private WxGroupDao wxGroupDao;
 	
 	/**
-	 *新增用户组
+	 *新增用户分组
 	 * 
 	 * @param searchDto
 	 * @return
@@ -45,9 +45,18 @@ public class WxGroupService {
 		
 		return br;
 	}
+	
+	/**
+	 * 根据id获取分组信息
+	 * @param id
+	 * @return
+	 */
+	public WxGroupInfo getWxGroupInfo(String id){
+		return wxGroupDao.getWxGroupInfo(id);
+	}
 
 	/**
-	 * 查询微信用户组列表
+	 * 查询微信用户分组列表
 	 * 
 	 * @param searchDto
 	 * @return
@@ -60,7 +69,7 @@ public class WxGroupService {
 	}
 	
 	/**
-	 * 同步微信用户数据
+	 * 同步微信用户分组数据
 	 */
 	public BaseResponseDto<Object> syncWxGroup(){
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
@@ -85,7 +94,7 @@ public class WxGroupService {
 	}
 	
 	/**
-	 *删除用户组
+	 *删除分组
 	 * 
 	 * @param searchDto
 	 * @return
@@ -101,7 +110,26 @@ public class WxGroupService {
 			br.setErrorCode(ErrorCode.wx_error.getCode());
 			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
 		}
-		
+		return br;
+	}
+	
+	/**
+	 *更新分组
+	 * 
+	 * @param searchDto
+	 * @return
+	 */
+	public BaseResponseDto<Object> updateWxGroup(WxGroupInfo wxGroupInfo) {
+		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
+		String access_token = AccessTokenDto.getAccess_token();
+		String url = String.format( WxConsts.USER_GROUP_UPDATE_URL, access_token);
+		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroupInfo.getGroupId() + ",\"name\":\"" + wxGroupInfo.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
+		if(jb.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
+			wxGroupDao.updateWxGroup(wxGroupInfo);
+		}else{
+			br.setErrorCode(ErrorCode.wx_error.getCode());
+			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
+		}
 		return br;
 	}
 }

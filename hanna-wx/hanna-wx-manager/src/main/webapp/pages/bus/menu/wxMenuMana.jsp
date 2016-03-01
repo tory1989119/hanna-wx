@@ -46,7 +46,7 @@
 			</tr>
 			<tbody id="tbodyId">
 				<tr >
-					<td colspan="5">无数据</td>
+					<td colspan="6">无数据</td>
 				</tr>
             </tbody>
 		</table>

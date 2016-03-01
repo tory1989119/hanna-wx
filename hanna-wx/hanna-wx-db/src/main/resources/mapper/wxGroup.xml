@@ -6,7 +6,7 @@
 	<insert id="insertWxGroup" parameterType="WxGroupInfo" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO WX_GROUP_INFO (GROUP_ID,NAME,COUNT)
 		VALUES (#{groupId},#{name},#{count})
-	</insert>	
+	</insert>
 	
 	<!-- 查询微信用户分组列表 -->
 	<select id="queryWxGroup" parameterType="SysSearchDto" resultType="WxGroupInfo" >
@@ -17,6 +17,17 @@
 		COUNT count
 		FROM WX_GROUP_INFO
 		LIMIT #{begin},#{rows}
+	</select>	
+	
+	<!-- 根据id获取分组信息 -->
+	<select id="getWxGroupInfo" parameterType="Long" resultType="WxGroupInfo" >
+		SELECT 
+		ID id,
+		GROUP_ID groupId,
+		NAME name,
+		COUNT count
+		FROM WX_GROUP_INFO
+		WHERE ID = #{id}
 	</select>
 	
 	<!-- 查询微信用户分组列表数 -->
@@ -30,9 +41,14 @@
 		TRUNCATE WX_GROUP_INFO
 	</update>
 	
-	<!-- 删除某个分组 -->
+	<!-- 删除分组 -->
 	<update id="deleteWxGroup" parameterType="Long">
 		DELETE FROM WX_GROUP_INFO WHERE ID = #{id}
+	</update>
+	
+	<!-- 更新分组 -->
+	<update id="updateWxGroup" parameterType="WxGroupInfo">
+		UPDATE WX_GROUP_INFO SET NAME = #{name} WHERE ID = #{id}
 	</update>
 	
 </mapper>

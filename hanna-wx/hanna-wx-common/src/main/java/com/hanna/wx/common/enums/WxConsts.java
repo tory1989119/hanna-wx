@@ -10,6 +10,9 @@ public interface WxConsts {
 	
 	/** 用户管理-分组管理-删除分组URL */
 	public static final String USER_GROUP_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/groups/delete?access_token=%s";
+	
+	/** 用户管理-分组管理-删除分组URL */
+	public static final String USER_GROUP_UPDATE_URL = "https://api.weixin.qq.com/cgi-bin/groups/update?access_token=%s";
 
 	/** 用户管理-分组管理-查询分组URL */
 	public static final String USER_GROUP_QUERY_URL = "https://api.weixin.qq.com/cgi-bin/groups/get?access_token=%s";
