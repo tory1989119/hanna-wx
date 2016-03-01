@@ -50,6 +50,9 @@
 				</tr>
             </tbody>
 		</table>
+		<div class="page tc f14 mt20 customBootstrap" id="pageId" style="display:none">
+			<div class="fl">共<span class="bluefc" id="showPageCount"></span>页记录</div><ul class="pagination" id="paginationId"></ul>
+		</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -172,8 +175,7 @@ function dele(id){
 			datatype: 'json',
 			type: "post",
 			data: {
-				id:id,
-				isDeleted:'1'
+				id:id
 			},
 			success: function (data) {
 				if (data.flag == '1' && data.errorCode == '10000') {

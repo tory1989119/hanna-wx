@@ -67,7 +67,7 @@
 		OPENID openid,
 		NICKNAME nickname,
 		SUBSCRIBE subscribe,
-		SUBSCRIBE_TIME subscribeTime,
+		date_format(SUBSCRIBE_TIME, '%Y-%m-%d %H:%i:%s') subscribeTime,
 		SEX sex,
 		COUNTRY country,
 		PROVINCE province,

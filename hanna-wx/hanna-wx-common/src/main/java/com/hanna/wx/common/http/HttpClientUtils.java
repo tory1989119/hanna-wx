@@ -29,7 +29,7 @@ public class HttpClientUtils {
      *            以map形式封装的params
      * @return
      */
-    public static String post(String url, Map<String, String> params) {
+    public static String post(String url, Map<String, String> params,String charset) {
         HttpPost httpPost = new HttpPost(url);
         try {
             if (null != params && !params.isEmpty()) {
@@ -42,7 +42,7 @@ public class HttpClientUtils {
         } catch (Exception e) {
             return null;
         }
-        return executePost(httpPost);
+        return executePost(httpPost,charset);
     }
 
     /**
@@ -60,7 +60,7 @@ public class HttpClientUtils {
            return null;
         }
         
-        return executePost(httpPost);
+        return executePost(httpPost,charset);
     }
     
     
@@ -100,7 +100,7 @@ public class HttpClientUtils {
     }
     
     
-    private static String executePost(HttpPost httpPost){
+    private static String executePost(HttpPost httpPost,String charset){
         CloseableHttpClient client = HttpClients.createDefault();
         try {
             //请求基本参数设置 10秒超时
@@ -117,7 +117,7 @@ public class HttpClientUtils {
                 } else {
                     // 获取响应实体    
                     HttpEntity entity = httpResponse.getEntity();
-                    return EntityUtils.toString(entity);
+                    return EntityUtils.toString(entity,charset);
                 }
             } catch (Exception e) {
             } finally {

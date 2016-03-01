@@ -40,6 +40,9 @@ public interface WxConsts {
 	
 	/** 菜单管理 - 删除菜单 */
 	public static final String MENU_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s";
+	
+	/** 素材管理 - 查询素材 */
+	public static final String METARIAL_QUERY_URL = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=%s";
 
 
 	// /////////////////////

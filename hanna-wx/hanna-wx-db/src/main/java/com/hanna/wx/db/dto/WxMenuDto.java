@@ -22,7 +22,7 @@ public class WxMenuDto {
 	/**
 	 * 调用新增永久素材接口返回的合法media_id
 	 */
-	private String mediaId;
+	private String media_id;
 	
 	public String getName() {
 		return name;
@@ -56,12 +56,12 @@ public class WxMenuDto {
 		this.url = url;
 	}
 
-	public String getMediaId() {
-		return mediaId;
+	public String getMedia_id() {
+		return media_id;
 	}
 
-	public void setMediaId(String mediaId) {
-		this.mediaId = mediaId;
+	public void setMedia_id(String media_id) {
+		this.media_id = media_id;
 	}
 
 	public List<WxMenuDto> getSub_button() {

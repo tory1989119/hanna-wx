@@ -23,7 +23,7 @@
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">分组名称：</span>
 						<input type="hidden"  name="id" id="id" value="${wxGroupInfo.id}">
-						<input type="hidden" name="fid" id="fid" value="${wxGroupInfo.groupId}">
+						<input type="hidden" name="groupId" id="groupId" value="${wxGroupInfo.groupId}">
 						<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" value="${wxGroupInfo.name}">
 					</div>
 					<div class="tc lh35 mt20">　　　　

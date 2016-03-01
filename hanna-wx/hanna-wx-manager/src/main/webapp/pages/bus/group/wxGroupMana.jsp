@@ -48,6 +48,9 @@
 				</tr>
             </tbody>
 		</table>
+		<div class="page tc f14 mt20 customBootstrap" id="pageId" style="display:none">
+			<div class="fl">共<span class="bluefc" id="showPageCount"></span>页记录</div><ul class="pagination" id="paginationId"></ul>
+		</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -122,7 +125,7 @@ function table(data,pageNum){
 		str = str + '<td>' + data.content[i].name + '</td>';
 		str = str + '<td>' + data.content[i].groupId + '</td>';
 		str = str + '<td>' + data.content[i].count + '</td>';
-		str = str + '<td><a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a> <a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\')">删除</a></td>';
+		str = str + '<td><a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a> <a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\',\'' + data.content[i].groupId + '\')">删除</a></td>';
 		str = str + '</tr>';
     }
 	$("#tbodyId").html(str);
@@ -158,7 +161,7 @@ function modify(id){
 /**
  * 删除
  */
-function dele(id){
+function dele(id,groupId){
 	layer.confirm('确定删除该分组？',{
 		btn: ['确定','取消']
 	},function(){
@@ -168,7 +171,7 @@ function dele(id){
 			type: "post",
 			data: {
 				id:id,
-				isDeleted:'1'
+				groupId:groupId
 			},
 			success: function (data) {
 				if (data.flag == '1' && data.errorCode == '10000') {
@@ -188,7 +191,7 @@ function dele(id){
 /**
  * 同步分组
  */
-function addMenu(){
+function addGroup(){
 	layer.load(2);//遮罩层
 	$.ajax({
 	      url: "<%=request.getContextPath()%>/bus/group/syncWxGroup.do",

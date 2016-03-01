@@ -127,7 +127,7 @@ public class WxMenuService {
 					oneLevelWmd.setKey(oneLevelWmi.getMenuKey());
 				}
 				if(!oneLevelWmi.getMediaId().equals("") && oneLevelWmi.getMediaId() !=null){
-					oneLevelWmd.setMediaId(oneLevelWmi.getMediaId());
+					oneLevelWmd.setMedia_id(oneLevelWmi.getMediaId());
 				}
 				if(!oneLevelWmi.getUrl().equals("") && oneLevelWmi.getUrl() !=null){
 					oneLevelWmd.setUrl(oneLevelWmi.getUrl());
@@ -146,7 +146,7 @@ public class WxMenuService {
 						secondLevelWmd.setKey(secondLevelWmi.getMenuKey());
 					}
 					if(!secondLevelWmi.getMediaId().equals("") && secondLevelWmi.getMediaId() !=null){
-						secondLevelWmd.setMediaId(secondLevelWmi.getMediaId());
+						secondLevelWmd.setMedia_id(secondLevelWmi.getMediaId());
 					}
 					if(!secondLevelWmi.getUrl().equals("") && secondLevelWmi.getUrl() !=null){
 						secondLevelWmd.setUrl(secondLevelWmi.getUrl());
@@ -161,7 +161,6 @@ public class WxMenuService {
 			
 			if(menuList.size() > 0){
 				url = String.format( WxConsts.MENU_CREATE_URL, access_token);
-				System.out.println("{\"button\": " + GsonUtils.toJson(menuList, menuList.getClass(),false) + "}");
 				we = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"button\": " + GsonUtils.toJson(menuList, menuList.getClass(),false) + "}","UTF-8"), WxErrorDto.class, true);
 				if(we.getErrcode() != GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 					br.setErrorCode(ErrorCode.wx_error.getCode());
