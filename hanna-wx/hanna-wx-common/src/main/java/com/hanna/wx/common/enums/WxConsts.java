@@ -7,6 +7,9 @@ public interface WxConsts {
 
 	/** 用户管理-分组管理-新增分组URL */
 	public static final String USER_GROUP_ADD_URL = "https://api.weixin.qq.com/cgi-bin/groups/create?access_token=%s";
+	
+	/** 用户管理-分组管理-删除分组URL */
+	public static final String USER_GROUP_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/groups/delete?access_token=%s";
 
 	/** 用户管理-分组管理-查询分组URL */
 	public static final String USER_GROUP_QUERY_URL = "https://api.weixin.qq.com/cgi-bin/groups/get?access_token=%s";
@@ -35,22 +38,6 @@ public interface WxConsts {
 	/** 菜单管理 - 删除菜单 */
 	public static final String MENU_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s";
 
-	// /** 消息类型-文本消息 */
-	// public static final String MSG_TEXT = "text";
-	// /** 消息类型-图片消息 */
-	// public static final String MSG_IMAGE = "image";
-	// /** 消息类型-语音消息 */
-	// public static final String MSG_VOICE = "voice";
-	// /** 消息类型-视频消息 */
-	// public static final String MSG_VIDEO = "video";
-	// /** 消息类型-小视频消息 */
-	// public static final String MSG_SHORTVIDEO = "shortvideo";
-	// /** 消息类型-地理位置消息 */
-	// public static final String MSG_LOCATION = "location";
-	// /** 消息类型-链接消息 */
-	// public static final String MSG_LINK = "link";
-	// /** 事件消息 */
-	// public static final String MSG_EVENT = "event";
 
 	// /////////////////////
 	// oauth2网页授权的scope

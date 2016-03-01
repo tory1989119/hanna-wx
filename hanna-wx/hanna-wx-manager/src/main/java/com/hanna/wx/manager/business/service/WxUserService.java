@@ -52,11 +52,11 @@ public class WxUserService {
 	 */
 	public BaseResponseDto<Object> syncWxUser(){
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-		String access_token = AccessTokenDto.access_token;
+		String access_token = AccessTokenDto.getAccess_token();
 		String next_openid = "";
 		String url = String.format( WxConsts.USER_QUERY_ALL_URL, access_token, next_openid);
-		wxUserDao.truncateWxUser();//清空微信用户表
 		boolean flag = true;
+		wxUserDao.truncateWxUser();//清空微信用户表
 		while (flag) {
 			JsonObject jb = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
 			if(jb.get("errcode") == null){

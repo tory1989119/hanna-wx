@@ -110,7 +110,7 @@ public class WxMenuService {
 	 */
 	public BaseResponseDto<Object> syncWxMenu(){
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-		String access_token = AccessTokenDto.access_token;
+		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.MENU_DELETE_URL, access_token);
 		WxErrorDto we = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxErrorDto.class,true);
 		if(we.getErrcode() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){

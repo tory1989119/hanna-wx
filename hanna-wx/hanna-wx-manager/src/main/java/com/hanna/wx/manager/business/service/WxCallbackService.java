@@ -22,7 +22,7 @@ public class WxCallbackService {
 	public void subscribe(WxMessageDto wm){
 		WxUserInfo wxUserInfo = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
 		if(wxUserInfo == null){
-			String access_token = AccessTokenDto.access_token;
+			String access_token = AccessTokenDto.getAccess_token();
 			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,wm.getFromUserName(),"zh_CN");
 			wxUserInfo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
 			if(wxUserInfo.getErrcode() == null){
