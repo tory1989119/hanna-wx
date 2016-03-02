@@ -1,4 +1,4 @@
-package com.hanna.wx.manager.system.filter;
+package com.hanna.wx.manager.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
