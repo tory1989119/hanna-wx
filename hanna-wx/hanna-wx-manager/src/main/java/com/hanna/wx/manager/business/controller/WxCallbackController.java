@@ -76,24 +76,20 @@ public class WxCallbackController {
 			xStream.alias("xml", WxMessageDto.class); 
 		    wm = (WxMessageDto) xStream.fromXML(strXml);
 			if(wm.getMsgType().equals(MsgTypeEnum.TEXT.getType())){
-				System.out.println("获取到文本消息");
-				return wxCallbackService.kf(wm);
+				return wxCallbackService.text(wm);//System.out.println("获取到文本消息");
 			}else if(wm.getMsgType().equals(MsgTypeEnum.IMAGE.getType())){
-				System.out.println("获取到图片消息");
-				return wxCallbackService.kf(wm);
+				return wxCallbackService.image(wm);//获取到图片消息
 			}else if(wm.getMsgType().equals(MsgTypeEnum.EVENT.getType())){
 				if(wm.getEvent().equals(EventEnum.CLICK.getType())){
-					System.out.println("点击菜单拉取消息时的事件推送");
+					return wxCallbackService.click(wm);//点击菜单拉取消息时的事件推送
 				}else if(wm.getEvent().equals(EventEnum.LOCATION.getType())){
 					System.out.println("上报地理位置事件");
 				}else if(wm.getEvent().equals(EventEnum.SCAN.getType())){
 					System.out.println("扫描二维码，用户已关注时的事件推送");
 				}else if(wm.getEvent().equals(EventEnum.SUBSCRIBE.getType())){
-					//关注事件
-					wxCallbackService.subscribe(wm);
+					wxCallbackService.subscribe(wm);//关注事件
 				}else if(wm.getEvent().equals(EventEnum.UNSUBSCRIBE.getType())){
-					//取消关注事件
-					wxCallbackService.unsubscribe(wm);
+					wxCallbackService.unsubscribe(wm);//取消关注事件
 				}else if(wm.getEvent().equals(EventEnum.VIEW.getType())){
 					System.out.println("点击菜单跳转链接时的事件推送 ");
 				}
@@ -104,11 +100,9 @@ public class WxCallbackController {
 			}else if(wm.getMsgType().equals(MsgTypeEnum.VIDEO.getType())){
 				System.out.println("获取到视频消息");
 			}else if(wm.getMsgType().equals(MsgTypeEnum.SHORTVIDEO.getType())){
-				System.out.println("获取到小视频消息");
-				return wxCallbackService.kf(wm);
+				return wxCallbackService.shortvideo(wm);//获取到小视频消息
 			}else if(wm.getMsgType().equals(MsgTypeEnum.VOICE.getType())){
-				System.out.println("获取到语音消息");
-				return wxCallbackService.kf(wm);
+				return wxCallbackService.voice(wm);//获取到语音消息
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

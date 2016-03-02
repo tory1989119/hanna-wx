@@ -6,6 +6,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hanna.wx.common.enums.MsgTypeEnum;
 import com.hanna.wx.common.enums.WxConsts;
 import com.hanna.wx.common.http.HttpClientUtils;
 import com.hanna.wx.common.utils.GsonUtils;
@@ -60,7 +61,7 @@ public class WxCallbackService {
 	 * @param wm
 	 * @return
 	 */
-	public String kf(WxMessageDto wm){
+	private String toKf(WxMessageDto wm){
 		XStream xStream = new XStream();
 		xStream.alias("xml", WxMessageDto.class);
 		WxMessageDto wm1 = new WxMessageDto();
@@ -69,5 +70,61 @@ public class WxCallbackService {
 		wm1.setFromUserName(wm.getToUserName());
 		wm1.setCreateTime(wm.getCreateTime());
 		return xStream.toXML(wm1);
+	}
+	
+	/**
+	 * 处理点击事件
+	 * @param wm
+	 * @return
+	 */
+	public String click(WxMessageDto wm){
+		if("kefu1234".endsWith(wm.getEventKey())){
+			XStream xStream = new XStream();
+			xStream.alias("xml", WxMessageDto.class);
+			WxMessageDto wm1 = new WxMessageDto();
+			wm1.setMsgType(MsgTypeEnum.TEXT.getType());
+			wm1.setToUserName(wm.getFromUserName());
+			wm1.setFromUserName(wm.getToUserName());
+			wm1.setCreateTime(wm.getCreateTime());
+			wm1.setContent("请输入你要咨询的问题，稍后会有客服与你联系，谢谢！");
+			return xStream.toXML(wm1);
+		}
+		return "";
+	}
+	
+	/**
+	 * 处理文本消息
+	 * @param wm
+	 * @return
+	 */
+	public String text(WxMessageDto wm){
+		return toKf(wm);
+	}
+	
+	/**
+	 * 处理图片消息
+	 * @param wm
+	 * @return
+	 */
+	public String image(WxMessageDto wm){
+		return toKf(wm);
+	}
+	
+	/**
+	 * 处理语音消息
+	 * @param wm
+	 * @return
+	 */
+	public String voice(WxMessageDto wm){
+		return toKf(wm);
+	}
+	
+	/**
+	 * 处理小视频
+	 * @param wm
+	 * @return
+	 */
+	public String shortvideo(WxMessageDto wm){
+		return toKf(wm);
 	}
 }
