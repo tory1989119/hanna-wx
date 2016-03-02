@@ -29,7 +29,7 @@ public class WxKfService {
 	/**
 	 *新增客服
 	 * 
-	 * @param searchDto
+	 * @param wxKf
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
@@ -98,7 +98,7 @@ public class WxKfService {
 	/**
 	 *删除客服
 	 * 
-	 * @param searchDto
+	 * @param wxKf
 	 * @return
 	 */
 	public BaseResponseDto<Object> deleteWxKf(WxKfInfo wxKf) {
@@ -118,7 +118,7 @@ public class WxKfService {
 	/**
 	 *更新客服
 	 * 
-	 * @param searchDto
+	 * @param wxKf
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */

@@ -26,7 +26,7 @@ public class WxGroupService {
 	/**
 	 *新增用户分组
 	 * 
-	 * @param searchDto
+	 * @param wxGroup
 	 * @return
 	 */
 	public BaseResponseDto<Object> insertWxGroup(WxGroupInfo wxGroup) {
@@ -96,7 +96,7 @@ public class WxGroupService {
 	/**
 	 *删除分组
 	 * 
-	 * @param searchDto
+	 * @param wxGroup
 	 * @return
 	 */
 	public BaseResponseDto<Object> deleteWxGroup(WxGroupInfo wxGroup) {
@@ -116,7 +116,7 @@ public class WxGroupService {
 	/**
 	 *更新分组
 	 * 
-	 * @param searchDto
+	 * @param wxGroup
 	 * @return
 	 */
 	public BaseResponseDto<Object> updateWxGroup(WxGroupInfo wxGroup) {
