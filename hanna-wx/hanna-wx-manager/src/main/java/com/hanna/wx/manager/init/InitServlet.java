@@ -33,10 +33,10 @@ public class InitServlet extends HttpServlet {
 		String appid = Configuration.getGlobalMsg("appid");
 		String secret = Configuration.getGlobalMsg("secret");
 		String url = String.format( WxConsts.QUERY_TOKEN_URL, grant_type, appid, secret );
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
-		AccessTokenDto.setAccess_token(jb.get("access_token").getAsString());
-		AccessTokenDto.setExpires_in(jb.get("expires_in").getAsInt());
-		logger.info("access_token = " + jb.get("access_token").getAsString());
+		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
+		AccessTokenDto.setAccess_token(jo.get("access_token").getAsString());
+		AccessTokenDto.setExpires_in(jo.get("expires_in").getAsInt());
+		logger.info("access_token = " + jo.get("access_token").getAsString());
     }
       
     @Override  

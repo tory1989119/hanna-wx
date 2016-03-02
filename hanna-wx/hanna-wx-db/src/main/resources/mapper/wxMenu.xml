@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hanna.wx.db.dao.WxMenuDao">
 	<!-- 插入信息 -->
-	<insert id="insertWxUser" parameterType="WxMenuInfo" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertWxMenu" parameterType="WxMenuInfo" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO WX_MENU_INFO (NAME,TYPE,MENU_KEY,URL,MEDIA_ID,FID,CREATE_TIME)
 		VALUES (#{name},#{type},#{menuKey},#{url},#{mediaId},#{fid},#{createTime})
 	</insert>

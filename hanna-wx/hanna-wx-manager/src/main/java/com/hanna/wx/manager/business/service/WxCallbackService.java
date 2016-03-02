@@ -1,5 +1,8 @@
 package com.hanna.wx.manager.business.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,9 @@ public class WxCallbackService {
 			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,wm.getFromUserName(),"zh_CN");
 			wxUser = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
 			if(wxUser.getErrcode() == null){
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				String date = sdf.format(new Date(wxUser.getSubscribe_time()*1000));
+				wxUser.setSubscribeTime(date);
 				wxUserDao.insertWxUser(wxUser);
 			}else{
 				System.out.println(wxUser.getErrmsg());

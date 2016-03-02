@@ -58,15 +58,15 @@ public class WxUserService {
 		boolean flag = true;
 		wxUserDao.truncateWxUser();//清空微信用户表
 		while (flag) {
-			JsonObject jb = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
-			if(jb.get("errcode") == null){
-				if(jb.get("count").getAsInt() > 0){
-					JsonArray ja = jb.get("data").getAsJsonObject().get("openid").getAsJsonArray();
+			JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
+			if(jo.get("errcode") == null){
+				if(jo.get("count").getAsInt() > 0){
+					JsonArray ja = jo.get("data").getAsJsonObject().get("openid").getAsJsonArray();
 					br = syncInsertWxUser(access_token, ja);
 					if(!br.getErrorCode().equals(ErrorCode.sucessed.getCode())){
 						flag = false;
 					}else{
-						next_openid = jb.get("next_openid").getAsString();
+						next_openid = jo.get("next_openid").getAsString();
 						url = String.format( WxConsts.USER_QUERY_ALL_URL, access_token, next_openid);
 					}
 				}else{
@@ -74,7 +74,7 @@ public class WxUserService {
 				}
 			}else{
 				br.setErrorCode(ErrorCode.wx_error.getCode());
-				br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
+				br.setContent(jo.get("errcode").getAsString() + "--" + jo.get("errmsg").getAsString());
 				flag = false;
 			}
 		}
@@ -91,15 +91,15 @@ public class WxUserService {
 		for (int i = 0; i < ja.size(); i++) {
 			String openid = ja.get(i).getAsString();
 			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,openid,"zh_CN");
-			WxUserInfo wxUserInfo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
-			if(wxUserInfo.getErrcode() == null){
+			WxUserInfo wxUser = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
+			if(wxUser.getErrcode() == null){
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				String date = sdf.format(new Date(wxUserInfo.getSubscribe_time()*1000));
-				wxUserInfo.setSubscribeTime(date);
-				wxUserDao.insertWxUser(wxUserInfo);
+				String date = sdf.format(new Date(wxUser.getSubscribe_time()*1000));
+				wxUser.setSubscribeTime(date);
+				wxUserDao.insertWxUser(wxUser);
 			}else{
 				br.setErrorCode(ErrorCode.wx_error.getCode());
-				br.setContent(wxUserInfo.getErrcode() + "--" + wxUserInfo.getErrmsg());
+				br.setContent(wxUser.getErrcode() + "--" + wxUser.getErrmsg());
 				break;
 			}
 		}

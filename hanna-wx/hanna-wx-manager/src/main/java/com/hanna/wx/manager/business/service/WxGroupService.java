@@ -33,14 +33,14 @@ public class WxGroupService {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.USER_GROUP_ADD_URL, access_token);
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
-		if(jb.get("errcode") == null){
-			wxGroup.setGroupId(jb.get("group").getAsJsonObject().get("id").getAsLong());
+		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
+		if(jo.get("errcode") == null){
+			wxGroup.setGroupId(jo.get("group").getAsJsonObject().get("id").getAsLong());
 			wxGroup.setCount(0);
 			wxGroupDao.insertWxGroup(wxGroup);
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
-			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
+			br.setContent(jo.get("errcode").getAsString() + "--" + jo.get("errmsg").getAsString());
 		}
 		
 		return br;
@@ -75,10 +75,10 @@ public class WxGroupService {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.USER_GROUP_QUERY_URL, access_token);
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
-		if(jb.get("errcode") == null){
+		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
+		if(jo.get("errcode") == null){
 			wxGroupDao.truncateWxGroup();//清空微信用户组表
-			JsonArray ja = jb.get("groups").getAsJsonArray();
+			JsonArray ja = jo.get("groups").getAsJsonArray();
 			for (int i = 0; i < ja.size(); i++) {
 				WxGroupInfo wxGroupInfo = new WxGroupInfo();
 				wxGroupInfo.setGroupId(ja.get(i).getAsJsonObject().get("id").getAsLong());
@@ -88,7 +88,7 @@ public class WxGroupService {
 			}
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
-			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
+			br.setContent(jo.get("errcode").getAsString() + "--" + jo.get("errmsg").getAsString());
 		}
 		return br;
 	}
@@ -103,12 +103,12 @@ public class WxGroupService {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.USER_GROUP_DELETE_URL, access_token);
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + "}}", "UTF-8"), JsonObject.class,true);
-		if(jb.get("errcode") == null){
+		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + "}}", "UTF-8"), JsonObject.class,true);
+		if(jo.get("errcode") == null){
 			wxGroupDao.deleteWxGroup(wxGroup.getId());
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
-			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
+			br.setContent(jo.get("errcode").getAsString() + "--" + jo.get("errmsg").getAsString());
 		}
 		return br;
 	}
@@ -123,23 +123,13 @@ public class WxGroupService {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.USER_GROUP_UPDATE_URL, access_token);
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + ",\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
-		if(jb.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
+		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + ",\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
+		if(jo.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 			wxGroupDao.updateWxGroup(wxGroup);
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
-			br.setContent(jb.get("errcode").getAsString() + "--" + jb.get("errmsg").getAsString());
+			br.setContent(jo.get("errcode").getAsString() + "--" + jo.get("errmsg").getAsString());
 		}
 		return br;
-	}
-	
-	public static void main(String[] args) {
-		String access_token = "pGn5IxFLM8jNNJEfkAPIpLc9N0xGWRGhXs5lu4ZHLAbeW07nhSZajlMcKLkje2hYhySMaQ7vA-BjEE-tpbItqBzxDqT1g1WMy4Jb_v0eYaQUNVbABACVD";
-		String url = String.format( WxConsts.METARIAL_QUERY_URL, access_token);
-		System.out.println(HttpClientUtils.post(url, "{\"type\":\"news\",\"offset\":0,\"count\":20}", "UTF-8"));
-		JsonObject jb = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"type\":\"news\",\"offset\":0,\"count\":20}", "UTF-8"), JsonObject.class,true);
-		String a = "1";
-		
-		
 	}
 }

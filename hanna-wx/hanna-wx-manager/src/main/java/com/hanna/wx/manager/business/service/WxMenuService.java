@@ -29,7 +29,7 @@ public class WxMenuService {
 	 * 
 	 * @param wxMenu
 	 */
-	public boolean insertWxUser(WxMenuInfo wxMenu) {
+	public boolean insertWxMenu(WxMenuInfo wxMenu) {
 		if(wxMenu.getFid() == null){
 			if(wxMenuDao.countOneLevelWxMenu() >=3){
 				return false;
@@ -41,7 +41,7 @@ public class WxMenuService {
 		}
 		
 		try {
-			wxMenuDao.insertWxUser(wxMenu);
+			wxMenuDao.insertWxMenu(wxMenu);
 		} catch (Exception e) {
 			try {
 				throw new Exception(e.toString());
@@ -101,7 +101,7 @@ public class WxMenuService {
 	 * 
 	 * @param wxMenu
 	 */
-	public void updateWxUser(WxMenuInfo wxMenu) {
+	public void updateWxMenu(WxMenuInfo wxMenu) {
 		wxMenuDao.updateWxMenu(wxMenu);
 	}
 

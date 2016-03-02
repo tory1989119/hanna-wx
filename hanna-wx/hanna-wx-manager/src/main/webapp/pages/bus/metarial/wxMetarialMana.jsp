@@ -18,18 +18,13 @@
 <body>
 <div class="mainSemt">
 	<div class="navigateItem pl20">
-		公众号管理>用户分组管理
+		公众号管理>素材管理
 	</div>
 	<div class="search">
 		<ul class="mb20 overflow">
 			<li>
-				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="add();">
-					新增
-				</span>
-			</li>
-			<li>
-				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="syncWxGroup();">
-					同步用户分组
+				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="syncWxMetarial();">
+					同步素材
 				</span>
 			</li>
 		</ul>
@@ -37,9 +32,9 @@
 	<div class="rightMain tc p10">
 		<table width="100%">
 			<tr>
-				<td>分组名称</td>
-				<td>分组id</td>
-				<td>分组用户数</td>
+				<td>素材id</td>
+				<td>素材标题</td>
+				<td>添加或修改时间</td>
 				<td>操作</td>
 			</tr>
 			<tbody id="tbodyId">
@@ -77,7 +72,7 @@ var pageSize = 10;
 function search(pageNum){
 	layer.load(2);//遮罩层
 	$.ajax({
-	      url: "<%=request.getContextPath()%>/bus/group/queryWxGroup.do",
+	      url: "<%=request.getContextPath()%>/bus/metarial/queryWxMetarial.do",
 	      datatype: 'json',
 	      type: "post",
 	      data: {
@@ -122,79 +117,21 @@ function table(data,pageNum){
 	var str = '';
 	for (var i = 0; i < data.content.length; i++) {
 		str = str + '<tr>';
-		str = str + '<td>' + data.content[i].name + '</td>';
-		str = str + '<td>' + data.content[i].groupId + '</td>';
-		str = str + '<td>' + data.content[i].count + '</td>';
-		str = str + '<td><a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a> <a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\',\'' + data.content[i].groupId + '\')">删除</a></td>';
+		str = str + '<td>' + data.content[i].mediaId + '</td>';
+		str = str + '<td>' + data.content[i].title + '</td>';
+		str = str + '<td>' + data.content[i].updateTime + '</td>';
+		str = str + '<td></td>';
 		str = str + '</tr>';
     }
 	$("#tbodyId").html(str);
 }
 /**
- * 新增
- */
-function add(){
-	//iframe层-父子操作
-	var index = layer.open({
-	    type: 2,
-	    area: ['900px', '500px'],
-	    fix: false, //不固定
-	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/bus/group/addWxGroupPage.do'
-	});
-	layer.full(index);
-}
-/**
- * 修改
- */
-function modify(id){
-	//iframe层-父子操作
-	var index = layer.open({
-	    type: 2,
-	    area: ['900px', '500px'],
-	    fix: false, //不固定
-	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/bus/group/modifyWxGroupPage.do?id='+id
-	});
-	layer.full(index);
-}
-/**
- * 删除
- */
-function dele(id,groupId){
-	layer.confirm('确定删除该分组？',{
-		btn: ['确定','取消']
-	},function(){
-		$.ajax({
-			url: "<%=request.getContextPath()%>/bus/group/deleteWxGroup.do",
-			datatype: 'json',
-			type: "post",
-			data: {
-				id:id,
-				groupId:groupId
-			},
-			success: function (data) {
-				if (data.flag == '1' && data.errorCode == '10000') {
-					layer.alert('删除成功！', {
-						icon: 6
-					},function(index){
-						search(parseInt($('.active').attr('jp-data')));
-						layer.close(index);
-					});
-				}else{
-					layer.alert(data.content, {icon: 6});
-				}
-			}
-		});
-	});
-}
-/**
  * 同步分组
  */
-function syncWxGroup(){
+function syncWxMetarial(){
 	layer.load(2);//遮罩层
 	$.ajax({
-	      url: "<%=request.getContextPath()%>/bus/group/syncWxGroup.do",
+	      url: "<%=request.getContextPath()%>/bus/metarial/syncWxMetarial.do",
 	      datatype: 'json',
 	      type: "post",
 	      data: {},

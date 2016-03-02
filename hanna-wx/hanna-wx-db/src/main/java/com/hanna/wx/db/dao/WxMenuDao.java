@@ -11,7 +11,7 @@ public interface WxMenuDao {
 	 * 
 	 * @param wxMenu
 	 */
-	public void insertWxUser(WxMenuInfo wxMenu);
+	public void insertWxMenu(WxMenuInfo wxMenu);
 
 	/**
 	 * 根据ID获取微信菜单信息

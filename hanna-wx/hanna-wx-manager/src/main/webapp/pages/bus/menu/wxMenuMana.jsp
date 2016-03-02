@@ -28,7 +28,7 @@
 				</span>
 			</li>
 			<li>
-				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="addMenu();">
+				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="syncWxMenu();">
 					同步菜单
 				</span>
 			</li>
@@ -209,10 +209,10 @@ function viewSub(id){
 /**
  * 同步菜单
  */
-function addMenu(){
+function syncWxMenu(){
 	layer.load(2);//遮罩层
 	$.ajax({
-	      url: "<%=request.getContextPath()%>/bus/menu/syncWxUser.do",
+	      url: "<%=request.getContextPath()%>/bus/menu/syncWxMenu.do",
 	      datatype: 'json',
 	      type: "post",
 	      data: {},

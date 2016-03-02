@@ -17,7 +17,13 @@
 		COUNT count
 		FROM WX_GROUP_INFO
 		LIMIT #{begin},#{rows}
-	</select>	
+	</select>
+	
+	<!-- 查询微信用户分组列表数 -->
+	<select id="countWxGroup" parameterType="SysSearchDto" resultType="int" >
+		SELECT COUNT(ID) 
+		FROM WX_GROUP_INFO
+	</select>
 	
 	<!-- 根据id获取分组信息 -->
 	<select id="getWxGroupInfo" parameterType="Long" resultType="WxGroupInfo" >
@@ -28,12 +34,6 @@
 		COUNT count
 		FROM WX_GROUP_INFO
 		WHERE ID = #{id}
-	</select>
-	
-	<!-- 查询微信用户分组列表数 -->
-	<select id="countWxGroup" parameterType="SysSearchDto" resultType="int" >
-		SELECT COUNT(ID) 
-		FROM WX_GROUP_INFO
 	</select>
 	
 	<!-- 清空表数据 -->
