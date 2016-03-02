@@ -8,11 +8,11 @@ package com.hanna.wx.common.enums;
 public interface GlobConstants {
 
     /**
-     * 接口调用标志:成功
+     * 接口返回标志:成功
      */
 	public static final int    REQUEST_RESULT_FLAG_SUCCESSED = 1;
     /**
-     * 接口调用标志:失败
+     * 接口返回标志:失败
      */
 	public static final int    REQUEST_RESULT_FLAG_FAILED    = 0;
 	/**

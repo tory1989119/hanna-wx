@@ -1,7 +1,7 @@
 package com.hanna.wx.db.model;
 
 /**
- * 用户基本信息响应对象
+ * 用户分组对象
  * 
  * @author wuxj
  *

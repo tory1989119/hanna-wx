@@ -66,13 +66,13 @@ public class WxCallbackController {
 	 */
 	@RequestMapping(value = "/callback.do", method = RequestMethod.POST)  
     @ResponseBody
-	public void importPost(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String importPost(HttpServletRequest request, HttpServletResponse response, Model model) {
 		WxMessageDto wm = null;
 		try {
 			String strXml = IOUtils.toString(request.getInputStream());
 			System.out.println(strXml);
 			if( strXml.length() <= 0 || strXml == null )
-				return;
+				return "";
 			XStream xStream = new XStream();
 			xStream.alias("xml", WxMessageDto.class); 
 		    wm = (WxMessageDto) xStream.fromXML(strXml);
@@ -109,5 +109,6 @@ public class WxCallbackController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return "";
 	}
 }

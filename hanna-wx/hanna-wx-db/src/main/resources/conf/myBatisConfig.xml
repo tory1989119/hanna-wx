@@ -7,14 +7,15 @@
 		<setting name="lazyLoadingEnabled" value="false" />
 	</settings>
 	<typeAliases>
-		<typeAlias alias="WxUserInfo" type="com.hanna.wx.db.model.WxUserInfo" />
-		<typeAlias alias="WxMenuInfo" type="com.hanna.wx.db.model.WxMenuInfo" />
-		<typeAlias alias="WxGroupInfo" type="com.hanna.wx.db.model.WxGroupInfo" />
-		<typeAlias alias="WxMetarialInfo" type="com.hanna.wx.db.model.WxMetarialInfo" />
+		<typeAlias alias="WxUserInfo" type="com.hanna.wx.db.model.WxUserInfo"/>
+		<typeAlias alias="WxMenuInfo" type="com.hanna.wx.db.model.WxMenuInfo"/>
+		<typeAlias alias="WxGroupInfo" type="com.hanna.wx.db.model.WxGroupInfo"/>
+		<typeAlias alias="WxMetarialInfo" type="com.hanna.wx.db.model.WxMetarialInfo"/>
+		<typeAlias alias="WxKfInfo" type="com.hanna.wx.db.model.WxKfInfo"/>
 		
-		<typeAlias alias="SysUserInfo" type="com.hanna.wx.db.model.SysUserInfo" />
-		<typeAlias alias="SysMenuInfo" type="com.hanna.wx.db.model.SysMenuInfo" />
+		<typeAlias alias="SysUserInfo" type="com.hanna.wx.db.model.SysUserInfo"/>
+		<typeAlias alias="SysMenuInfo" type="com.hanna.wx.db.model.SysMenuInfo"/>
 		
-		<typeAlias alias="SysSearchDto" type="com.hanna.wx.db.dto.SysSearchDto" />
+		<typeAlias alias="SysSearchDto" type="com.hanna.wx.db.dto.SysSearchDto"/>
 	</typeAliases>
 </configuration>
