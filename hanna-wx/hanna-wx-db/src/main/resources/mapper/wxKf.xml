@@ -4,8 +4,8 @@
 <mapper namespace="com.hanna.wx.db.dao.WxKfDao">
 	<!-- 插入信息 -->
 	<insert id="insertWxKf" parameterType="WxKfInfo" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO WX_KF_INFO (KF_ACCOUNT,NICKNAME,PASSWORD)
-		VALUES (#{kfAccount},#{nickname},#{password})
+		INSERT INTO WX_KF_INFO (KF_ID,KF_ACCOUNT,NICKNAME,PASSWORD,KF_HEADIMGURL)
+		VALUES (#{kfId},#{kfAccount},#{nickname},#{password},#{kfHeadimgurl})
 	</insert>
 	
 	<!-- 查询客服列表 -->
@@ -13,8 +13,7 @@
 		SELECT 
 		ID id,
 		KF_ACCOUNT kfAccount,
-		NICKNAME nickname,
-		PASSWORD password
+		NICKNAME nickname
 		FROM WX_KF_INFO
 		LIMIT #{begin},#{rows}
 	</select>
@@ -30,8 +29,7 @@
 		SELECT 
 		ID id,
 		KF_ACCOUNT kfAccount,
-		NICKNAME nickname,
-		PASSWORD password
+		NICKNAME nickname
 		FROM WX_KF_INFO
 		WHERE ID = #{id}
 	</select>

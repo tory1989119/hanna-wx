@@ -13,6 +13,7 @@ import com.hanna.wx.db.dao.WxUserDao;
 import com.hanna.wx.db.dto.AccessTokenDto;
 import com.hanna.wx.db.dto.WxMessageDto;
 import com.hanna.wx.db.model.WxUserInfo;
+import com.thoughtworks.xstream.XStream;
 
 @Service
 public class WxCallbackService {
@@ -52,5 +53,21 @@ public class WxCallbackService {
 			wxUser.setSubscribe("0");
 			wxUserDao.subscribe(wxUser);
 		}
+	}
+	
+	/**
+	 * 移交客服
+	 * @param wm
+	 * @return
+	 */
+	public String kf(WxMessageDto wm){
+		XStream xStream = new XStream();
+		xStream.alias("xml", WxMessageDto.class);
+		WxMessageDto wm1 = new WxMessageDto();
+		wm1.setMsgType(WxConsts.DKF_TYPE);
+		wm1.setToUserName(wm.getFromUserName());
+		wm1.setFromUserName(wm.getToUserName());
+		wm1.setCreateTime(wm.getCreateTime());
+		return xStream.toXML(wm1);
 	}
 }

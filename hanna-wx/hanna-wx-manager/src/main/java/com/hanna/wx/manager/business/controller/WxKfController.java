@@ -17,16 +17,16 @@ import com.hanna.wx.db.model.WxKfInfo;
 import com.hanna.wx.manager.business.service.WxKfService;
 
 @Controller
-@RequestMapping("/bus/kr")
+@RequestMapping("/bus/kf")
 public class WxKfController {
 	@Autowired
 	WxKfService wxKfService;
 
 	private Logger logger = LoggerFactory.getLogger(WxKfController.class);
 
-	private final String WX_KF_MANA_PAGE = "bus/kr/wxKfMana"; // 微信用户组管理界面
-	private final String ADD_WX_KF_PAGE = "bus/kr/addWxKf"; // 增加微信用户组
-	private final String MODIFY_WX_KF_PAGE = "bus/kr/modifyWxKf"; // 修改微信用户组
+	private final String WX_KF_MANA_PAGE = "bus/kf/wxKfMana"; // 微信用户组管理界面
+	private final String ADD_WX_KF_PAGE = "bus/kf/addWxKf"; // 增加微信用户组
+	private final String MODIFY_WX_KF_PAGE = "bus/kf/modifyWxKf"; // 修改微信用户组
 
 	/**
 	 * 跳转到微信用户组管理页面

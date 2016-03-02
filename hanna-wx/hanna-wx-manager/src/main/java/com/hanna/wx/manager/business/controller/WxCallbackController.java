@@ -70,17 +70,17 @@ public class WxCallbackController {
 		WxMessageDto wm = null;
 		try {
 			String strXml = IOUtils.toString(request.getInputStream());
-			System.out.println(strXml);
 			if( strXml.length() <= 0 || strXml == null )
 				return "";
 			XStream xStream = new XStream();
 			xStream.alias("xml", WxMessageDto.class); 
 		    wm = (WxMessageDto) xStream.fromXML(strXml);
-			
 			if(wm.getMsgType().equals(MsgTypeEnum.TEXT.getType())){
 				System.out.println("获取到文本消息");
+				return wxCallbackService.kf(wm);
 			}else if(wm.getMsgType().equals(MsgTypeEnum.IMAGE.getType())){
 				System.out.println("获取到图片消息");
+				return wxCallbackService.kf(wm);
 			}else if(wm.getMsgType().equals(MsgTypeEnum.EVENT.getType())){
 				if(wm.getEvent().equals(EventEnum.CLICK.getType())){
 					System.out.println("点击菜单拉取消息时的事件推送");
@@ -103,8 +103,12 @@ public class WxCallbackController {
 				System.out.println("获取到地址消息");
 			}else if(wm.getMsgType().equals(MsgTypeEnum.VIDEO.getType())){
 				System.out.println("获取到视频消息");
+			}else if(wm.getMsgType().equals(MsgTypeEnum.SHORTVIDEO.getType())){
+				System.out.println("获取到小视频消息");
+				return wxCallbackService.kf(wm);
 			}else if(wm.getMsgType().equals(MsgTypeEnum.VOICE.getType())){
 				System.out.println("获取到语音消息");
+				return wxCallbackService.kf(wm);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

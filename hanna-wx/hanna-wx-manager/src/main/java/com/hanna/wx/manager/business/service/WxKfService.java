@@ -86,6 +86,7 @@ public class WxKfService {
 				wxKfInfo.setKfId(ja.get(i).getAsJsonObject().get("kf_id").getAsString());
 				wxKfInfo.setKfAccount(ja.get(i).getAsJsonObject().get("kf_account").getAsString());
 				wxKfInfo.setNickname(ja.get(i).getAsJsonObject().get("kf_nick").getAsString());
+				wxKfInfo.setKfHeadimgurl(ja.get(i).getAsJsonObject().get("kf_headimgurl").getAsString());
 				wxKfDao.insertWxKf(wxKfInfo);
 			}
 		}else{
@@ -106,7 +107,7 @@ public class WxKfService {
 		String access_token = AccessTokenDto.getAccess_token();
 		String url = String.format( WxConsts.KF_DELETE_URL, access_token,wxKf.getKfAccount());
 		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url, "UTF-8"), JsonObject.class,true);
-		if(jo.get("errcode") == null){
+		if(jo.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 			wxKfDao.deleteWxKf(wxKf.getId());
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());

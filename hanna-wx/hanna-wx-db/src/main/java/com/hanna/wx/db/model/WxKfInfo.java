@@ -12,6 +12,7 @@ public class WxKfInfo{
 	private String kfAccount;
 	private String nickname;
 	private String password;
+	private String kfHeadimgurl;
 	public Long getId() {
 		return id;
 	}
@@ -41,5 +42,11 @@ public class WxKfInfo{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getKfHeadimgurl() {
+		return kfHeadimgurl;
+	}
+	public void setKfHeadimgurl(String kfHeadimgurl) {
+		this.kfHeadimgurl = kfHeadimgurl;
 	}
 }

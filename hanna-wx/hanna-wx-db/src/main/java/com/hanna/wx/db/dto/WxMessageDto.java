@@ -55,6 +55,10 @@ public class WxMessageDto{
 	private String Ticket;
 	/** 菜单编号 */
 	private String MenuId;
+	/** 客服账号 */
+	private String KfAccount;
+	/** 语音消息附带 */
+	private String Recognition;
 	public String getToUserName() {
 		return ToUserName;
 	}
@@ -198,5 +202,17 @@ public class WxMessageDto{
 	}
 	public void setMenuId(String menuId) {
 		MenuId = menuId;
+	}
+	public String getKfAccount() {
+		return KfAccount;
+	}
+	public void setKfAccount(String kfAccount) {
+		KfAccount = kfAccount;
+	}
+	public String getRecognition() {
+		return Recognition;
+	}
+	public void setRecognition(String recognition) {
+		Recognition = recognition;
 	}
 }

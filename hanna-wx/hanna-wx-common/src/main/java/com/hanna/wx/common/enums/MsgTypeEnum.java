@@ -11,7 +11,8 @@ public enum MsgTypeEnum {
 	VIDEO("video"),
 	LOCATION("location"),
 	LINK("link"),
-	EVENT("event");
+	EVENT("event"),
+	SHORTVIDEO("shortvideo");
 	
 	private String type;
 	
