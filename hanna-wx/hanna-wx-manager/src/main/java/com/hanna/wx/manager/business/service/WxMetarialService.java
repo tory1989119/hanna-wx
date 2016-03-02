@@ -1,5 +1,8 @@
 package com.hanna.wx.manager.business.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +29,7 @@ public class WxMetarialService {
 	 * @param searchDto
 	 * @return
 	 */
-	public BaseResponseDto<Object> querywxMetarial(SysSearchDto searchDto) {
+	public BaseResponseDto<Object> queryWxMetarial(SysSearchDto searchDto) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		br.setContent(wxMetarialDao.queryWxMetarial(searchDto));
 		br.setPageCount(wxMetarialDao.countWxMetarial(searchDto));
@@ -41,6 +44,7 @@ public class WxMetarialService {
 		Integer begin = 0;
 		boolean flag = true;
 		String url = String.format(WxConsts.METARIAL_QUERY_URL, AccessTokenDto.getAccess_token());
+		wxMetarialDao.truncateWxMetarial();
 		while (flag) {
 			JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url,"{\"type\":\"news\",\"offset\":" + begin + ",\"count\":20}", "UTF-8"),JsonObject.class, true);
 			if(jo.get("errcode") == null){
@@ -51,11 +55,15 @@ public class WxMetarialService {
 					for (int i = 0; i < ja.size(); i++) {
 						JsonObject metarialJo = ja.get(i).getAsJsonObject();
 						String media_id = metarialJo.get("media_id").getAsString();
-						JsonArray metarualJa = metarialJo.get("content").getAsJsonArray();
+						Long update_time = metarialJo.get("update_time").getAsLong();
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+						String date = sdf.format(new Date(update_time*1000));
+						JsonArray metarualJa = metarialJo.get("content").getAsJsonObject().get("news_item").getAsJsonArray();
 						for (int j = 0; j < metarualJa.size(); j++) {
-							JsonObject mediaJo = metarualJa.get(i).getAsJsonObject();
+							JsonObject mediaJo = metarualJa.get(j).getAsJsonObject();
 							WxMetarialInfo wxMetarial = new WxMetarialInfo();
 							wxMetarial.setMediaId(media_id);
+							wxMetarial.setUpdateTime(date);
 							wxMetarial.setTitle(mediaJo.get("title").getAsString());
 							wxMetarial.setThumbMediaId(mediaJo.get("thumb_media_id").getAsString());
 							wxMetarial.setThumbUrl(mediaJo.get("thumb_url").getAsString());

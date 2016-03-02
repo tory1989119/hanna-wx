@@ -84,7 +84,7 @@
 			return false; 
  		}
 		$.ajax({
-			url: "<%=request.getContextPath()%>/bus/menu/insertMenu.do",
+			url: "<%=request.getContextPath()%>/bus/menu/insertWxMenu.do",
 			datatype: 'json',
 			type: "post",
 			data: {

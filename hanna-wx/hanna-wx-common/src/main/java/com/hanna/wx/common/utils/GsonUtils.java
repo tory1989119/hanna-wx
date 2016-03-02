@@ -40,7 +40,7 @@ public class GsonUtils {
     		 return gson;
     	}else{
     		if (null == gsonNoNULL) {
-            	gsonNoNULL = new GsonBuilder().registerTypeAdapter(String.class, new StringConverter()).setDateFormat("yyyy-MM-dd").create();
+            	gsonNoNULL = new GsonBuilder().disableHtmlEscaping().registerTypeAdapter(String.class, new StringConverter()).setDateFormat("yyyy-MM-dd").create();
             }
     		 return gsonNoNULL;
     	}

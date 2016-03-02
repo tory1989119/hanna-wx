@@ -40,14 +40,14 @@ public class WxMetarialController {
 	 * @param searchDto
 	 * @return
 	 */
-	@RequestMapping(value = "querywxMetarial.do", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "queryWxMetarial.do", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public BaseResponseDto<Object> queryWxGroup(SysSearchDto searchDto) {
+	public BaseResponseDto<Object> queryWxMetarial(SysSearchDto searchDto) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		try {
-			return wxMetarialService.querywxMetarial(searchDto);
+			return wxMetarialService.queryWxMetarial(searchDto);
 		} catch (Exception e) {
-			logger.error("WxMetarialController.querywxMetarial", e);
+			logger.error("WxMetarialController.queryWxMetarial", e);
 			br.setErrorCode(ErrorCode.sys_error.getCode());
 			br.setContent(ErrorCode.sys_error.getDes());
 		}

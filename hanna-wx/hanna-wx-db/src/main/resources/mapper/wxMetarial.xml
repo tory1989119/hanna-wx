@@ -21,11 +21,17 @@
 		DIGEST digest,
 		URL url,
 		CONTENT_SOURCE_URL contentSourceUrl,
-		UPDATE_TIME updateTime,
+		date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') updateTime,
 		NAME name
 		FROM WX_METARIAL_INFO
 		LIMIT #{begin},#{rows}
-	</select>	
+	</select>
+	
+	<!-- 查询素材列表数 -->
+	<select id="countWxMetarial" parameterType="SysSearchDto" resultType="int" >
+		SELECT COUNT(ID) 
+		FROM WX_METARIAL_INFO
+	</select>
 	
 	<!-- 根据id获取素材信息 -->
 	<select id="getWxMetarialInfo" parameterType="Long" resultType="WxMetarialInfo" >
@@ -45,12 +51,6 @@
 		NAME name
 		FROM WX_METARIAL_INFO
 		WHERE ID = #{id}
-	</select>
-	
-	<!-- 查询素材列表数 -->
-	<select id="countWxMetarial" parameterType="SysSearchDto" resultType="int" >
-		SELECT COUNT(ID) 
-		FROM WX_METARIAL_INFO
 	</select>
 	
 	<!-- 清空表数据 -->
