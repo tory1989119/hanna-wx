@@ -11,7 +11,7 @@
   
   <properties>
 		<web.app.name>wx</web.app.name>
-	</properties>
+  </properties>
   
   <dependencies>
 	<dependency>
