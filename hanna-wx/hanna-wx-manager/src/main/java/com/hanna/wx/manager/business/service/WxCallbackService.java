@@ -6,13 +6,13 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hanna.wx.common.enums.GlobConstants;
 import com.hanna.wx.common.enums.MsgTypeEnum;
 import com.hanna.wx.common.enums.WxConsts;
-import com.hanna.wx.common.http.HttpClientUtils;
 import com.hanna.wx.common.utils.GsonUtils;
 import com.hanna.wx.db.dao.WxUserDao;
-import com.hanna.wx.db.dto.AccessTokenDto;
 import com.hanna.wx.db.dto.WxMessageDto;
+import com.hanna.wx.db.inf.WxClient;
 import com.hanna.wx.db.model.WxUserInfo;
 import com.thoughtworks.xstream.XStream;
 
@@ -20,6 +20,9 @@ import com.thoughtworks.xstream.XStream;
 public class WxCallbackService {
 	@Autowired
 	private WxUserDao wxUserDao;
+	
+	@Autowired
+	private WxClient wxClient;
 	/**
 	 * 用户关注
 	 * @param wm
@@ -27,10 +30,8 @@ public class WxCallbackService {
 	public void subscribe(WxMessageDto wm){
 		WxUserInfo wxUser = wxUserDao.getWxUserByOpenid(wm.getFromUserName());
 		if(wxUser == null){
-			String access_token = AccessTokenDto.getAccess_token();
-			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,wm.getFromUserName(),"zh_CN");
-			wxUser = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
-			if(wxUser.getErrcode() == null){
+			wxUser = GsonUtils.fromJson(wxClient.userInfo(wm.getFromUserName()).toString(), WxUserInfo.class,true);
+			if(wxUser.getErrcode() == null || wxUser.getErrcode() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String date = sdf.format(new Date(wxUser.getSubscribe_time()*1000));
 				wxUser.setSubscribeTime(date);

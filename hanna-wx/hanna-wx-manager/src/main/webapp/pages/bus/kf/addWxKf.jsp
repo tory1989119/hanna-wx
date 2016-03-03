@@ -22,12 +22,11 @@
 				<div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">客服昵称：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="nickname" id="nickname">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="nickname" id="nickname" maxlength="6">
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">客服账号：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="kfAccount" id="kfAccount">
-						账号必须以“@zjdxdwyy”结尾
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="kfAccount" id="kfAccount" placeholder="账号必须以“${accountSuffix}”结尾" maxlength="14">
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">客服密码：</span>

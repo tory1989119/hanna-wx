@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hanna.wx.common.enums.ErrorCode;
+import com.hanna.wx.common.utils.Configuration;
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.db.dto.SysSearchDto;
 import com.hanna.wx.db.model.WxKfInfo;
@@ -44,7 +45,9 @@ public class WxKfController {
 	 * @return
 	 */
 	@RequestMapping(value = "addWxKfPage.do", method = RequestMethod.GET)
-	public String addWxKfPage() {
+	public String addWxKfPage(HttpServletRequest request) {
+		String accountSuffix = Configuration.getGlobalMsg("accountSuffix");
+		request.setAttribute("accountSuffix", accountSuffix);
 		return ADD_WX_KF_PAGE;
 	}
 	
@@ -113,7 +116,19 @@ public class WxKfController {
 	public BaseResponseDto<Object> insertWxKf(WxKfInfo wxKfInfo) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		try {
-			return wxKfService.insertWxKf(wxKfInfo);
+			String accountSuffix = Configuration.getGlobalMsg("accountSuffix");
+			if(wxKfInfo.getKfAccount().length() > accountSuffix.length()){
+				String kfAccountSuffix = wxKfInfo.getKfAccount().substring(wxKfInfo.getKfAccount().length()-accountSuffix.length(), wxKfInfo.getKfAccount().length());
+				if(kfAccountSuffix.equals(accountSuffix)){
+					return wxKfService.insertWxKf(wxKfInfo);
+				}else{
+					br.setErrorCode(ErrorCode.kf_account_error.getCode());
+					br.setContent(ErrorCode.kf_account_error.getDes());
+				}
+			}else{
+				br.setErrorCode(ErrorCode.kf_account_error.getCode());
+				br.setContent(ErrorCode.kf_account_error.getDes());
+			}
 		} catch (Exception e) {
 			logger.error("WxKfController.insertWxKf", e);
 			br.setErrorCode(ErrorCode.sys_error.getCode());

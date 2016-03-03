@@ -25,6 +25,12 @@
 						<input type="hidden"  name="id" id="id" value="${wxMenuInfo.id}">
 						<input type="hidden" name="fid" id="fid" value="${wxMenuInfo.fid}">
 						<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" value="${wxMenuInfo.name}">
+						<c:if test="${wxMenuInfo.fid == null || wxMenuInfo.fid == ''}">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" maxlength="4" value="${wxMenuInfo.name}">
+						</c:if>
+						<c:if test="${wxMenuInfo.fid != null && wxMenuInfo.fid != ''}">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" maxlength="7" value="${wxMenuInfo.name}">
+						</c:if>
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">菜单类型：</span>
@@ -46,15 +52,15 @@
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">菜单key：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="menuKey" id="menuKey" value="${wxMenuInfo.menuKey}">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="menuKey" id="menuKey" value="${wxMenuInfo.menuKey}" maxlength="128">
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">url地址：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="url" id="url" value="${wxMenuInfo.url}">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="url" id="url" value="${wxMenuInfo.url}" maxlength="255">
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">素材id：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="mediaId" id="mediaId" value="${wxMenuInfo.mediaId}">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="mediaId" id="mediaId" value="${wxMenuInfo.mediaId}" maxlength="128">
 					</div>
 					<div class="tc lh35 mt20">　　　　
 						<span class="btnGriy Blackdetail cursor mr20" onclick="closeIf();">

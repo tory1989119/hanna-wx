@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hanna.wx.common.enums.ErrorCode;
-import com.hanna.wx.common.enums.WxConsts;
-import com.hanna.wx.common.http.HttpClientUtils;
 import com.hanna.wx.common.utils.GsonUtils;
 import com.hanna.wx.db.dao.WxUserDao;
-import com.hanna.wx.db.dto.AccessTokenDto;
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.db.dto.SysSearchDto;
+import com.hanna.wx.db.inf.WxClient;
 import com.hanna.wx.db.model.WxUserInfo;
 
 @Service
 public class WxUserService {
 	@Autowired
 	private WxUserDao wxUserDao;
+	@Autowired
+	private WxClient wxClient;
 
 	/**
 	 * 根据ID获取微信用户信息
@@ -52,22 +52,19 @@ public class WxUserService {
 	 */
 	public BaseResponseDto<Object> syncWxUser(){
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-		String access_token = AccessTokenDto.getAccess_token();
 		String next_openid = "";
-		String url = String.format( WxConsts.USER_QUERY_ALL_URL, access_token, next_openid);
 		boolean flag = true;
 		wxUserDao.truncateWxUser();//清空微信用户表
 		while (flag) {
-			JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
+			JsonObject jo = wxClient.userQueryAll(next_openid);
 			if(jo.get("errcode") == null){
 				if(jo.get("count").getAsInt() > 0){
 					JsonArray ja = jo.get("data").getAsJsonObject().get("openid").getAsJsonArray();
-					br = syncInsertWxUser(access_token, ja);
+					br = syncInsertWxUser(ja);
 					if(!br.getErrorCode().equals(ErrorCode.sucessed.getCode())){
 						flag = false;
 					}else{
 						next_openid = jo.get("next_openid").getAsString();
-						url = String.format( WxConsts.USER_QUERY_ALL_URL, access_token, next_openid);
 					}
 				}else{
 					flag = false;
@@ -86,12 +83,11 @@ public class WxUserService {
 	 * @param access_token
 	 * @param ja
 	 */
-	private BaseResponseDto<Object> syncInsertWxUser(String access_token,JsonArray ja){
+	private BaseResponseDto<Object> syncInsertWxUser(JsonArray ja){
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		for (int i = 0; i < ja.size(); i++) {
 			String openid = ja.get(i).getAsString();
-			String url = String.format( WxConsts.USER_QUERY_INFO_URL, access_token,openid,"zh_CN");
-			WxUserInfo wxUser = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), WxUserInfo.class,true);
+			WxUserInfo wxUser = GsonUtils.fromJson(wxClient.userInfo(openid).toString(), WxUserInfo.class,true);
 			if(wxUser.getErrcode() == null){
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String date = sdf.format(new Date(wxUser.getSubscribe_time()*1000));

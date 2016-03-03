@@ -23,7 +23,13 @@
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">菜单名：</span>
 						<input type="hidden" name="fid" id="fid" value="${fid}">
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name">
+						<c:if test="${fid == null || fid == ''}">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" maxlength="4">
+						</c:if>
+						<c:if test="${fid != null && fid != ''}">
+							<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" maxlength="7">
+						</c:if>
+						
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">菜单类型：</span>
@@ -45,15 +51,15 @@
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">菜单key：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="menuKey" id="menuKey">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="menuKey" id="menuKey" maxlength="128">
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">url地址：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="url" id="url">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="url" id="url" maxlength="255">
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">素材id：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="mediaId" id="mediaId">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="mediaId" id="mediaId" maxlength="128">
 					</div>
 					<div class="tc lh35 mt20">　　　　
 						<span class="btnGriy Blackdetail cursor mr20" onclick="closeIf();">

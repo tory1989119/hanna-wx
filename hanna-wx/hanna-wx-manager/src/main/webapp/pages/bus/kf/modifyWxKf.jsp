@@ -24,7 +24,7 @@
 						<span class="fl wp16 tr">客服昵称：</span>
 						<input type="hidden"  name="id" id="id" value="${wxKfInfo.id}">
 						<input type="hidden" name="kfAccount" id="kfAccount" value="${wxKfInfo.kfAccount}">
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="nickname" id="nickname" value="${wxKfInfo.nickname}">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="nickname" id="nickname" value="${wxKfInfo.nickname}" maxlength="6">
 					</div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">客服密码：</span>

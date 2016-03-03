@@ -9,19 +9,18 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hanna.wx.common.enums.ErrorCode;
-import com.hanna.wx.common.enums.WxConsts;
-import com.hanna.wx.common.http.HttpClientUtils;
-import com.hanna.wx.common.utils.GsonUtils;
 import com.hanna.wx.db.dao.WxMetarialDao;
-import com.hanna.wx.db.dto.AccessTokenDto;
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.db.dto.SysSearchDto;
+import com.hanna.wx.db.inf.WxClient;
 import com.hanna.wx.db.model.WxMetarialInfo;
 
 @Service
 public class WxMetarialService {
 	@Autowired
 	private WxMetarialDao wxMetarialDao;
+	@Autowired
+	private WxClient wxClient;
 
 	/**
 	 * 查询素材列表
@@ -43,10 +42,9 @@ public class WxMetarialService {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
 		Integer begin = 0;
 		boolean flag = true;
-		String url = String.format(WxConsts.METARIAL_QUERY_URL, AccessTokenDto.getAccess_token());
 		wxMetarialDao.truncateWxMetarial();
 		while (flag) {
-			JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url,"{\"type\":\"news\",\"offset\":" + begin + ",\"count\":20}", "UTF-8"),JsonObject.class, true);
+			JsonObject jo = wxClient.metarialQuery(begin);
 			if(jo.get("errcode") == null){
 				begin = begin +20;
 				Integer item_count = jo.get("item_count").getAsInt();

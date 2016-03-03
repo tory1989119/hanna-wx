@@ -1,21 +1,15 @@
 package com.hanna.wx.manager.business.service;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hanna.wx.common.enums.ErrorCode;
 import com.hanna.wx.common.enums.GlobConstants;
-import com.hanna.wx.common.enums.WxConsts;
-import com.hanna.wx.common.http.HttpClientUtils;
-import com.hanna.wx.common.utils.GsonUtils;
 import com.hanna.wx.db.dao.WxGroupDao;
-import com.hanna.wx.db.dto.AccessTokenDto;
 import com.hanna.wx.db.dto.BaseResponseDto;
 import com.hanna.wx.db.dto.SysSearchDto;
+import com.hanna.wx.db.inf.WxClient;
 import com.hanna.wx.db.model.WxGroupInfo;
 
 @Service
@@ -23,6 +17,8 @@ public class WxGroupService {
 	@Autowired
 	private WxGroupDao wxGroupDao;
 	
+	@Autowired
+	private WxClient wxClient;
 	/**
 	 *新增用户分组
 	 * 
@@ -31,10 +27,8 @@ public class WxGroupService {
 	 */
 	public BaseResponseDto<Object> insertWxGroup(WxGroupInfo wxGroup) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-		String access_token = AccessTokenDto.getAccess_token();
-		String url = String.format( WxConsts.USER_GROUP_ADD_URL, access_token);
-		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
-		if(jo.get("errcode") == null){
+		JsonObject jo = wxClient.groupCreate(wxGroup.getName());
+		if(jo.get("errcode") == null || jo.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 			wxGroup.setGroupId(jo.get("group").getAsJsonObject().get("id").getAsLong());
 			wxGroup.setCount(0);
 			wxGroupDao.insertWxGroup(wxGroup);
@@ -73,10 +67,8 @@ public class WxGroupService {
 	 */
 	public BaseResponseDto<Object> syncWxGroup(){
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-		String access_token = AccessTokenDto.getAccess_token();
-		String url = String.format( WxConsts.USER_GROUP_QUERY_URL, access_token);
-		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
-		if(jo.get("errcode") == null){
+		JsonObject jo = wxClient.groupQuery();
+		if(jo.get("errcode") == null || jo.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 			wxGroupDao.truncateWxGroup();//清空微信用户组表
 			JsonArray ja = jo.get("groups").getAsJsonArray();
 			for (int i = 0; i < ja.size(); i++) {
@@ -101,10 +93,8 @@ public class WxGroupService {
 	 */
 	public BaseResponseDto<Object> deleteWxGroup(WxGroupInfo wxGroup) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-		String access_token = AccessTokenDto.getAccess_token();
-		String url = String.format( WxConsts.USER_GROUP_DELETE_URL, access_token);
-		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + "}}", "UTF-8"), JsonObject.class,true);
-		if(jo.get("errcode") == null){
+		JsonObject jo = wxClient.groupDelete(wxGroup.getGroupId());
+		if(jo.get("errcode") == null || jo.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 			wxGroupDao.deleteWxGroup(wxGroup.getId());
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());
@@ -121,10 +111,8 @@ public class WxGroupService {
 	 */
 	public BaseResponseDto<Object> updateWxGroup(WxGroupInfo wxGroup) {
 		BaseResponseDto<Object> br = new BaseResponseDto<Object>();
-		String access_token = AccessTokenDto.getAccess_token();
-		String url = String.format( WxConsts.USER_GROUP_UPDATE_URL, access_token);
-		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.post(url, "{\"group\":{\"id\":" + wxGroup.getGroupId() + ",\"name\":\"" + wxGroup.getName() + "\"}}", "UTF-8"), JsonObject.class,true);
-		if(jo.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
+		JsonObject jo = wxClient.groupUpdate(wxGroup.getGroupId(), wxGroup.getName());
+		if(jo.get("errcode") == null || jo.get("errcode").getAsInt() == GlobConstants.WX_RESULT_FLAG_SUCCESSED){
 			wxGroupDao.updateWxGroup(wxGroup);
 		}else{
 			br.setErrorCode(ErrorCode.wx_error.getCode());

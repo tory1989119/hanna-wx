@@ -22,7 +22,7 @@
 				<div>
 					<div class="lh35 mb20">
 						<span class="fl wp16 tr">分组名称：</span>
-						<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name">
+						<input type="text" class="input-control h35  pl5 pr5 wp80" name="name" id="name" maxlength="10">
 					</div>
 					<div class="tc lh35 mt20">　　　　
 						<span class="btnGriy Blackdetail cursor mr20" onclick="closeIf();">
