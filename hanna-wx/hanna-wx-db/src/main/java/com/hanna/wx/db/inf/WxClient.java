@@ -197,4 +197,13 @@ public class WxClient {
 		JsonObject jo = GsonUtils.fromJson(HttpClientUtils.get(url,"UTF-8"), JsonObject.class,true);
 		return jo;
 	}
+	
+	/**
+	 * 红包接口
+	 * @param str
+	 * @return
+	 */
+	public String sendRedPack(String str,String certfile,String pwd_cert){
+		return HttpClientUtils.post( WxConsts.SENDREDPACK_URL, str, "utf-8", certfile, pwd_cert );
+	}
 }

@@ -173,24 +173,10 @@ function table(data,pageNum){
 			str = str + '<td>未关注</td>';
 		}
 		str = str + '<td>' + data.content[i].subscribeTime + '</td>';
-		str = str + '<td><a href="javascript:void(0)" onclick="getWxUserInfo(\'' + data.content[i].id + '\')">用户详情</a></td>';
+		str = str + '<td></td>';
 		str = str + '</tr>';
     }
 	$("#tbodyId").html(str);
-}
-/**
- * 查看用户详情
- */
-function getWxUserInfo(id){
-	//iframe层-父子操作
-	var index = layer.open({
-	    type: 2,
-	    area: ['900px', '500px'],
-	    fix: false, //不固定
-	    maxmin: true,
-	    content: 'wxUserInfoPage.do?id=' + id
-	});
-	layer.full(index);
 }
 
 /**

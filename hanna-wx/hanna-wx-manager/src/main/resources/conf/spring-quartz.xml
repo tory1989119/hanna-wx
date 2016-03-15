@@ -8,13 +8,14 @@
 						   http://www.springframework.org/schema/context 
 	 					   http://www.springframework.org/schema/context/spring-context-3.2.xsd ">
    <!-- 获取access_token任务开始 -->
+   
    <!-- 获取access_token的job -->
    <bean id="accessTokenJob" class="com.hanna.wx.manager.job.AccessTokenJob"/>  
 	<!-- 获取access_token调度的配置 -->
 	<bean id="accessTokenTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="accessTokenJobDetail" />
-		<property name="cronExpression" value="0 0 0/1 * * ? *" /> <!-- 每隔2小时 -->
+		<property name="cronExpression" value="0 0 0/1 * * ? *" /> <!-- 每隔1小时 -->
 	</bean>
 	
 	<!-- 获取access_token的job的配置-->
@@ -25,8 +26,33 @@
         <property name="targetMethod" value="execute"/>  
         <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->  
         <property name="concurrent" value="false"/>
-   </bean>  
+   </bean>
+   
    <!-- 获取access_token任务结束-->
+   
+   
+   <!-- 红包发送任务开始 -->
+   
+   <!-- 红包发送的job -->
+   <bean id="sendRedPackJob" class="com.hanna.wx.manager.job.SendRedPackJob"/>  
+	<!-- 红包发送调度的配置 -->
+	<bean id="sendRedPackTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="sendRedPackJobDetail" />
+		<property name="cronExpression" value="0 0/1 * * * ? *" /> <!-- 每隔1分钟 -->
+	</bean>
+	
+	<!-- 红包发送的job的配置-->
+    <bean id="sendRedPackJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <!-- 指定任务实体 --> 
+        <property name="targetObject" ref="sendRedPackJob"/> 
+        <!-- 指定任务入口方法 --> 
+        <property name="targetMethod" value="execute"/>  
+        <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->  
+        <property name="concurrent" value="false"/>
+   </bean>
+   
+   <!-- 红包发送任务结束-->
    
    <!-- 启动触发器的配置 -->
    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
@@ -34,6 +60,7 @@
         <!-- 每个Trigger表示一个作业。 -->
            <list>  
                <ref bean="accessTokenTrigger"/> 
+               <ref bean="sendRedPackTrigger"/> 
            </list>  
        </property>  
        <property name="autoStartup" value="true"/>  

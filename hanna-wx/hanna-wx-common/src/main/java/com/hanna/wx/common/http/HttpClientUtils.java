@@ -1,9 +1,14 @@
 package com.hanna.wx.common.http;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -13,6 +18,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -135,5 +142,48 @@ public class HttpClientUtils {
         }
         return null;
     }
+    
+    /**
+     * 微信红包调用
+     * @param url
+     * @param paramStr
+     * @param charset
+     * @param certfile
+     * @param pwd_cert
+     * @return
+     */
+	public static String post(String url, String paramStr, String charset, String certfile, String pwd_cert){
+		CloseableHttpClient httpclient = null;
+		try {
+			KeyStore keyStore = KeyStore.getInstance("PKCS12");
+			FileInputStream instream = new FileInputStream(new File(certfile));
+			try {
+				keyStore.load(instream, pwd_cert.toCharArray());
+			} finally {
+				instream.close();
+			}
+			// Trust own CA and all self-signed certs
+			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, pwd_cert.toCharArray()).build();
+			// Allow TLSv1 protocol only
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" }, null, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+			httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setConfig(RequestConfig.custom().setSocketTimeout(105000).setConnectTimeout(105000).setConnectionRequestTimeout(105000).setExpectContinueEnabled(false).build());
+			StringEntity se = new StringEntity(paramStr, charset);
+			httpPost.setEntity(se);
+			StringResponseHandler responseHandler = new StringResponseHandler();
+			responseHandler.setDefaultCharset(charset);
+			String res_data = httpclient.execute(httpPost, responseHandler);
+			return res_data;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			try {
+				httpclient.close();
+			} catch (IOException e) {
+				
+			}
+		}
+	}
 }
 

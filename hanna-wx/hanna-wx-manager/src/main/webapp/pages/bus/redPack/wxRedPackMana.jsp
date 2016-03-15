@@ -19,19 +19,25 @@
 <body>
 <div class="mainSemt">
 	<div class="navigateItem pl20">
-		系统管理>管理员管理
+		业务管理>红包管理
 	</div>
 	<div class="search">
 		<ul class="mb20 overflow">
 			<li>
-				<select class="form-control select145 h30" id="type">
+				<select class="form-control select145 h30" id="searchType" onchange="searchType();">
 					<option value="0">搜索类型</option>
-					<option value="1">昵称</option>
-			        <option value="2">手机号码</option>
+					<option value="1">OPENID</option>
+			        <option value="2">红包状态</option>
 				</select>
 			</li>
 			<li>
-				<input type="text" class="form-control text250 h30" id="typeValue"/>
+				<input type="text" class="form-control text250 h30" id="inputTypeValue"/>
+				
+				<select id="statusTypeValue"  class="form-control text250 h30" style="display:none">
+					<option value="0">发送中</option>
+					<option value="1">发送成功</option>
+					<option value="9">发送失败</option>
+    		</select>
 			</li>
 			<li>
 				<span class="fl">开始时间：</span>
@@ -46,27 +52,24 @@
 					搜索
 				</span>
 			</li>
-			<li>
-				<span class="btnSearch whitefc f14 mt5 clearfix cursor" onclick="add();">
-					新增
-				</span>
-			</li>
 		</ul>
 	</div>
 	<div class="rightMain tc p10">
 		<table width="100%">
 			<tr>
-				<td>管理员ID</td>
-				<td>昵称</td>
-				<td>性别</td>
-				<td>年龄</td>
-				<td>手机号码</td>
+				<td>本系统订单号</td>
+				<td>微信订单号</td>
+				<td>OPENID</td>
+				<td>活动名称</td>
+				<td>金额</td>
 				<td>创建时间</td>
+				<td>发送时间</td>
+				<td>状态</td>
 				<td>操作</td>
 			</tr>
 			<tbody id="tbodyId">
 				<tr >
-					<td colspan="7">无数据</td>
+					<td colspan="9">无数据</td>
 				</tr>
             </tbody>
 		</table>
@@ -97,24 +100,24 @@ var pageSize = 10;
 
 //查询 刷新当前页数pageNum
 function search(pageNum){
-	var phoneNumber = '';
-	var nickName = '';
-	if($("#type").val() == 1){
-		nickName = $("#typeValue").val();
-	}else if($("#type").val() == 2){
-		phoneNumber = $("#typeValue").val();
+	var status = '';
+	var openid = '';
+	if($("#searchType").val() == 1){
+		openid = $("#inputTypeValue").val();
+	}else if($("#searchType").val() == 2){
+		status = $("#statusTypeValue").val();
 	}
 	
 	layer.load(2);//遮罩层
 	$.ajax({
-	      url: "<%=request.getContextPath()%>/sys/querySysUser.do",
+	      url: "<%=request.getContextPath()%>/bus/redPack/queryWxRedPack.do",
 	      datatype: 'json',
 	      type: "post",
 	      data: {
 	    	  begin:(pageNum-1)*pageSize,
 	    	  rows:pageSize,
-	    	  nickName:nickName,
-	    	  phoneNumber:phoneNumber,
+	    	  openid:openid,
+	    	  status:status,
 	    	  startDate:$("#startDate").val(),
 	    	  endDate:$("#endDate").val()
 	      },
@@ -132,7 +135,7 @@ function search(pageNum){
 //列表显示内容
 function table(data,pageNum){
 	if(data.content == null || data.content.length <= 0){
-		$("#tbodyId").html('<tr ><td colspan="7">无数据</td></tr>');
+		$("#tbodyId").html('<tr ><td colspan="9">无数据</td></tr>');
 		$('#pageId').css('display','none');
 		return;
 	}else{
@@ -156,99 +159,44 @@ function table(data,pageNum){
 	var str = '';
 	for (var i = 0; i < data.content.length; i++) { 
 		str = str + '<tr>';
-		str = str + '<td>' + data.content[i].id + '</td>';
-		str = str + '<td>' + data.content[i].nickName + '</td>';
-		
-		if(data.content[i].sex != null){
-			if(data.content[i].sex == '0'){
-				str = str + '<td>' + '男' + '</td>';
-			}else{
-				str = str + '<td>' + '女' + '</td>';
-			}
+		str = str + '<td>' + data.content[i].mchBillno + '</td>';
+		if(data.content[i].sendListid != null && data.content[i].sendListid != ''){
+			str = str + '<td>' + data.content[i].sendListid + '</td>';
 		}else{
 			str = str + '<td></td>';
 		}
 		
-		if(data.content[i].age != null){
-			str = str + '<td>' + data.content[i].age + '</td>';
-		}else{
-			str = str + '<td></td>';
-		}
-		
-		if(data.content[i].phoneNumber != null){
-			str = str + '<td>' + data.content[i].phoneNumber + '</td>';
-		}else{
-			str = str + '<td></td>';
-		}
+		str = str + '<td>' + data.content[i].reOpenid + '</td>';
+		str = str + '<td>' + data.content[i].actName + '</td>';
+		str = str + '<td>' + data.content[i].totalAmount + '</td>';
 		str = str + '<td>' + data.content[i].createTime + '</td>';
-		str = str + '<td><a href="javascript:void(0)" onclick="getAdminInfo(\'' + data.content[i].id + '\')">管理员详情</a>　<a href="javascript:void(0)" onclick="modify(\'' + data.content[i].id + '\')">修改</a>　<a href="javascript:void(0)" onclick="dele(\'' + data.content[i].id + '\')">删除</a></td>';
+		str = str + '<td>' + data.content[i].sendTime + '</td>';
+		
+		if(data.content[i].status == '0'){
+			str = str + '<td>' + '发送中' + '</td>';
+		}if(data.content[i].status == '1'){
+			str = str + '<td>' + '发送成功' + '</td>';
+		}else{
+			str = str + '<td>' + '发送失败' + '</td>';
+		}
+		
+		str = str + '<td></td>';
 		str = str + '</tr>';
     }
 	$("#tbodyId").html(str);
 }
-//查看管理员详情
-function getAdminInfo(id){
-	//iframe层-父子操作
-	var index = layer.open({
-	    type: 2,
-	    area: ['900px', '500px'],
-	    fix: false, //不固定
-	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/sys/sysUserInfoPage.do?id=' + id
-	});
-	layer.full(index);
-}
-//新增
-function add(){
-	//iframe层-父子操作
-	var index = layer.open({
-	    type: 2,
-	    area: ['900px', '500px'],
-	    fix: false, //不固定
-	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/sys/addSysUserPage.do'
-	});
-	layer.full(index);
-}
-//修改
-function modify(id){
-	//iframe层-父子操作
-	var index = layer.open({
-	    type: 2,
-	    area: ['900px', '500px'],
-	    fix: false, //不固定
-	    maxmin: true,
-	    content: '<%=request.getContextPath()%>/sys/modifySysUserPage.do?id='+id
-	});
-	layer.full(index);
-}
-//删除
-function dele(id){
-	layer.confirm('确定删除该管理员？',{
-		btn: ['确定','取消']
-	},function(){
-		$.ajax({
-			url: "<%=request.getContextPath()%>/sys/updateSysUser.do",
-			datatype: 'json',
-			type: "post",
-			data: {
-				id:id,
-				isDeleted:'1'
-			},
-			success: function (data) {
-				if (data.flag == '1' && data.errorCode == '10000') {
-					layer.alert('删除成功！', {
-						icon: 6
-					},function(index){
-						search(parseInt($('.active').attr('jp-data')));
-						layer.close(index);
-					});
-				}else{
-					layer.alert(data.content, {icon: 6});
-				}
-			}
-		});
-	});
+
+//查询条件显示
+function searchType(){
+	if($('#searchType').val() == 2){
+		$('#inputTypeValue').hide();
+		$('#statusTypeValue').show();
+	}else{
+		$('#inputTypeValue').show();
+		$('#statusTypeValue').hide();
+	}
+	$('#inputTypeValue').val('');
+	$('#statusTypeValue').val('');
 }
 </script>
 </body>

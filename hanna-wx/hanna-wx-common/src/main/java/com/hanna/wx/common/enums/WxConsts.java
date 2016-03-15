@@ -58,6 +58,11 @@ public interface WxConsts {
 	
 	/** 客服管理 - 删除客服 */
 	public static final String KF_DELETE_URL = "https://api.weixin.qq.com/customservice/kfaccount/del?access_token=%s&kf_account=%s";
+	
+	/** 红包url */
+	public static final String SENDREDPACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+	/** 红包参数 */
+	public static final String SENDREDPACK_PARAMS = "act_name=%s&client_ip=%s&mch_billno=%s&mch_id=%s&nonce_str=%s&re_openid=%s&remark=%s&send_name=%s&total_amount=%s&total_num=%s&wishing=%s&wxappid=%s&key=%s";
 
 	/** 不弹出授权页面，直接跳转，只能获取用户openid */
 	public static final String OAUTH2_SCOPE_BASE = "snsapi_base";
@@ -69,7 +74,8 @@ public interface WxConsts {
 	
 	/** 获取access_token填写client_credential*/
 	public static final String TOKEN_GRANT_TYPE = "client_credential";
-	/** 获取access_token填写client_credential*/
+	
+	/** 获取网页access_token填写authorization_code*/
 	public static final String WY_GRANT_TYPE = "authorization_code";
 
 }

@@ -92,7 +92,12 @@ public class WxUserService {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String date = sdf.format(new Date(wxUser.getSubscribe_time()*1000));
 				wxUser.setSubscribeTime(date);
-				wxUserDao.insertWxUser(wxUser);
+				try {
+					wxUserDao.insertWxUser(wxUser);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
 			}else{
 				br.setErrorCode(ErrorCode.wx_error.getCode());
 				br.setContent(wxUser.getErrcode() + "--" + wxUser.getErrmsg());

@@ -19,5 +19,10 @@ public interface GlobConstants {
      * 微信接口调用标志:成功
      */
 	public static final int    WX_RESULT_FLAG_SUCCESSED = 0;
+	
+	/**
+     * 微信红包调用标志:成功
+     */
+	public static final String    WX_SENDREDPACK_FLAG_SUCCESSED = "SUCCESS";
     
 }
