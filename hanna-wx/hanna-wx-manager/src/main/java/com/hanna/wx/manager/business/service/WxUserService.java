@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hanna.wx.common.enums.ErrorCode;
+import com.hanna.wx.common.utils.EmojiFilter;
 import com.hanna.wx.common.utils.GsonUtils;
 import com.hanna.wx.db.dao.WxUserDao;
 import com.hanna.wx.db.dto.BaseResponseDto;
@@ -92,12 +93,8 @@ public class WxUserService {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String date = sdf.format(new Date(wxUser.getSubscribe_time()*1000));
 				wxUser.setSubscribeTime(date);
-				try {
-					wxUserDao.insertWxUser(wxUser);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-				
+				wxUser.setNickname(EmojiFilter.filterEmoji(wxUser.getNickname()));
+				wxUserDao.insertWxUser(wxUser);
 			}else{
 				br.setErrorCode(ErrorCode.wx_error.getCode());
 				br.setContent(wxUser.getErrcode() + "--" + wxUser.getErrmsg());

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hanna.wx.common.enums.GlobConstants;
 import com.hanna.wx.common.enums.MsgTypeEnum;
 import com.hanna.wx.common.enums.WxConsts;
+import com.hanna.wx.common.utils.EmojiFilter;
 import com.hanna.wx.common.utils.GsonUtils;
 import com.hanna.wx.db.dao.WxUserDao;
 import com.hanna.wx.db.dto.WxMessageDto;
@@ -35,6 +36,7 @@ public class WxCallbackService {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String date = sdf.format(new Date(wxUser.getSubscribe_time()*1000));
 				wxUser.setSubscribeTime(date);
+				wxUser.setNickname(EmojiFilter.filterEmoji(wxUser.getNickname()));
 				wxUserDao.insertWxUser(wxUser);
 			}else{
 				System.out.println(wxUser.getErrmsg());
